@@ -34,6 +34,7 @@ import proton.android.pass.data.impl.crypto.ReencryptUserInviteContents
 import proton.android.pass.data.impl.db.entities.UserInviteEntity
 import proton.android.pass.data.impl.fakes.FakeCreateNewUserInviteSignature
 import proton.android.pass.data.impl.fakes.FakeEncryptShareKeysForUser
+import proton.android.pass.data.impl.fakes.FakeGetUserAddressForShare
 import proton.android.pass.data.impl.fakes.FakeRemoteUserInviteDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
@@ -71,6 +72,7 @@ class UserInviteRepositoryImplTest {
             observeConfirmedInviteToken = FakeObserveConfirmedInviteToken(),
             groupRepository = groupRepository,
             shareRepository = FakeShareRepository(),
+            getUserAddressForShare = FakeGetUserAddressForShare(),
             encryptShareKeysForUser = FakeEncryptShareKeysForUser(),
             shareKeyRepository = FakeShareKeyRepository(),
             newUserInviteSignatureManager = FakeCreateNewUserInviteSignature()

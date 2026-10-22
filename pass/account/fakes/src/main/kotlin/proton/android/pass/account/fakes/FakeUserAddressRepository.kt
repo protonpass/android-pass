@@ -32,6 +32,13 @@ class FakeUserAddressRepository @Inject constructor() : UserAddressRepository {
     private var address: UserAddress? = null
     private var addresses: List<UserAddress> = emptyList()
 
+    var lastGetAddressId: AddressId? = null
+        private set
+    var lastGetAddressRefresh: Boolean? = null
+        private set
+    var lastGetAddressesRefresh: Boolean? = null
+        private set
+
     // Test methods
 
     fun setAddress(address: UserAddress?) {
@@ -60,9 +67,16 @@ class FakeUserAddressRepository @Inject constructor() : UserAddressRepository {
         sessionUserId: SessionUserId,
         addressId: AddressId,
         refresh: Boolean
-    ): UserAddress? = address
+    ): UserAddress? {
+        lastGetAddressId = addressId
+        lastGetAddressRefresh = refresh
+        return address
+    }
 
-    override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> = addresses
+    override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> {
+        lastGetAddressesRefresh = refresh
+        return addresses
+    }
 
     override fun observeAddress(
         sessionUserId: SessionUserId,

@@ -54,6 +54,7 @@ import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
+import proton.android.pass.data.impl.fakes.FakeGetUserAddressForShare
 import proton.android.pass.data.impl.fakes.FakeRemoteItemDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
@@ -99,9 +100,7 @@ class ItemRepositoryImplTest {
             addressId = ADDRESS_ID
         )
 
-        shareRepository = FakeShareRepository().apply {
-            setGetAddressForShareIdResult(Result.success(userAddress))
-        }
+        shareRepository = FakeShareRepository()
 
         database = runBlocking { setupDatabase() }
         localShareDataSource = LocalShareDataSourceImpl(
@@ -144,6 +143,7 @@ class ItemRepositoryImplTest {
             migrateItem = FakeMigrateItem(),
             encryptionContextProvider = FakeEncryptionContextProvider(),
             getShareAndItemKey = FakeGetShareAndItemKey(),
+            getUserAddressForShare = FakeGetUserAddressForShare().apply { setResult(Result.success(userAddress)) },
             folderKeyRepository = FakeFolderKeyRepository(),
             appDispatchers = FakeAppDispatchers(),
             featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),

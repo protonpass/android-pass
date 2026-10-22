@@ -27,12 +27,12 @@ import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.errors.NewUsersInviteError
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.InviteTarget
-import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
+import proton.android.pass.data.impl.crypto.GetUserAddressForShare
 import proton.android.pass.data.impl.remote.RemoteUserInviteDataSource
 import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
@@ -48,7 +48,7 @@ import javax.inject.Inject
 
 class InviteToItemImpl @Inject constructor(
     private val getPrimaryUserId: GetPrimaryUserId,
-    private val shareRepository: ShareRepository,
+    private val getUserAddressForShare: GetUserAddressForShare,
     private val getInviteUserMode: GetInviteUserMode,
     private val encryptItemsKeysForUser: EncryptItemsKeysForUser,
     private val remoteUserInviteDataSource: RemoteUserInviteDataSource
@@ -65,7 +65,7 @@ class InviteToItemImpl @Inject constructor(
 
         val existingUserInvitesAddresses = getUserInviteAddresses(userId, inviteTargets)
 
-        val inviterUserAddress = shareRepository.getAddressForShareId(userId, shareId)
+        val inviterUserAddress = getUserAddressForShare(userId, shareId)
         remoteUserInviteDataSource.sendInvites(
             userId = userId,
             shareId = shareId,

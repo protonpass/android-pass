@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
-import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.None
@@ -68,6 +67,7 @@ import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.impl.crypto.GetUserAddressForShare
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasTotp
@@ -134,6 +134,7 @@ class ItemRepositoryImpl @Inject constructor(
     private val migrateItem: MigrateItem,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val getShareAndItemKey: GetShareAndItemKey,
+    private val getUserAddressForShare: GetUserAddressForShare,
     private val folderKeyRepository: FolderKeyRepository,
     private val appDispatchers: AppDispatchers,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
@@ -1394,7 +1395,7 @@ class ItemRepositoryImpl @Inject constructor(
         folderId: FolderId?,
         itemIds: List<ItemId>
     ) {
-        val userAddress = shareRepository.getAddressForShareId(userId, shareId)
+        val addressId = getUserAddressForShare(userId, shareId).addressId
         val destinationKey = if (folderId != null) {
             folderKeyRepository.getFolderKey(userId, shareId, folderId)
                 ?: throw IllegalStateException("FolderKey not found for folderId=${folderId.id}")
@@ -1417,7 +1418,8 @@ class ItemRepositoryImpl @Inject constructor(
                 sourceFolderKeys = sourceFolderKeys
             )
             val (_, itemKey) = getShareAndItemKey(
-                userAddress = userAddress,
+                userId = userId,
+                addressId = addressId,
                 shareId = shareId,
                 itemId = ItemId(item.id),
                 decryptionKeyOverride = currentFolderKey
@@ -1698,11 +1700,12 @@ class ItemRepositoryImpl @Inject constructor(
         items: List<ItemEntity>,
         destinationFolderId: FolderId? = null
     ): List<ItemEntity> = withContext(appDispatchers.default) {
-        val userAddress = shareRepository.getAddressForShareId(userId, source)
+        val addressId = getUserAddressForShare(userId, source).addressId
         items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { chunk ->
             async {
                 migrateChunk(
-                    userAddress,
+                    userId,
+                    addressId,
                     source,
                     destination,
                     destinationKey,
@@ -1716,7 +1719,8 @@ class ItemRepositoryImpl @Inject constructor(
 
     @Suppress("LongMethod")
     private suspend fun migrateChunk(
-        userAddress: UserAddress,
+        userId: UserId,
+        addressId: AddressId,
         source: ShareId,
         destination: ShareId,
         destinationKey: ShareKey,
@@ -1724,7 +1728,7 @@ class ItemRepositoryImpl @Inject constructor(
         destinationFolderId: FolderId? = null
     ): List<ItemEntity> {
         val destFolderKey: FolderKey? = destinationFolderId?.let {
-            folderKeyRepository.getFolderKey(userAddress.userId, destination, it)
+            folderKeyRepository.getFolderKey(userId, destination, it)
                 ?: throw IllegalStateException("FolderKey not found for destination folderId=${it.id}")
         }
         val encryptionKey: InviteKey = destFolderKey ?: destinationKey
@@ -1732,7 +1736,7 @@ class ItemRepositoryImpl @Inject constructor(
         // Pre-fetch folder keys for source items that are currently in a folder.
         val uniqueSourceFolderIds = chunk.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
         val sourceFolderKeys: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
-            userId = userAddress.userId,
+            userId = userId,
             shareId = source,
             folderIds = uniqueSourceFolderIds
         )
@@ -1743,7 +1747,8 @@ class ItemRepositoryImpl @Inject constructor(
                 sourceFolderKeys = sourceFolderKeys
             )
             val (_, itemKey) = getShareAndItemKey(
-                userAddress = userAddress,
+                userId = userId,
+                addressId = addressId,
                 shareId = source,
                 itemId = ItemId(item.id),
                 decryptionKeyOverride = currentFolderKey
@@ -1769,14 +1774,14 @@ class ItemRepositoryImpl @Inject constructor(
             items = migrations
         )
 
-        val destinationShare = shareRepository.getById(userAddress.userId, destination)
+        val destinationShare = shareRepository.getById(userId, destination)
 
-        val res = remoteItemDataSource.migrateItems(userAddress.userId, source, body)
+        val res = remoteItemDataSource.migrateItems(userId, source, body)
 
         val folderIds = res.mapNotNull { it.folderId?.let(::FolderId) }.distinct()
 
         val folderKeysMap: Map<FolderId, FolderKey> = folderKeyRepository.getFolderKeys(
-            userId = userAddress.userId,
+            userId = userId,
             shareId = destination,
             folderIds = folderIds
         )
@@ -1788,8 +1793,8 @@ class ItemRepositoryImpl @Inject constructor(
                         ?: throw IllegalStateException("FolderKey not found in the database")
                 }
                 itemResponseToEntity(
-                    userId = userAddress.userId,
-                    addressId = userAddress.addressId,
+                    userId = userId,
+                    addressId = addressId,
                     itemRevision = revision,
                     share = destinationShare,
                     shareKeys = listOf(destinationKey),
@@ -1802,7 +1807,7 @@ class ItemRepositoryImpl @Inject constructor(
         val itemIdsToDelete = chunk.map { ItemId(it.id) }
         database.inTransaction("migrateChunk") {
             localItemDataSource.upsertItems(resAsEntities)
-            localItemDataSource.delete(userAddress.userId, source, itemIdsToDelete)
+            localItemDataSource.delete(userId, source, itemIdsToDelete)
         }
 
         // Update search index: remove from source, add to destination
@@ -1810,7 +1815,7 @@ class ItemRepositoryImpl @Inject constructor(
             searchIndexRepository.removeItemFromIndex(source, itemId)
         }
         searchIndexRepository.indexItems(
-            userAddress.userId,
+            userId,
             resAsEntities.map { destination to ItemId(it.id) }
         )
 
@@ -1946,7 +1951,8 @@ class ItemRepositoryImpl @Inject constructor(
             ) ?: throw IllegalStateException("FolderKey not found for folderId=${folderId.id}")
         }
         val (shareKey, itemKey) = getShareAndItemKey(
-            userAddress = userAddress,
+            userId = userAddress.userId,
+            addressId = userAddress.addressId,
             shareId = share.id,
             itemId = item.id,
             decryptionKeyOverride = folderKeyOverride

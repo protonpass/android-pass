@@ -66,7 +66,8 @@ class EncryptItemsKeysForUserImpl @Inject constructor(
             folderId = folderId
         ).getOrElse { return Result.failure(it) }
         val (_, itemKey) = getShareAndItemKey(
-            userAddress = userAddress,
+            userId = userAddress.userId,
+            addressId = userAddress.addressId,
             shareId = shareId,
             itemId = itemId,
             decryptionKeyOverride = folderKey

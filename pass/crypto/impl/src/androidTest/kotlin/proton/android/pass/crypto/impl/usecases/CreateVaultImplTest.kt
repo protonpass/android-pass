@@ -44,7 +44,7 @@ import kotlin.test.assertEquals
 class CreateVaultImplTest {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = FakeKeyStoreCrypto,
-        pgpCrypto = GOpenPGPCrypto(),
+        pgpCrypto = GOpenPGPCrypto()
     )
 
     private val encryptionContextProvider = FakeEncryptionContextProvider()
@@ -64,7 +64,7 @@ class CreateVaultImplTest {
         )
 
         val instance = CreateVaultImpl(cryptoContext, encryptionContextProvider, itemContentSerializer)
-        val (request, vaultKey) = instance.createVaultRequest(user, userAddress, vaultMetadata)
+        val (request, vaultKey) = instance.createVaultRequest(user, userAddress.addressId, vaultMetadata)
 
         validateVaultKey(user, request, vaultKey)
         validateVaultMetadata(vaultMetadata, request, vaultKey)
@@ -73,7 +73,7 @@ class CreateVaultImplTest {
     private fun validateVaultKey(
         user: User,
         request: EncryptedCreateVault,
-        vaultKey: EncryptionKey,
+        vaultKey: EncryptionKey
     ) {
         val decryptedVaultKey = user.useKeys(cryptoContext) {
             val decoded = cryptoContext.pgpCrypto.getBase64Decoded(request.encryptedVaultKey)

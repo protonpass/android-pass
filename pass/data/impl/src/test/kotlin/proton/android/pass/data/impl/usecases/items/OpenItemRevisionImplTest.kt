@@ -29,6 +29,7 @@ import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.usecases.FakeOpenItem
 import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
 import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
+import proton.android.pass.data.impl.fakes.FakeGetUserAddressForShare
 import proton.android.pass.data.impl.fakes.FakeRemoteItemDataSource
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
@@ -54,9 +55,6 @@ internal class OpenItemRevisionImplTest {
         item = ItemTestFactory.createNote()
         shareRepository = FakeShareRepository().apply {
             setGetByIdResult(Result.success(share))
-            setGetAddressForShareIdResult(
-                Result.success(FakeUserAddressRepository().generateAddress("test"))
-            )
         }
         shareKeyRepository = FakeShareKeyRepository().apply {
             emitGetShareKeys(listOf(ShareKeyTestFactory.createPrivate()))
@@ -69,6 +67,9 @@ internal class OpenItemRevisionImplTest {
         instance = OpenItemRevisionImpl(
             getPrimaryUserId = FakeGetPrimaryUserId(),
             shareRepository = shareRepository,
+            getUserAddressForShare = FakeGetUserAddressForShare().apply {
+                setResult(Result.success(FakeUserAddressRepository().generateAddress("test")))
+            },
             shareKeyRepository = shareKeyRepository,
             folderKeyRepository = folderKeyRepository,
             openItem = openItem

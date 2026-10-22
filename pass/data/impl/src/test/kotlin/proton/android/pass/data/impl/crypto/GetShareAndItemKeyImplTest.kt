@@ -32,21 +32,18 @@ import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.test.domain.ShareKeyTestFactory
 import proton.android.pass.test.domain.ShareTestFactory
-import proton.android.pass.test.domain.UserAddressTestFactory
 import kotlin.test.assertEquals
 
 class GetShareAndItemKeyImplTest {
 
-    private val userAddress = UserAddressTestFactory.create(
-        userId = UserId("user-id"),
-        addressId = AddressId("address-id")
-    )
+    private val userId = UserId("user-id")
+    private val addressId = AddressId("address-id")
     private val shareId = ShareId("share-id")
     private val itemId = ItemId("item-id")
 
     @Test
     fun `invoke returns latest share key mapped as item key for item share`() = runTest {
-        val share = ShareTestFactory.Item.create(id = shareId.id, userId = userAddress.userId.id)
+        val share = ShareTestFactory.Item.create(id = shareId.id, userId = userId.id)
         val shareKey = ShareKeyTestFactory.createPrivate()
         val itemKey = ItemKey(shareKey.rotation, shareKey.key, shareKey.responseKey)
         val expected = shareKey to itemKey
@@ -60,7 +57,7 @@ class GetShareAndItemKeyImplTest {
         val result = GetShareAndItemKeyImpl(
             shareRepository = shareRepository,
             itemKeyRepository = itemKeyRepository
-        ).invoke(userAddress, shareId, itemId, decryptionKeyOverride = null)
+        ).invoke(userId, addressId, shareId, itemId, decryptionKeyOverride = null)
 
         assertEquals(expected, result)
         assertEquals(1, itemKeyRepository.getLatestShareAndItemKeyCallCount)
@@ -72,7 +69,7 @@ class GetShareAndItemKeyImplTest {
 
     @Test
     fun `invoke ignores folder override for item share and still uses shared item scope`() = runTest {
-        val share = ShareTestFactory.Item.create(id = shareId.id, userId = userAddress.userId.id)
+        val share = ShareTestFactory.Item.create(id = shareId.id, userId = userId.id)
         val shareKey = ShareKeyTestFactory.createPrivate()
         val itemKey = ItemKey(shareKey.rotation, shareKey.key, shareKey.responseKey)
         val expected = shareKey to itemKey
@@ -91,7 +88,7 @@ class GetShareAndItemKeyImplTest {
         val result = GetShareAndItemKeyImpl(
             shareRepository = shareRepository,
             itemKeyRepository = itemKeyRepository
-        ).invoke(userAddress, shareId, itemId, decryptionKeyOverride = folderKey)
+        ).invoke(userId, addressId, shareId, itemId, decryptionKeyOverride = folderKey)
 
         assertEquals(expected, result)
         assertEquals(1, itemKeyRepository.getLatestShareAndItemKeyCallCount)
@@ -103,7 +100,7 @@ class GetShareAndItemKeyImplTest {
 
     @Test
     fun `invoke delegates to getLatestShareAndItemKey for vault share`() = runTest {
-        val share = ShareTestFactory.Vault.create(id = shareId.id, userId = userAddress.userId.id)
+        val share = ShareTestFactory.Vault.create(id = shareId.id, userId = userId.id)
         val shareKey = ShareKeyTestFactory.createPrivate()
         val itemKey = ItemKey(5L, EncryptedByteArray(byteArrayOf(1, 2)), "item-response")
         val expected = shareKey to itemKey
@@ -117,7 +114,7 @@ class GetShareAndItemKeyImplTest {
         val result = GetShareAndItemKeyImpl(
             shareRepository = shareRepository,
             itemKeyRepository = itemKeyRepository
-        ).invoke(userAddress, shareId, itemId, decryptionKeyOverride = null)
+        ).invoke(userId, addressId, shareId, itemId, decryptionKeyOverride = null)
 
         assertEquals(expected, result)
         assertEquals(1, itemKeyRepository.getLatestShareAndItemKeyCallCount)
@@ -133,7 +130,7 @@ class GetShareAndItemKeyImplTest {
 
     @Test
     fun `invoke maps folder override to vault folder decryption source`() = runTest {
-        val share = ShareTestFactory.Vault.create(id = shareId.id, userId = userAddress.userId.id)
+        val share = ShareTestFactory.Vault.create(id = shareId.id, userId = userId.id)
         val shareKey = ShareKeyTestFactory.createPrivate()
         val itemKey = ItemKey(5L, EncryptedByteArray(byteArrayOf(1, 2)), "item-response")
         val expected = shareKey to itemKey
@@ -152,7 +149,7 @@ class GetShareAndItemKeyImplTest {
         GetShareAndItemKeyImpl(
             shareRepository = shareRepository,
             itemKeyRepository = itemKeyRepository
-        ).invoke(userAddress, shareId, itemId, decryptionKeyOverride = folderKey)
+        ).invoke(userId, addressId, shareId, itemId, decryptionKeyOverride = folderKey)
 
         assertEquals(
             ItemKeyRepository.Scope.SharedVault(

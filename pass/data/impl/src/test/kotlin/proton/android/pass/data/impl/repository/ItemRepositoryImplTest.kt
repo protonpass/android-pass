@@ -40,6 +40,7 @@ import proton.android.pass.crypto.fakes.usecases.FakeOpenItem
 import proton.android.pass.crypto.fakes.usecases.FakeUpdateItem
 import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
+import proton.android.pass.data.impl.fakes.FakeGetUserAddressForShare
 import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.impl.fakes.FakeItemKeyRepository
 import proton.android.pass.common.fakes.FakeAppDispatchers
@@ -123,7 +124,6 @@ class ItemRepositoryImplTest {
         share = ShareTestFactory.random()
         userAddress = userAddressRepository.generateAddress("test1", userId)
         shareRepository.setGetByIdResult(Result.success(share))
-        shareRepository.setGetAddressForShareIdResult(Result.success(userAddress))
         shareKeyRepository.emitGetShareKeys(listOf(ShareKeyTestFactory.createPrivate()))
 
         repository = ItemRepositoryImpl(
@@ -143,6 +143,7 @@ class ItemRepositoryImplTest {
             shareKeyRepository = shareKeyRepository,
             migrateItem = migrateItem,
             getShareAndItemKey = getShareAndItemKey,
+            getUserAddressForShare = FakeGetUserAddressForShare().apply { setResult(Result.success(userAddress)) },
             folderKeyRepository = folderKeyRepository,
             appDispatchers = FakeAppDispatchers(),
             featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),

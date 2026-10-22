@@ -20,10 +20,6 @@ package proton.android.pass.data.impl.usecases
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.key.domain.entity.key.KeyId
-import me.proton.core.key.domain.entity.key.PrivateKey
-import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.entity.UserAddressKey
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.fakes.usecases.FakeGetPrimaryUserId
@@ -32,7 +28,6 @@ import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.fakes.repositories.FakeUserInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeGetInviteUserMode
 import proton.android.pass.data.impl.fakes.FakeShareRepository
-import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.UserId
@@ -184,39 +179,12 @@ class InviteToVaultImplTest {
 
 
     private fun setupUserAddress() {
-        val addressId = AddressId(ADDRESS_ID)
-        val key = UserAddressKey(
-            addressId = addressId,
-            version = 1,
-            flags = 0,
-            active = true,
-            keyId = KeyId("KeyId123"),
-            privateKey = PrivateKey(
-                key = "key",
-                isPrimary = true,
-                passphrase = null
-            )
-        )
-        val userAddress = UserAddress(
-            userId = UserId(USER_ID),
-            addressId = addressId,
-            email = INVITER_ADDRESS,
-            canSend = true,
-            canReceive = true,
-            enabled = true,
-            keys = listOf(key),
-            signedKeyList = null,
-            order = 1
-        )
-        shareRepository.setGetAddressForShareIdResult(Result.success(userAddress))
         getInviteUserMode.setResult(Result.success(InviteUserMode.ExistingUser))
     }
 
     companion object {
-        private const val INVITER_ADDRESS = "inviter@local"
         private const val INVITED_ADDRESS = "invited@remote"
         private const val USER_ID = "InviteToVaultImplTest-UserId"
         private const val SHARE_ID = "InviteToVaultImplTest-ShareId"
-        private const val ADDRESS_ID = "InviteToVaultImplTest-AddressID"
     }
 }

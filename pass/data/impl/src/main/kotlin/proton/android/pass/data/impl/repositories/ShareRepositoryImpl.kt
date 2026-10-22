@@ -29,7 +29,6 @@ import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
@@ -106,7 +105,7 @@ class ShareRepositoryImpl @Inject constructor(
         val userPrimaryKey = requireNotNull(user.keys.primary()?.keyId?.id)
 
         val (request, shareKey) = safeRunCatching {
-            createVaultRequest(user, vault, userAddress)
+            createVaultRequest(user, vault, userAddress.addressId)
         }.fold(
             onSuccess = { it },
             onFailure = {
@@ -474,14 +473,10 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress {
+    override suspend fun getAddressIdForShareId(userId: UserId, shareId: ShareId): AddressId {
         val entity = localShareDataSource.getById(userId, shareId)
             ?: throw ShareNotAvailableError()
-        val addressId = AddressId(entity.addressId)
-        return userAddressRepository.getAddress(userId, addressId)
-            ?: userAddressRepository.getAddresses(userId, refresh = true)
-                .firstOrNull { it.addressId == addressId }
-            ?: throw IllegalStateException("Could not find address for share ${shareId.id}")
+        return AddressId(entity.addressId)
     }
 
     override fun observeSharedWithMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>> =
@@ -769,10 +764,10 @@ class ShareRepositoryImpl @Inject constructor(
     private suspend fun createVaultRequest(
         user: User,
         vault: NewVault,
-        userAddress: UserAddress
+        addressId: AddressId
     ): Pair<CreateVaultRequest, EncryptionKey> {
         val body = newVaultToBody(vault)
-        val (request, shareKey) = createVault.createVaultRequest(user, userAddress, body)
+        val (request, shareKey) = createVault.createVaultRequest(user, addressId, body)
         return request.toRequest() to shareKey
     }
 

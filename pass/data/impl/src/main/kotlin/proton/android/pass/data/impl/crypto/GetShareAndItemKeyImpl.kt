@@ -19,13 +19,14 @@
 package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
@@ -37,11 +38,12 @@ class GetShareAndItemKeyImpl @Inject constructor(
 ) : GetShareAndItemKey {
 
     override suspend fun invoke(
-        userAddress: UserAddress,
+        userId: UserId,
+        addressId: AddressId,
         shareId: ShareId,
         itemId: ItemId,
         decryptionKeyOverride: FolderKey?
-    ): Pair<ShareKey, ItemKey> = shareRepository.getById(userAddress.userId, shareId).let { share ->
+    ): Pair<ShareKey, ItemKey> = shareRepository.getById(userId, shareId).let { share ->
         val scope = when (share) {
             is Share.Item -> ItemKeyRepository.Scope.SharedItem
             is Share.Vault -> ItemKeyRepository.Scope.SharedVault(
@@ -50,8 +52,8 @@ class GetShareAndItemKeyImpl @Inject constructor(
             )
         }
         itemKeyRepository.getLatestShareAndItemKey(
-            userId = userAddress.userId,
-            addressId = userAddress.addressId,
+            userId = userId,
+            addressId = addressId,
             shareId = shareId,
             itemId = itemId,
             scope = scope

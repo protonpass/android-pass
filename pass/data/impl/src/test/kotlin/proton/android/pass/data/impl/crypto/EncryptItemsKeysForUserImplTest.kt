@@ -24,6 +24,7 @@ import org.junit.Test
 import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.fakes.usecases.FakeGetAllKeysByAddress
 import proton.android.pass.data.impl.fakes.FakeFolderKeyRepository
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -130,7 +131,8 @@ class EncryptItemsKeysForUserImplTest {
         )
 
         override suspend fun invoke(
-            userAddress: me.proton.core.user.domain.entity.UserAddress,
+            userId: UserId,
+            addressId: AddressId,
             shareId: ShareId,
             itemId: ItemId,
             decryptionKeyOverride: FolderKey?

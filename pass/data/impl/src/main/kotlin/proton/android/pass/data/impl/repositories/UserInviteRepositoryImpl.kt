@@ -42,6 +42,7 @@ import proton.android.pass.data.api.repositories.UserInviteRepository
 import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptUserInviteKeys
+import proton.android.pass.data.impl.crypto.GetUserAddressForShare
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.crypto.ReencryptUserInviteContents
 import proton.android.pass.data.impl.db.entities.UserInviteEntity
@@ -87,6 +88,7 @@ class UserInviteRepositoryImpl @Inject constructor(
     private val observeConfirmedInviteToken: ObserveConfirmedInviteToken,
     private val groupRepository: GroupRepository,
     private val shareRepository: ShareRepository,
+    private val getUserAddressForShare: GetUserAddressForShare,
     private val encryptShareKeysForUser: EncryptShareKeysForUser,
     private val shareKeyRepository: ShareKeyRepository,
     private val newUserInviteSignatureManager: NewUserInviteSignatureManager
@@ -240,7 +242,7 @@ class UserInviteRepositoryImpl @Inject constructor(
         if (inviteTargets.isEmpty()) return
 
         coroutineScope {
-            val inviterUserAddress = shareRepository.getAddressForShareId(userId, shareId)
+            val inviterUserAddress = getUserAddressForShare(userId, shareId)
             val share = shareRepository.getById(userId, shareId)
 
             val requests = inviteTargets.map { target ->
@@ -268,7 +270,7 @@ class UserInviteRepositoryImpl @Inject constructor(
         if (inviteTargets.isEmpty()) return
 
         coroutineScope {
-            val inviterUserAddress = shareRepository.getAddressForShareId(userId, shareId)
+            val inviterUserAddress = getUserAddressForShare(userId, shareId)
             val share = shareRepository.getById(userId, shareId)
 
             val requests = inviteTargets.map { target ->

@@ -21,11 +21,11 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
+import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
@@ -67,8 +67,8 @@ class FakeShareRepository : ShareRepository {
 
     private val observeSharesByTypeFlow = testFlow<Result<List<Share>>>()
 
-    private var getAddressForShareIdResult: Result<UserAddress> =
-        Result.failure(IllegalStateException("UserAddress not set"))
+    private var getAddressIdForShareIdResult: Result<AddressId> =
+        Result.failure(IllegalStateException("AddressId not set"))
 
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
     private val deleteLocalSharesForUserMemory: MutableList<UserId> = mutableListOf()
@@ -130,26 +130,23 @@ class FakeShareRepository : ShareRepository {
         observeUsableShareIdsFlow.tryEmit(value)
     }
 
-    fun setGetAddressForShareIdResult(value: Result<UserAddress>) {
-        getAddressForShareIdResult = value
+    fun setGetAddressIdForShareIdResult(value: Result<AddressId>) {
+        getAddressIdForShareIdResult = value
     }
 
     fun setShareType(shareId: ShareId, shareType: ShareType) {
         shareTypes[shareId] = shareType
     }
 
-    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
-        createVaultResult.getOrThrow()
+    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share = createVaultResult.getOrThrow()
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         deleteVaultMemory.add(shareId)
         deleteVault.getOrThrow()
     }
 
-    override suspend fun refreshShares(
-        userId: UserId,
-        eventToken: EventToken?
-    ): RefreshSharesResult = refreshSharesResult
+    override suspend fun refreshShares(userId: UserId, eventToken: EventToken?): RefreshSharesResult =
+        refreshSharesResult
 
     override suspend fun refreshShare(
         userId: UserId,
@@ -163,10 +160,8 @@ class FakeShareRepository : ShareRepository {
     override fun observeAllShares(userId: UserId, includeHidden: Boolean): Flow<List<Share>> =
         observeSharesFlow.map { it.getOrThrow() }
 
-    override fun observeAllUsableShareIds(
-        userId: UserId,
-        includeHidden: Boolean
-    ): Flow<List<ShareId>> = observeUsableShareIdsFlow.map { it.getOrThrow() }
+    override fun observeAllUsableShareIds(userId: UserId, includeHidden: Boolean): Flow<List<ShareId>> =
+        observeUsableShareIdsFlow.map { it.getOrThrow() }
 
     override fun observeVaultCount(userId: UserId, includeHidden: Boolean): Flow<Int> =
         observeVaultCountFlow.map { it.getOrThrow() }
@@ -205,10 +200,7 @@ class FakeShareRepository : ShareRepository {
         return deleteSharesResult.getOrThrow()
     }
 
-    override suspend fun deleteLocalShares(
-        userId: UserId,
-        list: List<ShareId>
-    ): Boolean = true
+    override suspend fun deleteLocalShares(userId: UserId, list: List<ShareId>): Boolean = true
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
 
@@ -227,23 +219,16 @@ class FakeShareRepository : ShareRepository {
 
     override suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent) {}
 
-    override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
-        getAddressForShareIdResult.getOrThrow()
+    override suspend fun getAddressIdForShareId(userId: UserId, shareId: ShareId): AddressId =
+        getAddressIdForShareIdResult.getOrThrow()
 
-    override fun observeSharedWithMeIds(
-        userId: UserId,
-        includeHiddenVault: Boolean
-    ): Flow<List<ShareId>> = observeSharedWithMeIds.map { it.getOrThrow() }
+    override fun observeSharedWithMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>> =
+        observeSharedWithMeIds.map { it.getOrThrow() }
 
-    override fun observeSharedByMeIds(
-        userId: UserId,
-        includeHiddenVault: Boolean
-    ): Flow<List<ShareId>> = observeSharedByMeIds.map { it.getOrThrow() }
+    override fun observeSharedByMeIds(userId: UserId, includeHiddenVault: Boolean): Flow<List<ShareId>> =
+        observeSharedByMeIds.map { it.getOrThrow() }
 
-    override suspend fun batchChangeShareVisibility(
-        userId: UserId,
-        shareVisibilityChanges: Map<ShareId, Boolean>
-    ) {
+    override suspend fun batchChangeShareVisibility(userId: UserId, shareVisibilityChanges: Map<ShareId, Boolean>) {
     }
 
     override suspend fun filterShareIdsByType(
@@ -258,7 +243,11 @@ class FakeShareRepository : ShareRepository {
 
     fun getUpdateMembersCountMemory(): List<UpdateMembersCountPayload> = updateMembersCountMemory.toList()
 
-    override suspend fun updateMembersCount(userId: UserId, shareId: ShareId, count: Int) {
+    override suspend fun updateMembersCount(
+        userId: UserId,
+        shareId: ShareId,
+        count: Int
+    ) {
         updateMembersCountMemory.add(UpdateMembersCountPayload(userId, shareId, count))
     }
 
@@ -273,8 +262,7 @@ class FakeShareRepository : ShareRepository {
 
     override suspend fun enableAllOfflineAttachments(userId: UserId) {}
 
-    override fun observeSharedItemsOfflineEnabled(userId: UserId): Flow<Boolean> =
-        kotlinx.coroutines.flow.flowOf(true)
+    override fun observeSharedItemsOfflineEnabled(userId: UserId): Flow<Boolean> = kotlinx.coroutines.flow.flowOf(true)
 
     override suspend fun setSharedItemsOfflineAttachments(userId: UserId, enabled: Boolean) {}
 

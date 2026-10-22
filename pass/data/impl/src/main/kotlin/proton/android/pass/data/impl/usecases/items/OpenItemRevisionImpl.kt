@@ -26,6 +26,7 @@ import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
+import proton.android.pass.data.impl.crypto.GetUserAddressForShare
 import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.repositories.FolderKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
@@ -37,6 +38,7 @@ import javax.inject.Inject
 class OpenItemRevisionImpl @Inject constructor(
     private val getPrimaryUserId: GetPrimaryUserId,
     private val shareRepository: ShareRepository,
+    private val getUserAddressForShare: GetUserAddressForShare,
     private val shareKeyRepository: ShareKeyRepository,
     private val folderKeyRepository: FolderKeyRepository,
     private val openItem: OpenItem
@@ -48,7 +50,7 @@ class OpenItemRevisionImpl @Inject constructor(
         encryptionContext: EncryptionContext
     ): Item {
         val userId = getPrimaryUserId() ?: throw UserIdNotAvailableError()
-        val addressId = shareRepository.getAddressForShareId(userId, shareId).addressId
+        val addressId = getUserAddressForShare(userId, shareId).addressId
         val share = shareRepository.getById(userId, shareId)
         val shareKeys = shareKeyRepository.getShareKeys(
             userId = userId,

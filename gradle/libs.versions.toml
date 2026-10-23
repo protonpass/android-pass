@@ -48,7 +48,7 @@ protonAndroidPayment = "1.2.0"
 # Dagger
 dagger = "2.58"
 # Google
-protobuf = "3.21.12"
+protobuf = "3.25.5"
 app-update = "2.1.0"
 app-review = "2.0.1"
 # Gradle
@@ -84,7 +84,7 @@ passCommon = "2.3.2"
 showkase = "1.0.5"
 # Squareup
 leakCanary = "2.14"
-okhttp = "4.12.0"
+okhttp = "4.12.1"
 retrofit = "2.9.0"
 # SVG
 androidsvg = "1.4"

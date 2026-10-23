@@ -86,7 +86,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Помилка завантаження користувацьких адрес електронної пошти</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Не вдалося отримати адреси електронної пошти</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Вилучити</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Останній витік %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Останній витік на %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Знайдено в %s витоку</item>
     <item quantity="few">Знайдено в %s витоках</item>

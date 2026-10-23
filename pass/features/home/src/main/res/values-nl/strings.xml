@@ -54,16 +54,16 @@
   <string name="sl_sync_banner_title">Synchroniseer uw aliassen van SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">U heeft %d alias die aanwezig is in SimpleLogin, maar ontbreekt in Proton pass. Wilt u deze synchroniseren?</item>
-    <item quantity="other">U heeft %d aliassen die aanwezig zijn in SimpleLogin, maar ontbreekt in Proton pass. Wilt u deze synchroniseren?</item>
+    <item quantity="other">U heeft %d aliassen die aanwezig zijn in SimpleLogin, maar ontbreekt in Proton pass. Wilt u ze synchroniseren?</item>
   </plurals>
   <string name="home_notification_permission_banner_title">Krijg belangrijke updates</string>
   <string name="home_notification_permission_banner_text">Schakel push notificaties in om geïnformeerd te worden wanneer iemand een kluis met u deelt.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wil een item delen met u.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wil een item met u delen.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wil een item delen met uw groep %2$s.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wil een kluis delen met uw groep %2$s.</string>
   <string name="home_item_invite_card_title">Uitnodiging voor gedeeld item</string>
   <string name="home_vault_invite_card_title">Uitnodiging voor gedeelde kluis</string>
-  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wil een kluis met u delen.</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wil een kluis delen met u.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Wachtwoord kopiëren</string>
   <string name="bottomsheet_copy_username">Gebruikersnaam kopiëren</string>
@@ -142,7 +142,7 @@
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="one">Weet u zeker dat u verwijderde item wilt herstellen?</item>
-    <item quantity="other">Weet u zeker dat u de %d verwijderde items wilt herstellen?</item>
+    <item quantity="other">Weet u zeker dat u de %d items die naar de prullenbak zijn verwijderd wilt herstellen?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">%d item naar prullenbak verplaatsen?</item>
@@ -153,7 +153,7 @@
     <item quantity="other">Weet u zeker dat u %d items naar de prullenbak wilt verplaatsen?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="one">%d item permanent verwijderen?</item>
+    <item quantity="one">Permanent %d item verwijderen?</item>
     <item quantity="other">%d items permanent verwijderen?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">

@@ -72,7 +72,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">添加新的自定义邮箱地址</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">添加</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="other">用于 %d 登录</item>
+    <item quantity="other">在 %d 个登录项中使用</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="other">检测到 %d 泄露</item>
@@ -80,7 +80,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">加载自定义邮箱地址时出错</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">无法获取邮箱地址</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">移除</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">最近一次泄露的时间 %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">最近一次泄露发生于 %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="other">在 %s 中发现信息泄露</item>
   </plurals>

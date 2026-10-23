@@ -17,7 +17,7 @@
   <string name="profile_option_autofill_subtitle">Автоматическое заполнение имен пользователей и паролей.</string>
   <string name="profile_option_secure_links">Защищенные ссылки</string>
   <string name="profile_option_alias_management">Управление псевдонимами</string>
-  <string name="profile_option_generated_passwords">Generated passwords</string>
+  <string name="profile_option_generated_passwords">Сгенерированные пароли</string>
   <string name="profile_error_biometry_failed_to_start">Не удалось запустить биометрическую аутентификацию</string>
   <string name="profile_error_biometry_failed_to_authenticate">Сбой аутентификации</string>
   <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
@@ -65,15 +65,15 @@
   </plurals>
   <plurals name="profile_after_minutes">
     <item quantity="one">Через %d минуту</item>
-    <item quantity="few">Через %d минуты</item>
-    <item quantity="many">Через %d минут</item>
-    <item quantity="other">Через %d минут</item>
+    <item quantity="few">Через %d минут</item>
+    <item quantity="many">Через %d минуты</item>
+    <item quantity="other">Через %d минуты</item>
   </plurals>
   <plurals name="profile_after_hours">
     <item quantity="one">Через %d час</item>
-    <item quantity="few">Через %d часа</item>
-    <item quantity="many">Через %d часов</item>
-    <item quantity="other">Через %d часов</item>
+    <item quantity="few">Через %d часов</item>
+    <item quantity="many">Через %d часа</item>
+    <item quantity="other">Через %d часа</item>
   </plurals>
   <string name="profile_less_than_a_minute">Меньше минуты</string>
   <string name="account_switcher_manage_account">Управление аккаунтом</string>

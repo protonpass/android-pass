@@ -21,12 +21,12 @@
   <plurals name="sync_item_count">
     <item quantity="one">Articole descărcate: %d</item>
     <item quantity="few">Articole descărcate: %d</item>
-    <item quantity="other">Articole descărcate: %d</item>
+    <item quantity="other">S-au descărcat %d de articole</item>
   </plurals>
   <plurals name="sync_finished_item_count">
     <item quantity="one">Articole sincronizate: %d</item>
     <item quantity="few">Articole sincronizate: %d</item>
-    <item quantity="other">Articole sincronizate: %d</item>
+    <item quantity="other">S-au sincronizat %d de articole</item>
   </plurals>
   <string name="sync_progress_item_count">Se descarcă %1$d din %2$d articole</string>
   <string name="sync_dialog_title">Se sincronizează articolele…</string>

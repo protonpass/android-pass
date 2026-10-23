@@ -31,9 +31,9 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Přesunout</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Položka je již v této složce</item>
-    <item quantity="few">%d položky jsou již v této složce</item>
-    <item quantity="many">%d položek je již v této složce</item>
-    <item quantity="other">%d položek je již v této složce</item>
+    <item quantity="few">%d items are already in this folder</item>
+    <item quantity="many">%d items are already in this folder</item>
+    <item quantity="other">%d items are already in this folder</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Tato složka se již nachází v tomto umístění</string>
   <string name="migrate_disabled_folder_reason_being_moved">Tato složka je právě přesouvána</string>

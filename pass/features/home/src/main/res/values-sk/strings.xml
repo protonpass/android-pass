@@ -60,12 +60,12 @@
   </plurals>
   <string name="home_notification_permission_banner_title">Získajte dôležité aktualizácie</string>
   <string name="home_notification_permission_banner_text">Povoľte push oznámenia, aby ste dostali informáciu, keď s vami ostatní budú zdieľať trezor.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s chce s vami zdieľať položku.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s s vami chce zdieľať položku.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s chce zdieľať položku s vašou skupinou %2$s.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s chce zdieľať trezor s vašou skupinou %2$s.</string>
   <string name="home_item_invite_card_title">Pozvánka ku zdieľanej položke</string>
   <string name="home_vault_invite_card_title">Pozvánka do zdieľaného trezora</string>
-  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s s vami chce zdieľať trezor.</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s chce s vami zdieľať trezor.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopírovať heslo</string>
   <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>
@@ -89,7 +89,7 @@
   <plurals name="vault_drawer_vaults_item_count">
     <item quantity="one">%d položka</item>
     <item quantity="few">%d položky</item>
-    <item quantity="many">%d položiek</item>
+    <item quantity="many">%d položky</item>
     <item quantity="other">%d položiek</item>
   </plurals>
   <string name="vault_drawer_create_vault">Vytvoriť trezor</string>

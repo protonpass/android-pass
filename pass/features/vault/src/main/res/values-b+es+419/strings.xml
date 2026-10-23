@@ -25,8 +25,8 @@
   <string name="folder_delete_dialog_title">Eliminar carpeta</string>
   <string name="folder_delete_dialog_body">Esto eliminará de forma permanente la carpeta __FOLDER_NAME__ y todo su contenido. Ingrese el nombre de la carpeta para confirmar la eliminación.</string>
   <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
-    <item quantity="one">This will permanently delete the folder %2$s and all its contents (%1$d item). Enter the folder name to confirm deletion.</item>
-    <item quantity="other">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
+    <item quantity="one">Esto eliminará de forma permanente la carpeta %2$s y todo su contenido (%1$d elemento). Ingrese el nombre de la carpeta para confirmar la eliminación.</item>
+    <item quantity="other">Esto eliminará de forma permanente la carpeta %2$s y todo su contenido (%1$d elementos). Ingrese el nombre de la carpeta para confirmar la eliminación.</item>
   </plurals>
   <string name="folder_delete_dialog_placeholder">Nombre de carpeta</string>
   <string name="folder_delete_dialog_delete_action">Eliminar</string>

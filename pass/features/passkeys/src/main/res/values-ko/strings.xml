@@ -21,6 +21,6 @@
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Proton Pass에서 패스키 선택</string>
   <string name="passkeys_user_logged_out">로그아웃했습니다. 앱을 열어 다시 로그인해 주세요.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">패스키 생성</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">\'%s\'항목에 대한 패스키를 생성하시겠습니까?</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">\'%s\'항목에 대한 패스키를 생성하시겠어요?</string>
   <string name="passkey_error_generating_passkey">패스키를 생성할 수 없음</string>
 </resources>

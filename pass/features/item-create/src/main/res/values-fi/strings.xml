@@ -183,7 +183,7 @@
   <string name="update_identity_item_creation_error">Identiteettiä ei voitu päivittää</string>
   <!--  Common create items  -->
   <string name="title_create">Luo</string>
-  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s kopioitiin)</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (kopioitu)</string>
   <string name="changes_saved">Muutokset tallennettiin</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA-salaisuus (TOTP)</string>

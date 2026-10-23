@@ -26,9 +26,9 @@
   <string name="sharing_can_manage_description">Lahko odobri in prekliče dostop do tega trezorja.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d predmet</item>
-    <item quantity="two">%d predmeta</item>
-    <item quantity="few">%d predmetov</item>
-    <item quantity="other">%d predmetov</item>
+    <item quantity="two">%d predmeti</item>
+    <item quantity="few">%d predmeti</item>
+    <item quantity="other">%d predmeta</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
     <item quantity="one">%d item (including trashed)</item>
@@ -96,8 +96,8 @@
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d predmet</item>
     <item quantity="two">%d predmeta</item>
-    <item quantity="few">%d predmeti</item>
-    <item quantity="other">%d predmetov</item>
+    <item quantity="few">%d predmeta</item>
+    <item quantity="other">%d predmeti</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Povabilo poslano.</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Ustvarjanje računa v teku</string>
@@ -106,7 +106,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Člani</string>
   <string name="share_manage_vault_current_user_indicator">Vi</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Poskusi znova</string>
   <string name="share_role_viewer">Preglednik</string>
   <string name="share_role_editor">Urejevalnik</string>
   <string name="share_role_admin">Administrator</string>

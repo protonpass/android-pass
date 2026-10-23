@@ -55,7 +55,7 @@
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Contraseñas reusadas</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Genera contraseñas únicas de cada cuenta para mejorar su seguridad.</string>
-  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reusada %1$d veces</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reutilizada %1$d veces</string>
   <!-- Compromised passwords screen -->
   <string name="security_center_compromised_pass_top_bar_title">Contraseñas comprometidas</string>
   <string name="security_center_compromised_pass_top_bar_subtitle">Las contraseñas comprometidas son las que se han expuesto en filtraciones de datos. Nunca reutilices contraseñas para limitar el impacto si se produce una filtración de datos.</string>
@@ -72,8 +72,8 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Añadir una dirección de correo personalizada</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Añadir</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Uso en %d inicio de sesión</item>
-    <item quantity="other">Uso en %d inicios de sesión</item>
+    <item quantity="one">Usado en %d inicio de sesión</item>
+    <item quantity="other">Usado en %d inicios de sesión</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="one">%d vulneración detectada</item>
@@ -82,10 +82,10 @@
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error al cargar la dirección de correo personalizada</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">No se pueden obtener las direcciones de correo.</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Eliminar</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Última vulneración en %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Última filtración en %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
-    <item quantity="one">Encontrado en %s vulneración</item>
-    <item quantity="other">Encontrado en %s vulneraciones</item>
+    <item quantity="one">Encontrada en %s vulneración</item>
+    <item quantity="other">Encontrada en %s vulneraciones</item>
   </plurals>
   <string name="security_center_dark_web_monitor_found_in_breaches">No se han detectado vulneraciones.</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Direcciones de Proton</string>

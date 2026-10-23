@@ -55,7 +55,7 @@
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Yeniden kullanılmış parolalar</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Güvenliğinizi artırmak için her hesapta ayrı benzersiz parolalar oluşturun.</string>
-  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d kez yeniden kullanılmış</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d kez yeniden kullanıldı</string>
   <!-- Compromised passwords screen -->
   <string name="security_center_compromised_pass_top_bar_title">Bilinen parolalar</string>
   <string name="security_center_compromised_pass_top_bar_subtitle">Bilinen parolalar veri sızıntılarında açığa çıkmış parolalardır. Bir veri sızıntısı ortaya çıktığında bunun etkisini sınırlamak için aynı parolayı asla başka yerlerde kullanmayın.</string>
@@ -82,7 +82,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Özel e-posta adresleri yüklenirken sorun çıktı</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">E-posta adresleri alınamadı</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Kaldır</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Son veri sızıntısı: %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Son veri sızıntısı %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">%s veri sızıntısında bulundu</item>
     <item quantity="other">%s veri sızıntısında bulundu</item>

@@ -9,6 +9,6 @@
   <string name="generate_username_label_adjectives">Adjektiivit</string>
   <string name="generate_username_label_nouns">Substantiivit</string>
   <string name="generate_username_label_verbs">Verbit</string>
-  <string name="generate_username_snackbar_copied">Username copied to clipboard</string>
+  <string name="generate_username_snackbar_copied">Käyttäjätunnus kopioitiin leikepöydälle</string>
   <string name="generate_username_snackbar_error">Käyttäjätunnusta ei voitu luoda</string>
 </resources>

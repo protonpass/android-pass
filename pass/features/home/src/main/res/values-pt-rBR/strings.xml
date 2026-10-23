@@ -54,7 +54,7 @@
   <string name="sl_sync_banner_title">Sincronize seus aliases do SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Você tem %d alias que está presente no SimpleLogin, mas que está ausente no Proton Pass. Você gostaria de sincroniza-lo?</item>
-    <item quantity="other">Você tem %d endereços alternativos que estão presentes no SimpleLogin, mas que estão ausentes no Proton Pass. Você gostaria de sincroniza-los?</item>
+    <item quantity="other">Você tem %d aliases que estão presentes no SimpleLogin, mas que estão ausentes no Proton Pass. Você gostaria de sincroniza-los?</item>
   </plurals>
   <string name="home_notification_permission_banner_title">Obter atualizações importantes</string>
   <string name="home_notification_permission_banner_text">Ative as notificações push para ser informado quando outros compartilharem um cofre com você</string>
@@ -103,7 +103,7 @@
   <string name="search_topbar_placeholder_pinning">Pesquisar em Fixados…</string>
   <string name="search_topbar_placeholder_shared_by_me">Pesquisar em Compartilhado com…</string>
   <string name="search_topbar_placeholder_shared_with_me">Pesquisar em Compartilhado comigo…</string>
-  <string name="search_topbar_placeholder_folder">Pesquisar em %s…</string>
+  <string name="search_topbar_placeholder_folder">Pesquisar em %s...</string>
   <string name="search_topbar_placeholder_folder_fallback">Pesquisar na Pasta…</string>
   <string name="home_topbar_title_folder_fallback">Pasta</string>
   <string name="item_type_filter_list_icon_content_description">Ícone de tipo de item</string>

@@ -26,7 +26,7 @@
   <string name="downloading_attachments">Download degli allegati</string>
   <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s file</string>
   <string name="plan_subscription_auto_renews_monthly">L\'abbonamento si rinnova automaticamente a %1$s/mese</string>
-  <string name="plan_subscription_auto_renews_annual">L\'abbonamento si rinnova automaticamente a %1$s/anno</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Offerta di benvenuto. Si rinnova automaticamente a %1$s/mese</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Offerta di benvenuto. Si rinnova automaticamente a %1$s/anno</string>
+  <string name="plan_subscription_auto_renews_annual">L\'abbonamento si rinnova automaticamente a %1$s/anno</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Offerta di benvenuto. Si rinnova automaticamente a %1$s/mese</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Offerta di benvenuto. Si rinnova automaticamente a %1$s/anno</string>
 </resources>

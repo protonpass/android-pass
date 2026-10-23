@@ -27,8 +27,8 @@
   <plurals name="sharing_item_count">
     <item quantity="one">%d element</item>
     <item quantity="few">%d elementy</item>
-    <item quantity="many">%d elementów</item>
-    <item quantity="other">%d elementów</item>
+    <item quantity="many">Elementy: %d</item>
+    <item quantity="other">Elementy: %d</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
     <item quantity="one">%d item (including trashed)</item>
@@ -37,10 +37,10 @@
     <item quantity="other">%d items (including trashed)</item>
   </plurals>
   <plurals name="sharing_member_count">
-    <item quantity="one">%d użytkownik</item>
-    <item quantity="few">%d użytkowników</item>
-    <item quantity="many">%d użytkowników</item>
-    <item quantity="other">%d użytkowników</item>
+    <item quantity="one">%d członek</item>
+    <item quantity="few">%d członków</item>
+    <item quantity="many">%d członków</item>
+    <item quantity="other">%d członków</item>
   </plurals>
   <string name="sharing_member_count_header">Użytkownicy</string>
   <string name="shared_via_title">Udostępniono przez</string>
@@ -61,7 +61,7 @@
   <string name="sharing_item_invitation_accept">Zaakceptuj i zobacz element</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="sharing_group_invitation_accept">Accept invitation</string>
+  <string name="sharing_group_invitation_accept">Akceptuj zaproszenie</string>
   <string name="sharing_invite_more">Zaproś więcej…</string>
   <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
   <string name="sharing_snackbar_invite_accept_error">Wystąpił błąd podczas akceptowania zaproszenia</string>
@@ -95,9 +95,9 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d element</item>
-    <item quantity="few">%d elementy</item>
-    <item quantity="many">%d elementów</item>
-    <item quantity="other">%d elementów</item>
+    <item quantity="few">%d elementów</item>
+    <item quantity="many">%d elementy</item>
+    <item quantity="other">%d elementy</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Zaproszenie wysłane</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Oczekujące utworzenie konta</string>
@@ -106,7 +106,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Użytkownicy</string>
   <string name="share_manage_vault_current_user_indicator">Ty</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Spróbuj ponownie</string>
   <string name="share_role_viewer">Odczyt</string>
   <string name="share_role_editor">Edycja</string>
   <string name="share_role_admin">Administrator</string>

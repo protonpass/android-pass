@@ -21,6 +21,6 @@
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Einen Passkey aus Proton Pass auswählen</string>
   <string name="passkeys_user_logged_out">Du wurdest abgemeldet. Bitte melde dich erneut an, um fortzufahren.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Passkey generieren</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Bist du sicher, dass du einen Passkey für den Eintrag \'%s\' generieren willst?</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Möchtest du wirklich einen Passkey für den Eintrag „%s“ generieren?</string>
   <string name="passkey_error_generating_passkey">Fehler beim Generieren des Passkeys.</string>
 </resources>

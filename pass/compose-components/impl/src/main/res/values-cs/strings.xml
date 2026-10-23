@@ -107,7 +107,7 @@
     <item quantity="one">1 položka</item>
     <item quantity="few">%d položky</item>
     <item quantity="many">%d položek</item>
-    <item quantity="other">%d položek</item>
+    <item quantity="other">%d položky/položek</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Zahodit změny?</string>
@@ -200,7 +200,7 @@
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
-  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo!</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
   <string name="item_details_identity_section_work_title">Detaily práce</string>
   <string name="item_details_identity_section_work_company_title">Firma</string>

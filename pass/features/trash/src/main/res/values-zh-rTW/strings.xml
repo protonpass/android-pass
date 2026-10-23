@@ -12,7 +12,7 @@
   <string name="delete_alias_enabled_subtitle">"當信箱別名被刪除，將無法復原。可能您需要停用別名？ "</string>
   <string name="delete_alias_disabled_subtitle">請注意，一旦刪除，此別名便無法還原。此別名已停用，且不會再轉寄電子郵件至您的電郵信箱。</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="other">您即將永久刪除 %d 個別名</item>
+    <item quantity="other">You\'re about to permanently delete %d aliases</item>
   </plurals>
   <string name="bulk_delete_alias_subtitle">請注意，別名一旦刪除，就無法恢復。</string>
   <string name="bulk_delete_alias_confirm">了解，我將不再需要這些項目</string>

@@ -251,8 +251,8 @@
     <item quantity="other">%d დღე</item>
   </plurals>
   <plurals name="time_unit_hours">
-    <item quantity="one">%d საათი</item>
-    <item quantity="other">%d საათი</item>
+    <item quantity="one">%d სთ</item>
+    <item quantity="other">%d სთ</item>
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d წუთი</item>

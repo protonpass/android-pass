@@ -31,18 +31,18 @@
   <string name="bottomsheet_view_item_history">Mostrar o histórico</string>
   <string name="bottomsheet_monitor_exclude">Excluir da monitorização</string>
   <string name="bottomsheet_monitor_include">Incluir na monitorização</string>
-  <string name="bottomsheet_migrate_item_v2">Move</string>
-  <string name="bottomsheet_create_folder">Create folder</string>
-  <string name="folder_tree_create_folder">Create folder</string>
-  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_migrate_item_v2">Mover</string>
+  <string name="bottomsheet_create_folder">Criar uma pasta</string>
+  <string name="folder_tree_create_folder">Criar uma pasta</string>
+  <string name="bottomsheet_rename_folder">Alterar o nome</string>
   <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_move_folder">Move folder</string>
-  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
+  <string name="bottomsheet_move_all_items_in_folder">Mover todos os itens</string>
   <string name="bottomsheet_copy_item_note">Copiar nota</string>
   <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
   <string name="bottomsheet_restore">Restaurar</string>
   <string name="bottomsheet_leave">Deixar</string>
-  <string name="bottomsheet_duplicate">Duplicate</string>
+  <string name="bottomsheet_duplicate">Duplicar</string>
   <string name="bottomsheet_no_actions">Nenhuma ação disponível</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir o menu de acção do item</string>
@@ -335,10 +335,10 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure a autenticação A2F para mais segurança</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este serviço oferece autenticação de dois fatores (A2F). Ative-a para aumentar a segurança da sua conta.</string>
-  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_ignore">Ignorar</string>
   <string name="login_item_monitor_action_restore">Restore alert</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
-  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_weak">Palavra-passe fraca</string>
   <string name="login_item_monitor_label_compromised">Compromised password</string>
   <string name="login_item_monitor_label_reused">Reused password</string>
   <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
@@ -367,12 +367,12 @@
   <string name="action_reveal">Mostrar</string>
   <string name="action_conceal">Ocultar</string>
   <string name="warning_dialog_item_shared_vault_title">Item in a shared vault</string>
-  <string name="warning_dialog_item_shared_title">Shared item</string>
+  <string name="warning_dialog_item_shared_title">Item partilhado</string>
   <string name="warning_dialog_item_shared_vault_creating">You are creating an item in a shared vault and members will immediately gain access to this item.</string>
   <string name="warning_dialog_item_shared_vault_moving">You are moving an item to a shared vault and members will immediately gain access to this item.</string>
   <string name="warning_dialog_item_shared_vault_updating">You are editing an item in a shared vault and members will immediately gain access to this item.</string>
   <string name="warning_dialog_item_shared_updating">You are editing a shared item. Changes will be visible to everyone it\'s shared with immediately.</string>
-  <string name="warning_dialog_item_shared_vault_reminder">Don\'t remind me again</string>
+  <string name="warning_dialog_item_shared_vault_reminder">Não lembrar novamente</string>
   <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
   <!-- Shared word separator dialog (used by password + username generators) -->
@@ -390,8 +390,8 @@
     <item quantity="other">%s palavras</item>
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
-  <string name="password_strength_prefix">Password strength</string>
-  <string name="password_check_min_length">Password is too short</string>
+  <string name="password_strength_prefix">Força da palavra-passe</string>
+  <string name="password_check_min_length">A palavra-passe é demasiado curta</string>
   <string name="password_check_lowercase">Lowercase letters</string>
   <string name="password_check_uppercase">Uppercase letters</string>
   <string name="password_check_no_consecutive">No repeated characters</string>

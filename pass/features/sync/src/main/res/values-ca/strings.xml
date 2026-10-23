@@ -19,12 +19,12 @@
 <resources>
   <string name="sync_item_empty">Caixa forta buida</string>
   <plurals name="sync_item_count">
-    <item quantity="one">S\'ha baixat %d element</item>
-    <item quantity="other">S\'han baixat %d elements</item>
+    <item quantity="one">S\'ha descarregat %d element</item>
+    <item quantity="other">S\'han descarregat %d elements</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d element sincronitzat</item>
-    <item quantity="other">%d elements sincronitzats</item>
+    <item quantity="one">S\'ha sincronitzat %d element</item>
+    <item quantity="other">S\'han sincronitzat %d elements</item>
   </plurals>
   <string name="sync_progress_item_count">S\'està descarregant %1$d de %2$d elements</string>
   <string name="sync_dialog_title">S\'estan sincronitzant elements…</string>

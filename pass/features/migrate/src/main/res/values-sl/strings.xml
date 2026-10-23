@@ -9,7 +9,7 @@
   <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
     <item quantity="one">Ali želite %d predmet premakniti v naslednjo mapo?</item>
     <item quantity="two">Ali želite %d predmeta premakniti v naslednjo mapo?</item>
-    <item quantity="few">Ali želite %d predmetov premakniti v naslednjo mapo?</item>
+    <item quantity="few">Ali želite %d predmete premakniti v naslednjo mapo?</item>
     <item quantity="other">Ali želite %d predmetov premakniti v naslednjo mapo?</item>
   </plurals>
   <string name="migrate_item_confirm_confirm_button">Premakni</string>
@@ -31,9 +31,9 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Premakni</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Predmet je že v tej mapi</item>
-    <item quantity="two">Predmeta %d sta že v tej mapi</item>
-    <item quantity="few">Predmetov %d je že v tej mapi</item>
-    <item quantity="other">Predmetov %d je že v tej mapi</item>
+    <item quantity="two">%d items are already in this folder</item>
+    <item quantity="few">%d items are already in this folder</item>
+    <item quantity="other">%d items are already in this folder</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Mapa je že na tej lokaciji</string>
   <string name="migrate_disabled_folder_reason_being_moved">Ta mapa je bila premaknjena</string>
@@ -43,9 +43,9 @@
   <string name="migrate_disabled_vault_reason_same_vault">Predmeta ne morete premakniti v isti trezor</string>
   <plurals name="migrate_items_shared_warning_title">
     <item quantity="one">Premaknite predmet v drug trezor?</item>
-    <item quantity="two">Premaknite%d predmeta v drug trezor?</item>
-    <item quantity="few">Premaknite%d predmete v drug trezor?</item>
-    <item quantity="other">Premaknite%d predmete v drug trezor?</item>
+    <item quantity="two">Move %d items to another vault?</item>
+    <item quantity="few">Move %d items to another vault?</item>
+    <item quantity="other">Move %d items to another vault?</item>
   </plurals>
   <string name="migrate_item_shared_warning_message">[%i] predmet je trenutno v skupni rabi. Premik v drug trezor bo odstranil dostop za vse druge uporabnike.</string>
   <plurals name="migrate_items_shared_warning_message">

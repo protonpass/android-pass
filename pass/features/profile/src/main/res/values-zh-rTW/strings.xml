@@ -17,7 +17,7 @@
   <string name="profile_option_autofill_subtitle">自動填入使用者名稱和密碼</string>
   <string name="profile_option_secure_links">安全加密連結</string>
   <string name="profile_option_alias_management">別名管理</string>
-  <string name="profile_option_generated_passwords">Generated passwords</string>
+  <string name="profile_option_generated_passwords">已生成的密碼</string>
   <string name="profile_error_biometry_failed_to_start">無法使用生物特徵驗證</string>
   <string name="profile_error_biometry_failed_to_authenticate">驗證失敗</string>
   <string name="profile_error_app_lock_update_failed">Could not update the app lock. Please try again.</string>
@@ -61,7 +61,7 @@
     <item quantity="other">%d天後</item>
   </plurals>
   <plurals name="profile_after_minutes">
-    <item quantity="other">%d分鐘後</item>
+    <item quantity="other">%d 分鐘之後</item>
   </plurals>
   <plurals name="profile_after_hours">
     <item quantity="other">%d小時後</item>
@@ -80,9 +80,9 @@
   <string name="filtered_by_credit_cards">已依信用或簽帳卡篩選。垃圾桶中的項目不會顯示。</string>
   <string name="filtered_by_identities">已依身分篩選。垃圾桶中的項目不會顯示。</string>
   <string name="filtered_by_custom_items">已依自訂項目篩選。垃圾桶中的項目不會顯示。</string>
-  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">您需要切換至 %1$s 才能管理它。</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
   <string name="account_switch_confirmation_title">管理帳號</string>
   <string name="account_switch_confirmation_confirm">切換並管理</string>
   <string name="profile_storage_data_title">雲端儲存</string>
-  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%2$s 中的 %1$s</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s的%2$s</string>
 </resources>

@@ -111,7 +111,7 @@
   <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>
   <string name="sharing_bottomsheet_cancel_invite">Daveti iptal et</string>
   <string name="sharing_transfer_ownership_confirm_title">Sahipliği aktar</string>
-  <string name="sharing_transfer_ownership_confirm_message">Bu kasanın sahipliğini %s kişisine aktarmak istediğinize emin misiniz?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Bu kasa %s kişisine aktarılsın mı?</string>
   <string name="sharing_snackbar_cancel_invite_success">Davet iptal edildi</string>
   <string name="sharing_snackbar_cancel_invite_error">Davet iptal edilirken sorun çıktı</string>
   <string name="sharing_snackbar_resend_invite_success">Davet yeniden gönderildi</string>
@@ -123,8 +123,8 @@
   <string name="sharing_snackbar_transfer_ownership_error">Sahiplik aktarılırken sorun çıktı</string>
   <string name="sharing_invites_info_dialog_title">Üye sayısı sınırı</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">Bu kasanın en fazla %1$d üyesi olabilir. Hala %2$d davetiyeniz var.</item>
-    <item quantity="other">Bu kasanın en fazla %1$d üyesi olabilir. Hala %2$d davetiyeniz var.</item>
+    <item quantity="one">Bu kasanın en fazla %1$d üyesi olabilir. %2$d davet daha gönderebilirsiniz.</item>
+    <item quantity="other">Bu kasanın en fazla %1$d üyesi olabilir. %2$d davet daha gönderebilirsiniz.</item>
   </plurals>
   <string name="sharing_limit_reached">Bu kasa için üye ve davet sayısı sınırına ulaşıldı.</string>
   <string name="sharing_invites_info_upgrade_text">Daha fazla davet gönderebilmek için tarifenizi yükseltin.</string>

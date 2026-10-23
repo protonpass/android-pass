@@ -103,7 +103,7 @@
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 élément</item>
-    <item quantity="other">%d éléments</item>
+    <item quantity="other">%d éléments</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Abandonner les modifications ?</string>
@@ -248,7 +248,7 @@
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d jour</item>
-    <item quantity="other">%d jours</item>
+    <item quantity="other">%d jours</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d heure</item>
@@ -256,7 +256,7 @@
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="other">%d minutes</item>
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="one">%d seconde</item>
@@ -292,7 +292,7 @@
   <string name="simple_login_widget_action">Synchroniser les alias</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Vous n\'avez pas reçu le code ?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Veuillez vérifier vos messages indésirables pour un message intitulé \"%s\"</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Veuillez vérifier vos messages indésirables/spam pour un message intitulé « %s »</string>
   <string name="verification_code_suggestion_subject_new_email_address">Veuillez confirmer votre adresse e-mail pour Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Veuillez confirmer votre messagerie</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si vous ne trouvez pas ce message, vous pouvez %s.</string>
@@ -350,8 +350,8 @@
   <string name="field_detail_display_name_title">Nom d\'affichage</string>
   <string name="display_name_section_description">Il s\'agit du nom d\'affichage lors de l\'envoi d\'un message depuis cet alias.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s transféré</item>
-    <item quantity="other">%1$s transférés</item>
+    <item quantity="one">%1$s transfert</item>
+    <item quantity="other">%1$s transferts</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s réponse</item>

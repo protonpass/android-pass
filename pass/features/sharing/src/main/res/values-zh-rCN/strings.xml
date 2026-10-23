@@ -48,7 +48,7 @@
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s 想和您分享一个保险库。</string>
   <string name="sharing_vault_invitation_accept">加入共享保险库</string>
   <string name="sharing_item_invitation_title">共享项目邀请</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s 希望与您分享一个项目。</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s 希望与您共享一个项目</string>
   <string name="sharing_item_invitation_accept">接受并查看项目</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s 希望与您的群组 %2$s 共享一个保险库。</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s 希望与您的群组 %2$s 共享一个项目。</string>
@@ -91,7 +91,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">成员</string>
   <string name="share_manage_vault_current_user_indicator">你</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">重试</string>
   <string name="share_role_viewer">查看者</string>
   <string name="share_role_editor">编辑者</string>
   <string name="share_role_admin">管理员</string>

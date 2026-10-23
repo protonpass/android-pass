@@ -25,7 +25,7 @@
   <string name="sharing_can_edit_description">このフォルダー内のアイテムを作成、編集、削除、エクスポートすることができます。</string>
   <string name="sharing_can_manage_description">この保管庫へのアクセスを許可および取り消しできます。</string>
   <plurals name="sharing_item_count">
-    <item quantity="other">%d 個のアイテム</item>
+    <item quantity="other">%d個のアイテム</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
     <item quantity="other">%d items (including trashed)</item>
@@ -45,10 +45,10 @@
   <string name="share_permissions_title">アクセスレベルの設定</string>
   <string name="sharing_reject_invitation">招待を拒否する</string>
   <string name="sharing_vault_invitation_title">共有済み保管庫の招待</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたに保管庫を共有したいようです。</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたと保管庫を共有したいようです。</string>
   <string name="sharing_vault_invitation_accept">共有保管庫に参加する</string>
   <string name="sharing_item_invitation_title">共有済みのアイテム招待</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたにアイテムを共有したいようです。</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたとアイテムを共有したいようです。</string>
   <string name="sharing_item_invitation_accept">承諾してアイテムを閲覧</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$sがグループ%2$sで保管庫を共有したいようです。</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$sがグループ%2$sでアイテムを共有したいようです。</string>
@@ -82,7 +82,7 @@
     <item quantity="other">%d 件の招待が残っています</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
-    <item quantity="other">%d 個のアイテム</item>
+    <item quantity="other">%d個のアイテム</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">招待の送信</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">アカウント作成が保留中</string>
@@ -91,7 +91,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">メンバー</string>
   <string name="share_manage_vault_current_user_indicator">あなた</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">再試行</string>
   <string name="share_role_viewer">閲覧者</string>
   <string name="share_role_editor">編集者</string>
   <string name="share_role_admin">管理者</string>
@@ -106,7 +106,7 @@
   <string name="sharing_bottomsheet_resend_invite">招待の再送</string>
   <string name="sharing_bottomsheet_cancel_invite">招待のキャンセル</string>
   <string name="sharing_transfer_ownership_confirm_title">所有権の移転</string>
-  <string name="sharing_transfer_ownership_confirm_message">このフォルダーの所有権を%sに移転しますか？</string>
+  <string name="sharing_transfer_ownership_confirm_message">この保管庫の所有権を%sに移転しますか？</string>
   <string name="sharing_snackbar_cancel_invite_success">招待がキャンセルされました</string>
   <string name="sharing_snackbar_cancel_invite_error">招待のキャンセル中にエラーが発生しました</string>
   <string name="sharing_snackbar_resend_invite_success">招待状再送</string>

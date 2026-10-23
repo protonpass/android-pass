@@ -27,7 +27,7 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Flytt</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Elementet finnes allerede i denne mappen</item>
-    <item quantity="other">%d elementer finnes allerede i denne mappen</item>
+    <item quantity="other">%d items are already in this folder</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Mappen finnes allerede på denne plasseringen</string>
   <string name="migrate_disabled_folder_reason_being_moved">Denne mappen flyttes</string>

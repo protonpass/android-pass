@@ -46,7 +46,7 @@
   <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Поштова адреса вже використовується</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Підтвердьте Вашу поштову скриньку</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Ми відправили код підтвердження на %s. Введіть його нижче:</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Ми надіслали код підтвердження на %s. Введіть його нижче:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">ваша адреса електронної пошти</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Невірний код підтвердження поштової скриньки</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Досягнуто ліміт невірного коду перевірки поштової скриньки, скриньку видалено</string>
@@ -56,7 +56,7 @@
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Код підтвердження успішно відправлено</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Видалити поштову скриньку</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">Усі псевдоніми, що використовують поштову скриньку %s, також буде видалено. Щоб продовжувати отримувати листи, перенесіть ці псевдоніми на іншу поштову скриньку:</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Усі псевдоніми, що використовують поштову скриньку %s, також будуть видалені. Аби продовжувати отримувати листи, перенесіть ці псевдоніми до іншої поштової скриньки:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Перенести псевдоніми</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">До поштової скриньки</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Видалити поштову скриньку</string>

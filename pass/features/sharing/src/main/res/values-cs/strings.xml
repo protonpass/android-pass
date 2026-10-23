@@ -25,10 +25,10 @@
   <string name="sharing_can_edit_description">Může vytvářet, upravovat, mazat a exportovat položky v tomto trezoru.</string>
   <string name="sharing_can_manage_description">Může udělovat a odebírat přístup k tomuto trezoru.</string>
   <plurals name="sharing_item_count">
-    <item quantity="one">%d položka</item>
+    <item quantity="one">%d položek</item>
     <item quantity="few">%d položky</item>
-    <item quantity="many">%d položek</item>
-    <item quantity="other">%d položek</item>
+    <item quantity="many">Položek: %d</item>
+    <item quantity="other">%d položky</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
     <item quantity="one">%d položka (včetně těch v koši)</item>
@@ -94,10 +94,10 @@
     <item quantity="other">Zbývá %d pozvánek</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
-    <item quantity="one">%d položka</item>
-    <item quantity="few">%d položky</item>
-    <item quantity="many">%d položek</item>
-    <item quantity="other">%d položek</item>
+    <item quantity="one">%d položek</item>
+    <item quantity="few">%d položek</item>
+    <item quantity="many">%d položky</item>
+    <item quantity="other">%d položky</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Pozvánka odeslána</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Čekání na vytvoření účtu</string>

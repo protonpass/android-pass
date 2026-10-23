@@ -72,6 +72,6 @@
     <item quantity="one">%d položka</item>
     <item quantity="few">%d položky</item>
     <item quantity="many">%d položek</item>
-    <item quantity="other">%d položek</item>
+    <item quantity="other">%d položky</item>
   </plurals>
 </resources>

@@ -52,7 +52,7 @@
   <string name="sharing_item_invitation_accept">Terima dan lihat item</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="sharing_group_invitation_accept">Accept invitation</string>
+  <string name="sharing_group_invitation_accept">Terima undangan</string>
   <string name="sharing_invite_more">Undang…</string>
   <string name="sharing_snackbar_invite_accepted">Undangan diterima</string>
   <string name="sharing_snackbar_invite_accept_error">Terjadi kesalahan menerima undangan</string>
@@ -91,7 +91,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Anggota</string>
   <string name="share_manage_vault_current_user_indicator">Anda</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Ulangi</string>
   <string name="share_role_viewer">Pengamat</string>
   <string name="share_role_editor">Penyunting</string>
   <string name="share_role_admin">Admin</string>

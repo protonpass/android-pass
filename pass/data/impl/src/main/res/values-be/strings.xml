@@ -24,9 +24,9 @@
   <string name="attachment_download_channel">Укладанні для спампоўвання</string>
   <string name="attachment_download_channel_description">Канал апавяшчэнняў для спампоўвання далучэнняў</string>
   <string name="downloading_attachments">Спампоўванне далучэнняў</string>
-  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">Файлаў %1$s</string>
-  <string name="plan_subscription_auto_renews_monthly">Падпіска будзе аўтаматычна падаўжацца за %1$s/месяц</string>
-  <string name="plan_subscription_auto_renews_annual">Падпіска будзе аўтаматычна падаўжацца за %1$s/год</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Вітальная прапанова. Аўтаматычнае падаўжэнне за %1$s/месяц</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Вітальная прапанова. Аўтаматычнае падаўжэнне за %1$s/год</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s файлаў</string>
+  <string name="plan_subscription_auto_renews_monthly">Падпіска будзе аўтаматычна падаўжацца за %1$s у месяц</string>
+  <string name="plan_subscription_auto_renews_annual">Падпіска будзе аўтаматычна падаўжацца за %1$s у год</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Вітальная прапанова. Аўтаматычнае падаўжэнне за %1$s у месяц</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Вітальная прапанова. Аўтаматычнае падаўжэнне за %1$s у год</string>
 </resources>

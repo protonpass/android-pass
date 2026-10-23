@@ -56,7 +56,7 @@
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Ellenőrző kód sikeresen elküldve</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Postafiók törlése</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">A %s postafiókot használó összes álnév is törlésre kerül. Ha továbbra is szeretne e-maileket kapni, helyezze át ezeket az álneveket egy másik postafiókba:</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">A %s postafiókot használó összes e-mail álnév szintén törlődik. Ha továbbra is szeretne e-maileket kapni, helyezze át ezeket az e-mail álneveket egy másik postafiókba:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Álnevek áthelyezése</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Postafiókba</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Postafiók törlése</string>

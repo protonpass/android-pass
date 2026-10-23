@@ -53,9 +53,9 @@
   <string name="bottomsheet_leave_vault">离开保险库</string>
   <string name="bottomsheet_view_members">查看成员</string>
   <string name="bottomsheet_manage_access">管理权限</string>
-  <string name="bottomsheet_offline_attachments">Offline attachments</string>
-  <string name="bottomsheet_offline_attachments_enabled">Enabled</string>
-  <string name="bottomsheet_offline_attachments_disabled">Disabled</string>
+  <string name="bottomsheet_offline_attachments">离线附件</string>
+  <string name="bottomsheet_offline_attachments_enabled">已启用</string>
+  <string name="bottomsheet_offline_attachments_disabled">已禁用</string>
   <string name="bottomsheet_select_vault_read_only">您只能查看</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">您只能在最早的保险库中创建项目</string>
   <string name="vault_title">保险库</string>
@@ -66,6 +66,6 @@
   <string name="organise_vaults_snackbar_success">保险库整理完成</string>
   <string name="organise_vaults_snackbar_error">保险库整理失败</string>
   <plurals name="organise_vaults_item_count">
-    <item quantity="other">%d 个项目</item>
+    <item quantity="other">%d 项</item>
   </plurals>
 </resources>

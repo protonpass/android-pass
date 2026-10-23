@@ -46,7 +46,7 @@
   <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">Dit e-mailadres is al in gebruik</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Bevestig uw mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We hebben een verificatiecode gestuurd naar %s. Voer deze hieronder in:</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We hebben een verificatiecode naar %s verzonden. Voer deze hieronder in:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">uw e-mailadres</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Ongeldige verificatiecode mailbox</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Ongeldige limiet voor verificatiecode voor mailbox bereikt, postvak is verwijderd</string>
@@ -56,7 +56,7 @@
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verificatiecode succesvol verzonden</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Mailbox verwijderen</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">Alle aliassen die de mailbox %s gebruiken zullen ook worden verwijderd. Om te blijven ontvangen e-mails overdracht deze aliassen naar een ander postvak:</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Alle aliassen die de postvak IN %s gebruiken, worden ook verwijderd. Om e-mails te blijven ontvangen, moet u deze aliassen overzetten naar een andere postvak IN:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliassen</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Naar mailbox</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Mailbox verwijderen</string>

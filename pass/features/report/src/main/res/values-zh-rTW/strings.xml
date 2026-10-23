@@ -33,7 +33,7 @@
   <string name="report_reason_sync">同步</string>
   <string name="report_reason_passkeys">密碼金鑰</string>
   <string name="report_reason_other">其它</string>
-  <string name="tips_title">適用於 %1$s 的快速修復</string>
+  <string name="tips_title">Quick fixes for %1$s</string>
   <string name="tips_subtitle">這些提示可以協助您更快地解決您的問題。</string>
   <string name="autofill_tip_restart">嘗試停用及啟用自動填入服務。</string>
   <string name="autofill_tip_browser">嘗試另一個瀏覽器。</string>

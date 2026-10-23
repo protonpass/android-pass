@@ -44,7 +44,7 @@
     <item quantity="other">Kata sandi salah. %d upaya tersisa</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="other">%d upaya tersisa</item>
+    <item quantity="other">%d percobaan tersisa</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Terlalu banyak upaya entri PIN yang gagal. Seluruh pengguna Anda sedang dikeluarkan.</string>
   <string name="auth_pin_too_many_attempts_dismiss">Terlalu banyak upaya entri PIN yang gagal</string>

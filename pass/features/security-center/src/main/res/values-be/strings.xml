@@ -55,7 +55,7 @@
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Паўторна выкарыстаныя паролі</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Генерыраваць унікальныя паролі для кожнага ўліковага запісу, каб павялічыць вашу бяспеку.</string>
-  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Паўторна выкарыстана раз: %1$d</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Паўторна выкарыстаны %1$d разоў</string>
   <!-- Compromised passwords screen -->
   <string name="security_center_compromised_pass_top_bar_title">Скампраметаваныя паролі</string>
   <string name="security_center_compromised_pass_top_bar_subtitle">Скампраметаваныя паролі — гэта тыя паролі, якія раскрываюцца пры парушэннях даных. Ніколі не выкарыстоўвайце паролі паўторна, каб абмежаваць наступствы ў выпадку парушэння даных.</string>
@@ -81,7 +81,7 @@
     <item quantity="one">Выяўлена %d парушэнне</item>
     <item quantity="few">Выяўлена %d парушэнні</item>
     <item quantity="many">Выяўлена %d парушэнняў</item>
-    <item quantity="other">Выяўлена %d парушэнняў</item>
+    <item quantity="other">Выяўлена %d парушэнні</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Памылка загрузкі карыстальніцкіх адрасоў электроннай пошты</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Немагчыма атрымаць адрасы электроннай пошты</string>

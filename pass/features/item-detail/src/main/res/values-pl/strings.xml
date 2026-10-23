@@ -112,22 +112,22 @@
   <string name="field_detail_display_name_title">Nazwa wyświetlana</string>
   <string name="display_name_section_description">Nazwa wyświetlana podczas wysyłania wiadomości z tego aliasu.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s przekierowana</item>
-    <item quantity="few">%1$s przekierowane</item>
-    <item quantity="many">%1$s przekierowanych</item>
-    <item quantity="other">%1$s przekierowanych</item>
+    <item quantity="one">%1$s przekierowanie</item>
+    <item quantity="few">%1$s przekierowania</item>
+    <item quantity="many">%1$s przekierowań</item>
+    <item quantity="other">%1$s przekierowań</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s wysłana</item>
-    <item quantity="few">%1$s wysłane</item>
-    <item quantity="many">%1$s wysłanych</item>
-    <item quantity="other">%1$s wysłanych</item>
+    <item quantity="one">%1$s odpowiedź</item>
+    <item quantity="few">%1$s odpowiedzi</item>
+    <item quantity="many">%1$s odpowiedzi</item>
+    <item quantity="other">%1$s odpowiedzi</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s zablokowana</item>
-    <item quantity="few">%1$s zablokowane</item>
-    <item quantity="many">%1$s zablokowanych</item>
-    <item quantity="other">%1$s zablokowanych</item>
+    <item quantity="one">%1$s zablokowanie</item>
+    <item quantity="few">%1$s zablokowania</item>
+    <item quantity="many">%1$s zablokowań</item>
+    <item quantity="other">%1$s zablokowań</item>
   </plurals>
   <string name="open_with">Otwórz w:</string>
   <string name="open_attachments_error">Nie można otworzyć załącznika</string>

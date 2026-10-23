@@ -27,7 +27,7 @@
   <string name="topbar_search_pinned_items">고정 내에서 검색…</string>
   <string name="topbar_search_query_oldest_vaults">가장 오래된 금고 내에서 검색…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">검색...</string>
-  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">모든 계정 (%1$s)</string>
+  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">전체 계정 (%1$s)</string>
   <plurals name="select_item_autosave_banner">
     <item quantity="other">같은 이름의 항목이 이미 존재합니다.\n업데이트할지 새 항목을 생성할지 선택해 주세요.</item>
   </plurals>

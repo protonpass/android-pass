@@ -25,8 +25,8 @@
   <string name="attachment_download_channel_description">Benachrichtigungskanal für das Herunterladen von Anhängen</string>
   <string name="downloading_attachments">Anhänge werden heruntergeladen</string>
   <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s Dateien</string>
-  <string name="plan_subscription_auto_renews_monthly">Abonnement verlängert sich automatisch für %1$s/Monat</string>
-  <string name="plan_subscription_auto_renews_annual">Abonnement verlängert sich automatisch für %1$s/Jahr</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Willkommensangebot. Verlängert sich automatisch für %1$s/Monat</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Willkommensangebot. Verlängert sich automatisch für %1$s/Jahr</string>
+  <string name="plan_subscription_auto_renews_monthly">Abonnement wird automatisch für %1$s/Monat verlängert.</string>
+  <string name="plan_subscription_auto_renews_annual">Abonnement wird automatisch für %1$s/Jahr verlängert.</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Willkommensangebot. Wird automatisch für %1$s/Monat verlängert.</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Willkommensangebot. Wird automatisch für %1$s/Jahr verlängert.</string>
 </resources>

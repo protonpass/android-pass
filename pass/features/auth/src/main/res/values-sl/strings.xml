@@ -50,10 +50,10 @@
     <item quantity="other">Napačno geslo. Še %d poskusov</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">Še %d poskus</item>
-    <item quantity="two">Še %d poskusa</item>
-    <item quantity="few">Še %d poskusi</item>
-    <item quantity="other">Še %d poskusov</item>
+    <item quantity="one">Na voljo imate še %d poskus</item>
+    <item quantity="two">Na voljo imate še %d poskusa</item>
+    <item quantity="few">Na voljo imate še %d poskuse</item>
+    <item quantity="other">Na voljo imate še %d poskusov</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Preveč neuspešnih poskusov PIN kode. Vsi vaši uporabniki so odjavljeni.</string>
   <string name="auth_pin_too_many_attempts_dismiss">Preveč neuspešnih poskusov s PIN kodo</string>

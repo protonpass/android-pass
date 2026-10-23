@@ -56,7 +56,7 @@
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Codul de verificare a fost trimis.</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Ștergere cont de e-mail</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">Toate aliasurile care utilizează adresa de e-mail %s vor fi șterse. Pentru a continua să primiți mesaje, transferați aceste aliasuri către alt cont de e-mail:</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Toate aliasurile care utilizează adresa de e-mail %s vor fi șterse. Pentru a continua să primiți e-mailuri, transferați aceste aliasuri către alt cont de e-mail:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transferare aliasuri</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Către contul de e-mail</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Ștergere cont de e-mail</string>

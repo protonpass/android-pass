@@ -55,7 +55,7 @@
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Contrasenyes reutilitzades</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Genereu contrasenyes úniques per a cada compte per a augmentar la seguretat.</string>
-  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reutilitzat %1$d vegades</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">S\'ha reutilitzat %1$d vegades</string>
   <!-- Compromised passwords screen -->
   <string name="security_center_compromised_pass_top_bar_title">Contrasenyes compromeses</string>
   <string name="security_center_compromised_pass_top_bar_subtitle">Les contrasenyes en risc són les que han estat exposades en filtracions de dades. No reutilitzeu mai les contrasenyes per tal de limitar-ne l\'impacte quan hi hagi una filtració.</string>
@@ -72,20 +72,20 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Afegeix una adreça electrònica personalitzada nova</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Afegeix</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Utilitzat en %d inici de sessió.</item>
-    <item quantity="other">Utilitzat en %d inicis de sessió.</item>
+    <item quantity="one">S\'utilitza en %d inici de sessió</item>
+    <item quantity="other">S\'utilitza en %d inicis de sessió</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">S\'ha detectat %d infracció.</item>
-    <item quantity="other">S\'han detectat %d infraccions.</item>
+    <item quantity="one">S\'ha detectat %d infracció</item>
+    <item quantity="other">S\'han detectat %d infraccions</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">S\'ha produït un error en carregar les adreces de correu electrònic personalitzades</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">No s\'han pogut obtenir les adreces de correu electrònic</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Esborrar</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Última infracció el %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Darrera infracció el %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
-    <item quantity="one">S\'ha trobat en %s infracció.</item>
-    <item quantity="other">S\'ha trobat en %s infraccions.</item>
+    <item quantity="one">S\'ha trobat en %s infracció</item>
+    <item quantity="other">S\'ha trobat en %s infraccions</item>
   </plurals>
   <string name="security_center_dark_web_monitor_found_in_breaches">No s\'han detectat infraccions</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Adreces de Proton</string>

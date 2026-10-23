@@ -261,7 +261,7 @@
   <string name="template_ssh_key_field_username">使用者名稱</string>
   <string name="template_ssh_key_field_host">主機</string>
   <!-- SSH Key Generation -->
-  <string name="ssh_key_generate_button">Generate</string>
+  <string name="ssh_key_generate_button">產生</string>
   <string name="ssh_key_type_ed25519">Ed25519</string>
   <string name="ssh_key_type_rsa_2048">RSA-2048</string>
   <string name="ssh_key_type_rsa_4096">RSA-4096</string>
@@ -347,7 +347,7 @@
   <string name="autofill_suggestions_title">URL Matching</string>
   <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
   <string name="autofill_suggestions_tab_basic">Basic</string>
-  <string name="autofill_suggestions_tab_advanced">Advanced</string>
+  <string name="autofill_suggestions_tab_advanced">進階</string>
   <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
   <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
   <string name="autofill_suggestions_mode_never">Never fill on this website</string>
@@ -357,7 +357,7 @@
   <string name="autofill_suggestions_mode_exact_path">Exact URL matching</string>
   <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
   <string name="autofill_suggestions_mode_default_badge">DEFAULT</string>
-  <string name="autofill_suggestions_url_column">URL</string>
-  <string name="autofill_suggestions_suggested_column">Suggested</string>
+  <string name="autofill_suggestions_url_column">網址</string>
+  <string name="autofill_suggestions_suggested_column">建議</string>
   <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
 </resources>

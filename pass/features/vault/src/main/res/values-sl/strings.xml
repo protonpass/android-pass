@@ -57,8 +57,8 @@
   <string name="bottomsheet_view_members">Poglej člane</string>
   <string name="bottomsheet_manage_access">Upravljanje dostopa</string>
   <string name="bottomsheet_offline_attachments">Offline attachments</string>
-  <string name="bottomsheet_offline_attachments_enabled">Enabled</string>
-  <string name="bottomsheet_offline_attachments_disabled">Disabled</string>
+  <string name="bottomsheet_offline_attachments_enabled">Omogočeno</string>
+  <string name="bottomsheet_offline_attachments_disabled">Onemogočeno</string>
   <string name="bottomsheet_select_vault_read_only">Lahko samo berete</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Predmete lahko ustvarite le v svojih starejših trezorjih
 ​</string>
@@ -71,8 +71,8 @@
   <string name="organise_vaults_snackbar_error">Trezorjev ni bilo mogoče organizirati</string>
   <plurals name="organise_vaults_item_count">
     <item quantity="one">%d predmet</item>
-    <item quantity="two">%d predmeta</item>
+    <item quantity="two">%d predmeti</item>
     <item quantity="few">%d predmeti</item>
-    <item quantity="other">%d predmetov</item>
+    <item quantity="other">%d predmeti</item>
   </plurals>
 </resources>

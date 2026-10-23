@@ -27,7 +27,7 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Μετακίνηση</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Το στοιχείο υπάρχει ήδη σε αυτόν τον φάκελο</item>
-    <item quantity="other">%d στοιχεία υπάρχουν ήδη σε αυτόν τον φάκελο</item>
+    <item quantity="other">%d items are already in this folder</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Αυτός ο φάκελος βρίσκεται ήδη σε αυτήν την τοποθεσία</string>
   <string name="migrate_disabled_folder_reason_being_moved">Αυτός ο φάκελος μετακινείται</string>

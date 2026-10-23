@@ -28,5 +28,5 @@
   <string name="plan_subscription_auto_renews_monthly">구독이 매월 %1$s(으)로 자동 갱신됩니다.</string>
   <string name="plan_subscription_auto_renews_annual">구독이 매년 %1$s(으)로 자동 갱신됩니다</string>
   <string name="plan_welcome_offer_auto_renews_monthly">환영 할인. 매월 %1$s(으)로 갱신됩니다.</string>
-  <string name="plan_welcome_offer_auto_renews_annual">환영 할인. 매년 %1$s(으)로 갱신됩니다.</string>
+  <string name="plan_welcome_offer_auto_renews_annual">환영 할인. 매월 %1$s(으)로 갱신됩니다.</string>
 </resources>

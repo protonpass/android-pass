@@ -183,7 +183,7 @@
   <string name="update_identity_item_creation_error">Kan identiteit niet bijwerken</string>
   <!--  Common create items  -->
   <string name="title_create">Aanmaken</string>
-  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (kopie)</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (gekopieerd)</string>
   <string name="changes_saved">Wijzigingen opgeslagen.</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA geheime sleutel (TOTP)</string>
@@ -345,7 +345,7 @@
   <string name="functionality_not_available">Deze functionaliteit is niet beschikbaar voor uw apparaat.</string>
   <!-- Autofill URL suggestions screen -->
   <string name="autofill_suggestions_title">URL-vergelijking</string>
-  <string name="autofill_suggestions_description">Pas het gedrag van automatisch invullen aan om te bepalen waar aanmeldgegevens worden voorgesteld en ingevuld voor %s.</string>
+  <string name="autofill_suggestions_description">Pas het gedrag van automatisch aanvullen aan om te wijzigen waar aanmeldingen worden voorgesteld en ingevuld voor %s.</string>
   <string name="autofill_suggestions_tab_basic">Standaard</string>
   <string name="autofill_suggestions_tab_advanced">Geavanceerd</string>
   <string name="autofill_suggestions_mode_default">Bovenliggend domein en subdomeinen</string>

@@ -27,7 +27,7 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">Inte inställt</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d säkerhetsnyckel inställd</item>
-    <item quantity="other">%d säkerhetsnycklar inställda</item>
+    <item quantity="one">%d säkerhetsnyckel konfigurerad</item>
+    <item quantity="other">%d säkerhetsnycklar konfigurerade</item>
   </plurals>
 </resources>

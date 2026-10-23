@@ -49,9 +49,9 @@
   <string name="secure_links_list_expired_description">Истекло</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d просмотр</item>
-    <item quantity="few">%d просмотра</item>
-    <item quantity="many">%d просмотров</item>
-    <item quantity="other">%d просмотров</item>
+    <item quantity="few">%d просмотров</item>
+    <item quantity="many">%d просмотра</item>
+    <item quantity="other">%d просмотра</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Возникла ошибка при получении защищенных ссылок</string>
   <string name="secure_links_list_header_title_inactive">Неактивные ссылки</string>

@@ -345,7 +345,7 @@
   <string name="functionality_not_available">Cette fonctionnalité n\'est pas disponible pour votre appareil.</string>
   <!-- Autofill URL suggestions screen -->
   <string name="autofill_suggestions_title">Correspondance d\'URL</string>
-  <string name="autofill_suggestions_description">Modifiez les paramètres de remplissage automatique pour définir où les identifiants de connexion sont suggérés et renseignés pour %s.</string>
+  <string name="autofill_suggestions_description">Ajustez les paramètres de remplissage automatique pour changer où les identifiants de connexion sont suggérés et renseignés pour %s.</string>
   <string name="autofill_suggestions_tab_basic">Basique</string>
   <string name="autofill_suggestions_tab_advanced">Avancé</string>
   <string name="autofill_suggestions_mode_default">Domaine parent et sous-domaines</string>

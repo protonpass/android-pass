@@ -45,7 +45,7 @@
   <string name="secure_links_list_expiration_description">Kedaluwarsa dalam %s</string>
   <string name="secure_links_list_expired_description">Kedaluwarsa</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="other">%d kali dilihat</item>
+    <item quantity="other">%d views</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Terdapat masalah dalam mengambil tautan aman</string>
   <string name="secure_links_list_header_title_inactive">Tautan yang tidak aktif</string>

@@ -44,7 +44,7 @@
     <item quantity="other">密码错误。剩余 %d 次尝试。</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="other">剩余 %d 次尝试</item>
+    <item quantity="other">还可尝试 %d 次</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">PIN 码尝试失败次数过多，所有用户将被强制退出登录。</string>
   <string name="auth_pin_too_many_attempts_dismiss">PIN 码尝试失败次数过多</string>

@@ -51,10 +51,10 @@
   <string name="share_permissions_title">Setare nivel de acces</string>
   <string name="sharing_reject_invitation">Refuzare invitație</string>
   <string name="sharing_vault_invitation_title">Invitație seif partajat</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un seif.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s dorește să vă partajeze un seif.</string>
   <string name="sharing_vault_invitation_accept">Alăturare la seif partajat</string>
   <string name="sharing_item_invitation_title">Invitație articol partajat</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un articol.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s dorește să vă partajeze un articol.</string>
   <string name="sharing_item_invitation_accept">Acceptare și vizualizare articol</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s dorește să partajeze un seif cu grupul %2$s de care aparțineți.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s dorește să partajeze un articol cu grupul %2$s de care aparțineți.</string>

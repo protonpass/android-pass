@@ -53,8 +53,8 @@
   <string name="home_drawer_all_items">Alle elementer</string>
   <string name="sl_sync_banner_title">Synkroniser dine aliasser fra SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="one">Du har %d alias, som findes i SimpleLogin, men som mangler i Proton Pass. Ønsker du at synkronisere det?</item>
-    <item quantity="other">Du har %d aliasser, som findes i SimpleLogin, men som mangler i Proton Pass. Ønsker du at synkronisere dem?</item>
+    <item quantity="one">Du har %d alias, som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne synkronisere det?</item>
+    <item quantity="other">Du har %d aliasser, som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne synkronisere dem?</item>
   </plurals>
   <string name="home_notification_permission_banner_title">Få vigtige opdateringer</string>
   <string name="home_notification_permission_banner_text">Aktivér push-notifikationer for at blive informeret, når andre deler en boks med dig.</string>

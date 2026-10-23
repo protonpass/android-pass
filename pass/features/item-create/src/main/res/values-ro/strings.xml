@@ -144,7 +144,7 @@
   <string name="identity_field_gender_title">Gen</string>
   <string name="identity_field_floor_title">Etaj</string>
   <string name="identity_field_county_title">Județ</string>
-  <string name="identity_field_linkedin_title">Linkedin</string>
+  <string name="identity_field_linkedin_title">LinkedIn</string>
   <string name="identity_field_reddit_title">Nume utilizator Reddit</string>
   <string name="identity_field_facebook_title">Adresa URL de Facebook</string>
   <string name="identity_field_yahoo_title">Nume utilizator Yahoo</string>
@@ -159,7 +159,7 @@
   <string name="identity_add_field_gender">Gen</string>
   <string name="identity_add_field_floor">Etaj</string>
   <string name="identity_add_field_county">Județ</string>
-  <string name="identity_add_field_linkedin">Linkedin</string>
+  <string name="identity_add_field_linkedin">LinkedIn</string>
   <string name="identity_add_field_reddit">Nume utilizator Reddit</string>
   <string name="identity_add_field_facebook">Adresa URL de Facebook</string>
   <string name="identity_add_field_yahoo">Nume utilizator Yahoo</string>
@@ -201,7 +201,7 @@
   <string name="create_alias_content_limit_banner">Ați atins limita aliasurilor pe care le puteți crea. Puteți creați un număr nelimitat de aliasuri dacă vă modificați abonamentul.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplicația trebuie actualizată pentru a edita acest articol.</string>
   <string name="remove_passkey_dialog_title">Eliminați această cheie de acces?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Veți elimina cheia de acces pentru utilizatorul „%1$s” pentru „%2$s”. Confirmați?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Sunteți pe cale să eliminați cheia de acces pentru utilizatorul „%1$s” pentru „%2$s”. Confirmați?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Atașamente</string>
   <string name="banner_body_attachments">Puteți atașa fișiere la articole pentru o organizare mai bună.</string>

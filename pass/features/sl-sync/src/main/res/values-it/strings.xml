@@ -56,7 +56,7 @@
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Codice di verifica inviato correttamente</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Elimina la casella email</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">Verranno eliminati anche tutti gli alias che utilizzano la casella di posta %s. Per continuare a ricevere email trasferisci questi alias in una casella di posta diversa:</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Verranno eliminati anche tutti gli alias che utilizzano la casella email %s. Per continuare a ricevere email trasferisci questi alias in una casella email diversa:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Trasferisci alias</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Alla casella email</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Elimina la casella email</string>

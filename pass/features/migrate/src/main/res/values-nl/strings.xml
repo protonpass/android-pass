@@ -27,7 +27,7 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Verplaatsen</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Item bevindt zich al in deze map</item>
-    <item quantity="other">%d Items bevinden zich al in deze map</item>
+    <item quantity="other">%d items are already in this folder</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Deze map bevindt zich al op deze locatie</string>
   <string name="migrate_disabled_folder_reason_being_moved">Deze map wordt verplaatst</string>

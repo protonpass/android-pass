@@ -144,7 +144,7 @@
   <string name="identity_field_gender_title">Género</string>
   <string name="identity_field_floor_title">Piso</string>
   <string name="identity_field_county_title">Provincia</string>
-  <string name="identity_field_linkedin_title">Linkedin</string>
+  <string name="identity_field_linkedin_title">LinkedIn</string>
   <string name="identity_field_reddit_title">Nombre de usuario de Reddit</string>
   <string name="identity_field_facebook_title">URL de Facebook</string>
   <string name="identity_field_yahoo_title">Nombre de usuario de Yahoo</string>
@@ -159,7 +159,7 @@
   <string name="identity_add_field_gender">Género</string>
   <string name="identity_add_field_floor">Piso</string>
   <string name="identity_add_field_county">Provincia</string>
-  <string name="identity_add_field_linkedin">Linkedin</string>
+  <string name="identity_add_field_linkedin">LinkedIn</string>
   <string name="identity_add_field_reddit">Nombre de usuario de Reddit</string>
   <string name="identity_add_field_facebook">URL de Facebook</string>
   <string name="identity_add_field_yahoo">Nombre de usuario de Yahoo</string>
@@ -352,7 +352,7 @@
   <string name="autofill_suggestions_mode_exact">Dominio o subdominio exacto</string>
   <string name="autofill_suggestions_mode_never">No completar nunca en este sitio web</string>
   <string name="autofill_suggestions_mode_start_with">Comienza con</string>
-  <string name="autofill_suggestions_mode_pattern">Wildcard pattern</string>
+  <string name="autofill_suggestions_mode_pattern">Patrón comodín</string>
   <string name="autofill_suggestions_mode_regular_expression">Expresión regular</string>
   <string name="autofill_suggestions_mode_exact_path">Coincidencia exacta de URL</string>
   <string name="autofill_suggestions_android_limitation">Las reglas avanzadas no están disponibles en Android debido a limitaciones en las API del sistema operativo.</string>

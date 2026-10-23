@@ -103,7 +103,7 @@
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
     <item quantity="one">1 öge</item>
-    <item quantity="other">%d öğe</item>
+    <item quantity="other">%d öge</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">Değişiklikler yok sayılsın mı?</string>
@@ -311,8 +311,8 @@
   <string name="options_menu_content_description">Seçenekler menüsü</string>
   <!-- Items -->
   <plurals name="shared_items_count">
-    <item quantity="one">%d paylaşılmış öge</item>
-    <item quantity="other">%d paylaşılmış öge</item>
+    <item quantity="one">%d öge paylaşılmış</item>
+    <item quantity="other">%d öge paylaşılmış</item>
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d kullanıcı</item>
@@ -354,8 +354,8 @@
     <item quantity="other">%1$s iletme</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s yanıtlama</item>
-    <item quantity="other">%1$s yanıtlama</item>
+    <item quantity="one">%1$s yanıt</item>
+    <item quantity="other">%1$s yanıt</item>
   </plurals>
   <plurals name="alias_blocks_count">
     <item quantity="one">%1$s engelleme</item>

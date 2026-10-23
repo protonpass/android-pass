@@ -27,7 +27,7 @@
   <string name="home_empty_no_vaults_subtitle">Silakan hubungi administrator Anda.</string>
   <string name="home_empty_read_only_vault_title">Brankas ini kosong</string>
   <string name="home_empty_read_only_vault_subtitle">Anda tidak dapat menambahkan item ke brankas yang bersifat read-only.</string>
-  <string name="home_empty_folder_plan_restricted_title">This folder is empty</string>
+  <string name="home_empty_folder_plan_restricted_title">Folder ini kosong</string>
   <string name="home_empty_folder_plan_restricted_subtitle">Upgrade your plan to create items inside folders.</string>
   <string name="home_empty_vault_create_login">Buat entri masuk</string>
   <string name="home_empty_vault_create_alias">Buat alias Hide-my-email</string>
@@ -60,9 +60,9 @@
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s ingin membagikan item dengan Anda.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share an item with your group %2$s.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s wants to share a vault with your group %2$s.</string>
-  <string name="home_item_invite_card_title">Shared item invitation</string>
-  <string name="home_vault_invite_card_title">Shared vault invitation</string>
-  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="home_item_invite_card_title">Undangan item yang dibagikan</string>
+  <string name="home_vault_invite_card_title">Undangan brankas yang dibagikan</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s ingin membagikan brankas dengan Anda.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Salin kata sandi</string>
   <string name="bottomsheet_copy_username">Salin nama pengguna</string>
@@ -101,7 +101,7 @@
   <string name="search_topbar_placeholder_pinning">Cari di Tersemat…</string>
   <string name="search_topbar_placeholder_shared_by_me">Cari di Dibagikan dengan saya…</string>
   <string name="search_topbar_placeholder_shared_with_me">Cari di Dibagikan dengan saya…</string>
-  <string name="search_topbar_placeholder_folder">Search in %s…</string>
+  <string name="search_topbar_placeholder_folder">Cari di %s…</string>
   <string name="search_topbar_placeholder_folder_fallback">Search in folder…</string>
   <string name="home_topbar_title_folder_fallback">Folder</string>
   <string name="item_type_filter_list_icon_content_description">Ikon tipe item</string>
@@ -178,6 +178,6 @@
   <string name="bulk_action_disable_alias">Nonaktifkan alias</string>
   <string name="vault_drawer_organise_vaults">Organisir brankas</string>
   <string name="sync_group_vault_warning">Some vaults are currently unavailable due to an issue with their group.</string>
-  <string name="sync_inactive_vault_warning">Some vaults are no longer accessible due to a password reset. Reactivate your account keys in order to regain access.</string>
-  <string name="sync_inactive_vault_warning_action">Learn more</string>
+  <string name="sync_inactive_vault_warning">Beberapa brankas tidak lagi dapat diakses karena kata pengaturan ulang kata sandi. Aktifkan kembali kunci akun Anda untuk dapat kembali mengakses brankas ini.</string>
+  <string name="sync_inactive_vault_warning_action">Pelajari lebih lanjut</string>
 </resources>

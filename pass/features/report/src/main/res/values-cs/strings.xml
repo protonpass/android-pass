@@ -48,7 +48,7 @@
   <string name="tips_passkey_android_not_supported">Vaše verze systému Android je zastaralá. Zkuste zařízení aktualizovat.</string>
   <string name="tips_passkey_supported">Přístupové klíče jsou podporovány</string>
   <string name="tips_passkey_not_supported">Přístupové klíče nejsou podporovány</string>
-  <string name="report_steps" comment="Indicator showing report progress">Krok %1$d z(e) %2$d</string>
+  <string name="report_steps" comment="Indicator showing report progress">Krok %1$d z %2$d</string>
   <string name="description_cannot_be_blank">Popis nemůže být prázdný</string>
   <string name="description_is_too_short">Popis je příliš krátký</string>
   <string name="description_is_too_long">Popis je příliš dlouhý</string>

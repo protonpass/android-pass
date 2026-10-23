@@ -46,8 +46,8 @@
   <string name="secure_links_list_expiration_description">Expira en %s</string>
   <string name="secure_links_list_expired_description">Expirado</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="one">%d vista</item>
-    <item quantity="other">%d vistas</item>
+    <item quantity="one">%d visualización</item>
+    <item quantity="other">%d visualizaciones</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Se ha producido un error al obtener los enlaces seguros.</string>
   <string name="secure_links_list_header_title_inactive">Enlaces inactivos</string>

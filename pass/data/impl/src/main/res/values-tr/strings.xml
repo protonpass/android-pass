@@ -26,7 +26,7 @@
   <string name="downloading_attachments">Ek dosyalar indiriliyor</string>
   <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s dosya</string>
   <string name="plan_subscription_auto_renews_monthly">Abonelik %1$s/ay tutar ile otomatik olarak yenilenir</string>
-  <string name="plan_subscription_auto_renews_annual">Abonelik %1$s/yıl tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_subscription_auto_renews_annual">Abonelik %1$s/yıl tutar ile otomatik yenilenir</string>
   <string name="plan_welcome_offer_auto_renews_monthly">Karşılama teklifi. %1$s/ay tutar ile otomatik olarak yenilenir</string>
   <string name="plan_welcome_offer_auto_renews_annual">Karşılama teklifi. %1$s/yıl tutar ile otomatik olarak yenilenir</string>
 </resources>

@@ -45,7 +45,7 @@
   <string name="secure_links_list_title">Безпечні посилання</string>
   <string name="secure_links_list_empty_title">Немає безпечних посилань</string>
   <string name="secure_links_list_empty_subtitle">Ви можете почати створювати безпечні посилання з деталей елемента параметрів спільного доступу</string>
-  <string name="secure_links_list_expiration_description">Завершується за %s</string>
+  <string name="secure_links_list_expiration_description">Завершується через %s</string>
   <string name="secure_links_list_expired_description">Протерміновано</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d перегляд</item>

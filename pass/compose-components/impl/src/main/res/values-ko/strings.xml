@@ -305,7 +305,7 @@
     <item quantity="other">사용자 %d 명</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="other">%d명 회원</item>
+    <item quantity="other">%d명 구성원</item>
   </plurals>
   <string name="show_network_qr_code">네트워크 QR 코드 보이기</string>
   <string name="expand_collpased_text">더 보기</string>
@@ -367,7 +367,7 @@
   <string name="bottomsheet_option_word_separator_numbers">숫자</string>
   <string name="bottomsheet_option_word_separator_numbers_and_symbols">숫자 및 기호</string>
   <plurals name="word_count">
-    <item quantity="other">%s 단어</item>
+    <item quantity="other">%s단어</item>
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">비밀번호 보안 강도</string>

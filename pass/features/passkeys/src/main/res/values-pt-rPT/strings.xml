@@ -21,6 +21,6 @@
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Selecione uma chave de acesso do Proton Pass</string>
   <string name="passkeys_user_logged_out">Foi desconectado. Abre a aplicação e inicie sessão novamente.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Gerar uma chave de acesso</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Tem certeza que deseja gerar uma Chave de acesso para o item «%s»?</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Tem a certeza de que pretende gerar uma chave de acesso para o item «%s»?</string>
   <string name="passkey_error_generating_passkey">Não foi possível gerar a chave de acesso.</string>
 </resources>

@@ -46,8 +46,8 @@
     <item quantity="other">Helytelen jelszó. %d próbálkozás maradt</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">%d próbálkozás maradt</item>
-    <item quantity="other">%d próbálkozás maradt</item>
+    <item quantity="one">%d kísérlet maradt</item>
+    <item quantity="other">%d kísérlet maradt</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Túl sok hibás pin kód próbálkozás. Minden felhasználója ki lesz jelentkeztetve.</string>
   <string name="auth_pin_too_many_attempts_dismiss">Túl sok sikertelen PIN-kód próbálkozás</string>

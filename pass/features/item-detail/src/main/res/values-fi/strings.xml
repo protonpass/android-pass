@@ -38,7 +38,7 @@
   <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa. Käy vaihtamassa salasanasi palvelun tiliasetuksista.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d toinen kirjautumistieto käyttää samaa salasanaa</item>
+    <item quantity="one">%d muu kirjautumistieto käyttää samaa salasanaa</item>
     <item quantity="other">%d muuta kirjautumistietoa käyttää samaa salasanaa</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Vahvista suojausta määrittämällä 2FA</string>
@@ -110,8 +110,8 @@
   <string name="field_detail_display_name_title">Näyttönimi</string>
   <string name="display_name_section_description">Näyttönimi, kun lähetät sähköpostia tästä aliaksesta.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s ohjaus</item>
-    <item quantity="other">%1$s ohjausta</item>
+    <item quantity="one">%1$s välitys</item>
+    <item quantity="other">%1$s välitystä</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s vastaus</item>

@@ -21,6 +21,6 @@
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Selecteer een toegangssleutel uit Proton Pass</string>
   <string name="passkeys_user_logged_out">U bent uitgelogd. Gelieve opnieuw in loggen door de app te openen.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Toegangssleutel genereren</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Weet u zeker dat u een toegangssleutel wilt genereren voor het item \'%s\'?</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Weet u zeker dat u een passkey wilt genereren voor het item \'%s\'?</string>
   <string name="passkey_error_generating_passkey">Kon toegangssleutel niet genereren</string>
 </resources>

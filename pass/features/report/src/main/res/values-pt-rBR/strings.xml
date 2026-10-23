@@ -48,7 +48,7 @@
   <string name="tips_passkey_android_not_supported">Sua versão do Android é muito antiga. Tente atualizar seu dispositivo.</string>
   <string name="tips_passkey_supported">Chaves de acesso suportadas</string>
   <string name="tips_passkey_not_supported">As chaves de acesso não são suportadas</string>
-  <string name="report_steps" comment="Indicator showing report progress">Etapa %1$d de %2$d</string>
+  <string name="report_steps" comment="Indicator showing report progress">Passo %1$d de %2$d</string>
   <string name="description_cannot_be_blank">A descrição não pode estar em branco</string>
   <string name="description_is_too_short">A descrição é muito curta</string>
   <string name="description_is_too_long">A descrição é muito longa</string>

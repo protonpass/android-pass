@@ -48,7 +48,7 @@
   <string name="tips_passkey_android_not_supported">사용자의 Android 버전이 너무 낮음. 기기를 업그레이드해주세요.</string>
   <string name="tips_passkey_supported">패스키를 지원함</string>
   <string name="tips_passkey_not_supported">패스키를 미지원함</string>
-  <string name="report_steps" comment="Indicator showing report progress">%2$d 단계 중 %1$d 번째</string>
+  <string name="report_steps" comment="Indicator showing report progress">%2$d 단계 중 %1$d 단계</string>
   <string name="description_cannot_be_blank">설명은 비울 수 없습니다</string>
   <string name="description_is_too_short">설명이 너무 짧습니다</string>
   <string name="description_is_too_long">설명이 너무 깁니다</string>

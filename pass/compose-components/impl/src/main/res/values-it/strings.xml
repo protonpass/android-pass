@@ -207,7 +207,7 @@
   <string name="item_details_shared_section_note_title">Nota</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Ultima compilazione automatica</string>
   <string name="item_details_shared_section_item_history_created_title">Creazione</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modifica (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Modificato (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Cronologia dell\'elemento</string>
   <string name="item_details_shared_section_more_info_header_title">Mostra altro</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Mostra altro</string>
@@ -286,22 +286,22 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Abilita la sincronizzazione con SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Hai %d alias presente in SimpleLogin che è mancante in Proton Pass. Vuoi importare questo alias?</item>
-    <item quantity="other">Hai %d alias presenti in SimpleLogin che sono mancanti in Proton Pass. Vuoi importare questi alias?</item>
+    <item quantity="one">Abbiamo rilevato che hai %d alias presente in SimpleLogin ma mancante in Proton Pass. Vuoi importare questo alias?</item>
+    <item quantity="other">Abbiamo rilevato che hai %d alias presenti in SimpleLogin ma mancanti in Proton Pass. Vuoi importare questi alias?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizza gli alias</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Codice non ricevuto</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Cerca un\'email intitolata \"%s\" nella cartella spam</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Controlla se nella cartella Spam è presente un\'email denominata \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Conferma l\'indirizzo email per Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Conferma la casella di posta</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se non trovi questo messaggio, %s.</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se non riesci a trovare questa email, puoi %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">chiedi un nuovo codice</string>
   <string name="field_display_name_title">Nome visualizzato</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="one">%1$s file allegato</item>
-    <item quantity="other">%1$s file allegati</item>
+    <item quantity="one">%1$s file</item>
+    <item quantity="other">%1$s file</item>
   </plurals>
   <string name="attachment_title">Allegati</string>
   <string name="attachment_no_files">Carica un file dal dispositivo</string>

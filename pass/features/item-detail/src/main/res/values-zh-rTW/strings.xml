@@ -38,7 +38,7 @@
   <string name="login_item_monitor_widget_weak_pass_title">弱密碼</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">這個帳號有風險，請造訪該服務並變更您的密碼字元.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d 個其他登入使用相同密碼</item>
+    <item quantity="other">%d other logins use the same password</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">為更好安全設定雙重驗證</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">此服務提供雙重驗證。啟用此功能以加強帳號安全。</string>

@@ -55,7 +55,7 @@
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Parole refolosite</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Generați parole unice pentru fiecare cont pentru a vă spori securitatea.</string>
-  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Refolosită de %1$d (de) ori</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Refolosiri: %1$d</string>
   <!-- Compromised passwords screen -->
   <string name="security_center_compromised_pass_top_bar_title">Parole compromise</string>
   <string name="security_center_compromised_pass_top_bar_subtitle">Parolele compromise sunt cele expuse în cazul breșelor de date. Nu reutilizați niciodată parolele pentru a limita impactul atunci când are loc o breșă datelor.</string>
@@ -72,9 +72,9 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Adăugare adresă de e-mail cu domeniu personal</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Adăugare</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Folosită la %d conectare</item>
-    <item quantity="few">Folosită la %d conectare</item>
-    <item quantity="other">Folosită la %d conectare</item>
+    <item quantity="one">Folosit la %d conectare</item>
+    <item quantity="few">Folosit la %d conectări</item>
+    <item quantity="other">Folosit la %d de conectări</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="one">Breșe detectate: %d</item>

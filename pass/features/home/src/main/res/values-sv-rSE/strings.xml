@@ -142,7 +142,7 @@
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="one">Är du säker på att du vill återställa kastat objekt?</item>
-    <item quantity="other">Är du säker på att du vill återställa de %d kastade objekten?</item>
+    <item quantity="other">Är du säker på att du vill återställa %d kastade objekt?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">Flytta %d objekt till papperskorg?</item>
@@ -158,7 +158,7 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Är du säker på att du vill ta bort objektet? Denna åtgärd går inte att ångra</item>
-    <item quantity="other">Är du säker på att du vill ta bort de %d objekten? Denna åtgärd går inte att ångra</item>
+    <item quantity="other">Är du säker på att du vill ta bort %d objekt? Denna åtgärd är oåterkallelig</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">%d objekt delas för närvarande. Att ta bort det kommer ta bort åtkomst för alla andra användare.</item>

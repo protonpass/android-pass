@@ -51,7 +51,7 @@
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s möchte einen Tresor mit dir teilen.</string>
   <string name="sharing_vault_invitation_accept">Freigegebenem Tresor beitreten</string>
   <string name="sharing_item_invitation_title">Geteilte Eintrageinladung</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s möchte etwas mit dir teilen.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s möchte einen Eintrag mit dir teilen</string>
   <string name="sharing_item_invitation_accept">Annehmen und das Element anzeigen</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s möchte einen Tresor mit deiner Gruppe %2$s teilen.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s möchte einen Eintrag mit deiner Gruppe %2$s teilen.</string>
@@ -111,7 +111,7 @@
   <string name="sharing_bottomsheet_resend_invite">Einladung erneut senden</string>
   <string name="sharing_bottomsheet_cancel_invite">Einladung verwerfen</string>
   <string name="sharing_transfer_ownership_confirm_title">Inhaberschaft übertragen</string>
-  <string name="sharing_transfer_ownership_confirm_message">Inhaberschaft dieses Tresors auf %s übertragen?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Eigentumsrechte dieses Tresors auf %s übertragen?</string>
   <string name="sharing_snackbar_cancel_invite_success">Einladung verworfen</string>
   <string name="sharing_snackbar_cancel_invite_error">Fehler beim Abbrechen der Einladung.</string>
   <string name="sharing_snackbar_resend_invite_success">Einladung erneut gesendet</string>

@@ -68,6 +68,6 @@
   <string name="organise_vaults_snackbar_error">Non è stato possibile organizzare le casseforti</string>
   <plurals name="organise_vaults_item_count">
     <item quantity="one">%d elemento</item>
-    <item quantity="other">%dOggetti</item>
+    <item quantity="other">%d elementi</item>
   </plurals>
 </resources>

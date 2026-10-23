@@ -96,7 +96,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">წევრები</string>
   <string name="share_manage_vault_current_user_indicator">თქვენ</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">თავიდან</string>
   <string name="share_role_viewer">მთვალიერებელი</string>
   <string name="share_role_editor">რედაქტორი</string>
   <string name="share_role_admin">ადმინისტრატორი</string>
@@ -111,7 +111,7 @@
   <string name="sharing_bottomsheet_resend_invite">მოსაწვევის თავიდან გაგზავნა</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">მფლობელობის გადაცემა</string>
-  <string name="sharing_transfer_ownership_confirm_message">გადავცე ამ საცავს ფლობის უფლება %s-ს?</string>
+  <string name="sharing_transfer_ownership_confirm_message">გადაეცეს ამ საცავის ფლობის უფლება %s-ს?</string>
   <string name="sharing_snackbar_cancel_invite_success">მოწვევა გაუქმებულია</string>
   <string name="sharing_snackbar_cancel_invite_error">მოწვევის გაუქმების შეცდომა</string>
   <string name="sharing_snackbar_resend_invite_success">მოსაწვევი გაგზავნილია</string>

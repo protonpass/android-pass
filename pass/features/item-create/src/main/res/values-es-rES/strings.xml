@@ -201,7 +201,7 @@
   <string name="create_alias_content_limit_banner">Has alcanzado el límite de alias que puedes crear. Crea alias ilimitados al actualizar tu suscripción.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">La aplicación necesita actualizarse para editar este elemento.</string>
   <string name="remove_passkey_dialog_title">¿Eliminar esta clave de acceso?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Estás a punto de borrar la clave de acceso de «%1$s» para «%2$s». ¿Estás seguro?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Estás a punto de eliminar la clave de acceso de «%1$s» para «%2$s». ¿Estás seguro?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Archivos adjuntos</string>
   <string name="banner_body_attachments">Puedes adjuntar archivos a los elementos para una mejor organización.</string>

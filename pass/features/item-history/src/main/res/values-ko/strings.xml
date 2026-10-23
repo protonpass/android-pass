@@ -20,6 +20,7 @@
   <string name="item_history_restore_action">복원</string>
   <string name="item_history_restore_confirmation_dialog_title">이 버전을 복원하시겠습니까?</string>
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">현재 항목이 %1$s 버전으로 돌려지게 됩니다.</string>
+  <string name="item_history_restore_snackbar_message_open_error">There was an error opening item revision</string>
   <string name="item_history_restore_snackbar_message_error">항목 리비전을 복구하는 중에 오류가 발생했습니다</string>
   <string name="item_history_restore_snackbar_message_success">항목 리비전을 복구했습니다</string>
   <string name="item_history_restore_tab_title_current">현재</string>

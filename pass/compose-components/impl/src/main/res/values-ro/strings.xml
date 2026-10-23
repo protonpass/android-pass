@@ -297,8 +297,8 @@
   <string name="simple_login_widget_title">Activare sincronizare SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Am detectat că aveți %d alias care există în SimpleLogin, dar lipsește în Proton Pass. Doriți să-l importați?</item>
-    <item quantity="few">Am detectat că aveți %d de aliasuri care există în SimpleLogin, dar lipsesc în Proton Pass. Doriți să le importați?</item>
-    <item quantity="other">Am detectat că aveți %d aliasuri care există în SimpleLogin, dar lipsesc în Proton Pass. Doriți să le importați?</item>
+    <item quantity="few">Am detectat că aveți %d aliasuri care există în SimpleLogin, dar lipsesc în Proton Pass. Doriți să le importați?</item>
+    <item quantity="other">Am detectat că aveți %d de aliasuri care există în SimpleLogin, dar lipsesc în Proton Pass. Doriți să le importați?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizare aliasuri</string>
   <!-- Verification codes -->

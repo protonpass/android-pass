@@ -27,8 +27,8 @@
   <plurals name="sharing_item_count">
     <item quantity="one">%d элемент</item>
     <item quantity="few">%d элемента</item>
-    <item quantity="many">%d элементов</item>
-    <item quantity="other">%d элементов</item>
+    <item quantity="many">Элементов: %d</item>
+    <item quantity="other">Элементов: %d</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
     <item quantity="one">%d item (including trashed)</item>
@@ -61,7 +61,7 @@
   <string name="sharing_item_invitation_accept">Принять и просмотреть элемент</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="sharing_group_invitation_accept">Accept invitation</string>
+  <string name="sharing_group_invitation_accept">Принять приглашение</string>
   <string name="sharing_invite_more">Пригласить ещё…</string>
   <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
   <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>
@@ -106,7 +106,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Участники</string>
   <string name="share_manage_vault_current_user_indicator">Вы</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Повторить</string>
   <string name="share_role_viewer">Только просмотр</string>
   <string name="share_role_editor">Редактор</string>
   <string name="share_role_admin">Администратор</string>
@@ -121,7 +121,7 @@
   <string name="sharing_bottomsheet_resend_invite">Отправить повторное приглашение</string>
   <string name="sharing_bottomsheet_cancel_invite">Отменить приглашение</string>
   <string name="sharing_transfer_ownership_confirm_title">Передать права владельца</string>
-  <string name="sharing_transfer_ownership_confirm_message">Передать право собственности на это хранилище %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Transfer ownership of this vault to %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Приглашение отменено</string>
   <string name="sharing_snackbar_cancel_invite_error">Ошибка отмены приглашения</string>
   <string name="sharing_snackbar_resend_invite_success">Приглашение отправлено повторно</string>

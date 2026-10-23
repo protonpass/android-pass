@@ -25,7 +25,7 @@
   <string name="account_settings_list_item_extra_password_active">Aktív</string>
   <string name="account_settings_list_item_extra_password_description">A Pass használatához szüksége lesz az extra jelszóra. Ez kiegészítő jelszóként működik a Proton jelszava mellett.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Nincs beállítva</string>
-  <string name="account_settings_list_item_security_keys_hint_single">%s  </string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d hitelesítési kulcs beállítva</item>
     <item quantity="other">%d hitelesítési kulcs beállítva</item>

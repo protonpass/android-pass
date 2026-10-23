@@ -167,7 +167,7 @@
   <string name="autofill_mode_label_exact">Дакладны (пад)дамен</string>
   <string name="autofill_mode_label_never">Ніколі не запаўняць на гэтым вэб-сайце</string>
   <string name="autofill_mode_label_start_with">Пачаць з</string>
-  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
+  <string name="autofill_mode_label_pattern">Шаблон з падстановачнымі знакамі</string>
   <string name="autofill_mode_label_regular_expression">Рэгулярны выраз</string>
   <string name="autofill_mode_label_exact_path">Дакладнае супадзенне URL-адраса</string>
   <string name="autofill_mode_label_unsupported">Гэты URL-адрас будзе прапушчаны для аўтазапаўнення</string>
@@ -260,7 +260,7 @@
     <item quantity="one">%d дзень</item>
     <item quantity="few">%d дні</item>
     <item quantity="many">%d дзён</item>
-    <item quantity="other">%d дзён</item>
+    <item quantity="other">%d дні/дзён</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d гадзіна</item>
@@ -306,10 +306,10 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Уключыць сінхранізацыю SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Мы выявілі, што ў вас ёсць %d псеўданім, які прысутнічае ў SimpleLogin, але адсутнічае ў Proton Pass. Хочаце імпартаваць яго?</item>
-    <item quantity="few">Мы выявілі, што ў вас ёсць %d псеўданімы, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Хочаце імпартаваць іх?</item>
-    <item quantity="many">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Хочаце імпартаваць іх?</item>
-    <item quantity="other">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Хочаце імпартаваць іх?</item>
+    <item quantity="one">Мы выявілі, што ў вас ёсць %d псеўданім, які прысутнічае ў SimpleLogin, але адсутнічае ў Proton Pass. Магчыма, што вы хочаце імпартаваць яго?</item>
+    <item quantity="few">Мы выявілі, што ў вас ёсць %d псеўданімы, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
+    <item quantity="many">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
+    <item quantity="other">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
   </plurals>
   <string name="simple_login_widget_action">Сінхранізаваць псеўданімы</string>
   <!-- Verification codes -->

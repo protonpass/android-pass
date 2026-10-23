@@ -41,8 +41,8 @@
   <string name="attachments_saved_to_location_error">Не удалось сохранить вложение в указанном месте</string>
   <string name="attachment_sync_dialog_title_waiting">Waiting for connection</string>
   <string name="attachment_sync_dialog_title_downloading">Downloading attachments</string>
-  <string name="attachment_sync_dialog_title_done">Download complete</string>
-  <string name="attachment_sync_dialog_title_partial_failure">Download failed</string>
+  <string name="attachment_sync_dialog_title_done">Скачивание завершено</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Скачивание не удалось</string>
   <string name="attachment_sync_dialog_subtitle_waiting">Waiting for network connection to download attachments.</string>
   <string name="attachment_sync_dialog_subtitle_downloading">Downloading %1$d/%2$d attachments</string>
   <string name="attachment_sync_dialog_subtitle_done">All attachments have been downloaded successfully.</string>

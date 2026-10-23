@@ -68,8 +68,8 @@
   <string name="attachment_config_dialog_title">Latausvaihtoehdot</string>
   <string name="attachment_config_dialog_all_vaults">Kaikki holvit</string>
   <string name="attachment_config_dialog_select_vaults">Valitse ladattavat holvit</string>
-  <string name="attachment_config_dialog_shared_items">Shared with me</string>
+  <string name="attachment_config_dialog_shared_items">Jaettu minulle</string>
   <string name="attachment_config_dialog_start">Lataa</string>
   <string name="attachment_config_dialog_cancel">Peruuta</string>
-  <string name="settings_offline_attachments_shared_items">Shared with me</string>
+  <string name="settings_offline_attachments_shared_items">Jaettu minulle</string>
 </resources>

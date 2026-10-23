@@ -38,7 +38,7 @@
   <string name="login_item_monitor_widget_weak_pass_title">弱密码</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">此账户存在安全风险，请访问该服务并更改密码。</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d 其他登录使用相同密码</item>
+    <item quantity="other">其他 %d 个登录使用相同密码</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">设置 2FA 以获得更多安全</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">该服务提供 2FA。启用它可提高账户安全性。</string>
@@ -109,7 +109,7 @@
   <string name="field_detail_display_name_title">显示名称</string>
   <string name="display_name_section_description">使用此别名发送电子邮件时的显示名称。</string>
   <plurals name="alias_forwards_count">
-    <item quantity="other">%1$s 转发</item>
+    <item quantity="other">%1$s 已转发</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="other">%1$s 回复</item>

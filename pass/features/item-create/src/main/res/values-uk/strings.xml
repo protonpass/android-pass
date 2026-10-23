@@ -18,7 +18,7 @@
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Заповніть ваші особисті дані</string>
   <string name="item_type_more_description" comment="Subtitle of the Item Type CUSTOM in the Create new item bottomsheet">Збережіть Wi-Fi, паспорт, SSH або виберіть власний варіант</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Згенерувати надійний пароль</string>
-  <string name="sticky_button_generate_username">Generate username</string>
+  <string name="sticky_button_generate_username">Згенерувати ім’я користувача</string>
   <!-- Create Login -->
   <string name="field_email_title">Адреса електронної пошти</string>
   <string name="field_email_hint">Додати поштову адресу</string>
@@ -261,7 +261,7 @@
   <string name="template_ssh_key_field_username">Ім\'я користувача</string>
   <string name="template_ssh_key_field_host">Хост</string>
   <!-- SSH Key Generation -->
-  <string name="ssh_key_generate_button">Generate</string>
+  <string name="ssh_key_generate_button">Згенерувати</string>
   <string name="ssh_key_type_ed25519">Ed25519</string>
   <string name="ssh_key_type_rsa_2048">RSA-2048</string>
   <string name="ssh_key_type_rsa_4096">RSA-4096</string>
@@ -347,7 +347,7 @@
   <string name="autofill_suggestions_title">URL Matching</string>
   <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
   <string name="autofill_suggestions_tab_basic">Basic</string>
-  <string name="autofill_suggestions_tab_advanced">Advanced</string>
+  <string name="autofill_suggestions_tab_advanced">Розширені</string>
   <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
   <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
   <string name="autofill_suggestions_mode_never">Never fill on this website</string>
@@ -357,7 +357,7 @@
   <string name="autofill_suggestions_mode_exact_path">Exact URL matching</string>
   <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
   <string name="autofill_suggestions_mode_default_badge">DEFAULT</string>
-  <string name="autofill_suggestions_url_column">URL</string>
-  <string name="autofill_suggestions_suggested_column">Suggested</string>
+  <string name="autofill_suggestions_url_column">URL-адреса</string>
+  <string name="autofill_suggestions_suggested_column">Запропоновано</string>
   <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
 </resources>

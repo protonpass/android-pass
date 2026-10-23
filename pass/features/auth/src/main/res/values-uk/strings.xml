@@ -50,7 +50,7 @@
     <item quantity="other">Неправильний пароль. Залишилося %d спроб</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">Залишилася %d спроба</item>
+    <item quantity="one">Залишилась %d спроба</item>
     <item quantity="few">Залишилося %d спроби</item>
     <item quantity="many">Залишилося %d спроб</item>
     <item quantity="other">Залишилося %d спроб</item>

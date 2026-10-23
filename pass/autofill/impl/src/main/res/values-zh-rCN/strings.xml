@@ -3,7 +3,7 @@
   <string name="autofill_authenticate_prompt">从 Proton Pass 获取</string>
   <string name="error_loading_items">加载项目失败</string>
   <string name="inline_suggestions_open_app">打开 Proton Pass</string>
-  <string name="autofill_associate_web_app_name_dialog_title">在此应用或网站中使用“%s”的登录凭据。</string>
+  <string name="autofill_associate_web_app_name_dialog_title">在此应用程序或网站上使用\"%s \"的登录信息。</string>
   <string name="autofill_dialog_associate_and_autofill">始终使用</string>
   <string name="autofill_dialog_just_autofill">使用一次</string>
   <string name="autofill_dialog_cancel">取消</string>
@@ -30,7 +30,7 @@
   <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
   <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
   <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
-  <string name="autofill_troubleshooting_browser_active">Active</string>
+  <string name="autofill_troubleshooting_browser_active">订阅中</string>
   <string name="autofill_troubleshooting_inline_info">Inline suggestions appear in your keyboard. They need Android 11 or later and a compatible keyboard such as Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Share diagnostics</string>
   <string name="autofill_troubleshooting_open_diagnostics">Advanced diagnostics</string>
@@ -45,6 +45,6 @@
   <string name="autofill_diagnostics_outcome_nothing">Autofill was triggered in %1$s, but no matching login was offered. The page may have no detectable login fields, or you have no item for this site.</string>
   <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
   <string name="autofill_diagnostics_recent_title">Recent attempts</string>
-  <string name="autofill_diagnostics_clear">Clear</string>
+  <string name="autofill_diagnostics_clear">清空</string>
   <string name="autofill_diagnostics_share">Share with support</string>
 </resources>

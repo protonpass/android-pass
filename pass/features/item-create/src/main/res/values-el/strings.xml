@@ -37,7 +37,7 @@
   <string name="field_website_add_another">Προσθήκη</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Δημιουργήσετε ένα νέο κωδικό πρόσβασης</string>
   <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Απόκρυψη της διεύθυνσης ηλεκτρονικού ταχυδρομείου μου</string>
-  <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Χρησιμοποιήστε %s</string>
+  <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Χρήση %s</string>
   <string name="create_login_item_creation_error">Δεν ήταν δυνατή η δημιουργία σύνδεσης</string>
   <string name="create_login_item_update_error">Δεν ήταν δυνατή η ενημέρωση της σύνδεσης</string>
   <string name="create_login_init_error">Πρόβλημα ανάκτησης λεπτομερειών σύνδεσης</string>

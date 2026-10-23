@@ -26,7 +26,7 @@
   <string name="secure_links_create_row_expiration_options_fourteen_days">14 天</string>
   <string name="secure_links_create_row_expiration_options_thirty_days">30 天</string>
   <string name="secure_links_create_row_max_views_title">限制觀看次數</string>
-  <string name="secure_links_create_row_max_views_subtitle">最大觀看次數：%d</string>
+  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
   <string name="secure_links_create_button_generate">生成安全加密鏈結</string>
   <string name="secure_links_create_snackbar_message_error">生成安全加密鏈結時發生錯誤</string>
   <!--Overview screen-->

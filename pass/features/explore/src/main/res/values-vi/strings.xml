@@ -11,7 +11,7 @@
   <string name="explore_tool_codes_title">Codes</string>
   <string name="explore_tool_codes_subtitle">One-time codes for two-factor authentication.</string>
   <string name="codes_screen_title">Codes</string>
-  <string name="codes_search_placeholder">Search in all items</string>
+  <string name="codes_search_placeholder">Tìm trong tất cả các mục</string>
   <string name="codes_snackbar_code_copied">Code copied to clipboard</string>
   <string name="explore_tool_aliases_title">Protect emails with aliases</string>
   <string name="explore_tool_aliases_subtitle">Safeguard addresses, reduce spam, and block phishing attempts.</string>

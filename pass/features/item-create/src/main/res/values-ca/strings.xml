@@ -183,7 +183,7 @@
   <string name="update_identity_item_creation_error">No s\'ha pogut actualitzar la identitat.</string>
   <!--  Common create items  -->
   <string name="title_create">Crea</string>
-  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (copiat)</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">(S\'ha copiat el) %s</string>
   <string name="changes_saved">S\'han desat els canvis.</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clau secreta A2F (TOTP)</string>
@@ -345,7 +345,7 @@
   <string name="functionality_not_available">Aquesta funcionalitat no està disponible per al vostre dispositiu.</string>
   <!-- Autofill URL suggestions screen -->
   <string name="autofill_suggestions_title">Coincidència d\'URL</string>
-  <string name="autofill_suggestions_description">Ajusteu els comportaments d\'emplenament automàtic per canviar on se suggereixen i s\'emplenen els inicis de sessió per a %s.</string>
+  <string name="autofill_suggestions_description">Ajusteu els comportaments d\'emplenament automàtic per canviar on se suggereixen i s\'omplen les dades dels inicis de sessió per a %s.</string>
   <string name="autofill_suggestions_tab_basic">Bàsic</string>
   <string name="autofill_suggestions_tab_advanced">Avançat</string>
   <string name="autofill_suggestions_mode_default">Domini principal i subdominis</string>

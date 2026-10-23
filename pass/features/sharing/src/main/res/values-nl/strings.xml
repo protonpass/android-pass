@@ -51,7 +51,7 @@
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wil een kluis delen met u.</string>
   <string name="sharing_vault_invitation_accept">Deelnemen aan gedeelde kluis</string>
   <string name="sharing_item_invitation_title">Gedeelde item uitnodiging</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wil een item delen met u.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wil een kluis delen met u.</string>
   <string name="sharing_item_invitation_accept">Accepteer en bekijk het item</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wil een kluis delen met uw groep %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wil een item delen met uw groep %2$s.</string>
@@ -96,7 +96,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Leden</string>
   <string name="share_manage_vault_current_user_indicator">U</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Probeer opnieuw</string>
   <string name="share_role_viewer">Lezer</string>
   <string name="share_role_editor">Bewerker</string>
   <string name="share_role_admin">Beheerder</string>
@@ -111,7 +111,7 @@
   <string name="sharing_bottomsheet_resend_invite">Uitnodiging opnieuw verzenden</string>
   <string name="sharing_bottomsheet_cancel_invite">Uitnodiging annuleren</string>
   <string name="sharing_transfer_ownership_confirm_title">Eigendom overdragen</string>
-  <string name="sharing_transfer_ownership_confirm_message">Eigendom van deze kluis overdragen aan %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Wilt u het eigendom van deze kluis overdragen aan %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Uitnodiging geannuleerd.</string>
   <string name="sharing_snackbar_cancel_invite_error">Error bij het annuleren van de uitnodiging</string>
   <string name="sharing_snackbar_resend_invite_success">Uitnodiging opnieuw verzonden</string>

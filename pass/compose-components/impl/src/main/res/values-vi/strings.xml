@@ -18,7 +18,7 @@
     <item quantity="other">kết quả</item>
   </plurals>
   <string name="item_list_header_identities_type">Danh tính</string>
-  <string name="item_list_header_custom_type">Custom items</string>
+  <string name="item_list_header_custom_type">Mục tùy chỉnh</string>
   <string name="item_list_header_shared_with_me">Đã chia sẻ với tôi</string>
   <string name="item_list_header_shared_by_me">Đã chia sẻ bởi tôi</string>
   <!-- Bottomsheets -->
@@ -30,18 +30,18 @@
   <string name="bottomsheet_view_item_history">Xem lịch sử</string>
   <string name="bottomsheet_monitor_exclude">Bỏ qua theo dõi</string>
   <string name="bottomsheet_monitor_include">Thêm vào theo dõi</string>
-  <string name="bottomsheet_migrate_item_v2">Move</string>
-  <string name="bottomsheet_create_folder">Create folder</string>
-  <string name="folder_tree_create_folder">Create folder</string>
-  <string name="bottomsheet_rename_folder">Rename</string>
+  <string name="bottomsheet_migrate_item_v2">Di chuyển</string>
+  <string name="bottomsheet_create_folder">Tạo thư mục</string>
+  <string name="folder_tree_create_folder">Tạo thư mục</string>
+  <string name="bottomsheet_rename_folder">Đổi tên</string>
   <string name="bottomsheet_create_sub_folder">Create sub-folder</string>
   <string name="bottomsheet_move_folder">Move folder</string>
-  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
+  <string name="bottomsheet_move_all_items_in_folder">Chuyển tất cả nội dung</string>
   <string name="bottomsheet_copy_item_note">Sao chép ghi chú</string>
   <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
   <string name="bottomsheet_restore">Khôi phục</string>
   <string name="bottomsheet_leave">Thoát</string>
-  <string name="bottomsheet_duplicate">Duplicate</string>
+  <string name="bottomsheet_duplicate">Nhân đôi</string>
   <string name="bottomsheet_no_actions">Không có hành động nào khả dụng</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu hành động mục</string>
@@ -214,7 +214,7 @@
   <string name="item_details_shared_section_more_info_share_id">Số Share ID</string>
   <string name="item_details_wifi_network_label_ssid_name">Tên mạng (SSID)</string>
   <string name="item_details_wifi_network_label_password">Mật khẩu</string>
-  <string name="item_details_wifi_network_label_security">Security</string>
+  <string name="item_details_wifi_network_label_security">Bảo mật</string>
   <string name="item_details_ssh_key_label_public_key">Chìa khóa công khai</string>
   <string name="item_details_ssh_key_label_private_key">Chìa khóa riêng tư</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Phiên bản ứng dụng nay không còn được hỗ trợ, vui lòng cập nhật.</string>
@@ -245,7 +245,7 @@
     <item quantity="other">%d ngày</item>
   </plurals>
   <plurals name="time_unit_hours">
-    <item quantity="other">%d tiếng</item>
+    <item quantity="other">%d giờ</item>
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="other">%d phút</item>
@@ -302,12 +302,12 @@
     <item quantity="other">%d shared items</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="other">Người dùng %d</item>
+    <item quantity="other">%d người dùng</item>
   </plurals>
   <plurals name="members_count">
     <item quantity="other">%d thành viên</item>
   </plurals>
-  <string name="show_network_qr_code">Show Network QR Code</string>
+  <string name="show_network_qr_code">Hiển Thị Mã QR Mạng</string>
   <string name="expand_collpased_text">thêm</string>
   <string name="collapse_expanded_text">bớt</string>
   <string name="login_item_monitor_widget_weak_pass_title">Mật khẩu yếu</string>
@@ -319,7 +319,7 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập xác minh 2 bước để an toàn hơn</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
-  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_ignore">Bỏ qua</string>
   <string name="login_item_monitor_action_restore">Restore alert</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
   <string name="login_item_monitor_label_weak">Weak password</string>
@@ -343,18 +343,18 @@
     <item quantity="other">%1$s khối</item>
   </plurals>
   <string name="alias_create_login_from_alias">Tạo đăng nhập</string>
-  <string name="banner_contacts_title">Did you know?</string>
-  <string name="banner_contacts_subtitle">Every time your alias receives an email from someone, a new contact is automatically created.</string>
-  <string name="action_reveal">Reveal</string>
-  <string name="action_conceal">Conceal</string>
-  <string name="warning_dialog_item_shared_vault_title">Item in a shared vault</string>
-  <string name="warning_dialog_item_shared_title">Shared item</string>
-  <string name="warning_dialog_item_shared_vault_creating">You are creating an item in a shared vault and members will immediately gain access to this item.</string>
+  <string name="banner_contacts_title">Bạn có biết không?</string>
+  <string name="banner_contacts_subtitle">Mỗi khi bí danh của bạn nhận được một email từ ai đó, một liên hệ mới sẽ tự động được tạo.</string>
+  <string name="action_reveal">Hiển thị</string>
+  <string name="action_conceal">Ẩn</string>
+  <string name="warning_dialog_item_shared_vault_title">Nội dung trong một kho lưu trữ được chia sẽ</string>
+  <string name="warning_dialog_item_shared_title">Nội dung được chia sẻ</string>
+  <string name="warning_dialog_item_shared_vault_creating">Bạn đang tạo một mục trong một kho lưu trữ được chia sẽ và thành viên sẽ có quyền truy cập lập tức vào nó.</string>
   <string name="warning_dialog_item_shared_vault_moving">You are moving an item to a shared vault and members will immediately gain access to this item.</string>
   <string name="warning_dialog_item_shared_vault_updating">You are editing an item in a shared vault and members will immediately gain access to this item.</string>
-  <string name="warning_dialog_item_shared_updating">You are editing a shared item. Changes will be visible to everyone it\'s shared with immediately.</string>
-  <string name="warning_dialog_item_shared_vault_reminder">Don\'t remind me again</string>
-  <string name="upgrade_to_pass_plus">Upgrade to Pass Plus</string>
+  <string name="warning_dialog_item_shared_updating">Bạn đang chỉnh sửa một mục trong mọt kho lưu trữ được chia sẽ. Các thay đổi sẽ được hiển thị lập tức với những người được chia sẽ.</string>
+  <string name="warning_dialog_item_shared_vault_reminder">Không nhắc lại nữa</string>
+  <string name="upgrade_to_pass_plus">Nâng cấp lên Pass Plus</string>
   <string name="warning_dialog_reload_app_after_purchase_description">You are about to be redirected to our website. If you purchase a plan, please restart the app.</string>
   <!-- Shared word separator dialog (used by password + username generators) -->
   <string name="word_separator">Dấu tách từ</string>
@@ -371,7 +371,7 @@
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
   <string name="password_strength_prefix">Password strength</string>
-  <string name="password_check_min_length">Password is too short</string>
+  <string name="password_check_min_length">Mật khẩu quá ngắn</string>
   <string name="password_check_lowercase">Lowercase letters</string>
   <string name="password_check_uppercase">Uppercase letters</string>
   <string name="password_check_no_consecutive">No repeated characters</string>

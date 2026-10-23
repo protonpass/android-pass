@@ -34,19 +34,19 @@
   <string name="no_activity_contact">Žiadna aktivita za posledných 14 dní</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">za posledných 14 dní</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d preposlaný</item>
+    <item quantity="one">%1$d preposlaných</item>
     <item quantity="few">%1$d preposlané</item>
     <item quantity="many">%1$d preposlaných</item>
     <item quantity="other">%1$d preposlaných</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d odoslaný</item>
+    <item quantity="one">%1$d odoslaných</item>
     <item quantity="few">%1$d odoslané</item>
     <item quantity="many">%1$d odoslaných</item>
     <item quantity="other">%1$d odoslaných</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d zablokovaný</item>
+    <item quantity="one">%1$d zablokovaných</item>
     <item quantity="few">%1$d zablokované</item>
     <item quantity="many">%1$d zablokovaných</item>
     <item quantity="other">%1$d zablokovaných</item>

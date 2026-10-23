@@ -27,7 +27,7 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Sposta</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">L\'elemento è già in questa cartella</item>
-    <item quantity="other">%d elementi sono già in questa cartella</item>
+    <item quantity="other">%d items are already in this folder</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Questa cartella è già in questa posizione</string>
   <string name="migrate_disabled_folder_reason_being_moved">Questa cartella è stata spostata</string>

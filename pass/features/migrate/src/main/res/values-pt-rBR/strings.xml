@@ -27,7 +27,7 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Mover</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">O item já está nesta pasta</item>
-    <item quantity="other">%d itens já estão nesta pasta</item>
+    <item quantity="other">%d items are already in this folder</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Essa pasta já está nessa localização</string>
   <string name="migrate_disabled_folder_reason_being_moved">Essa pasta está sendo movida</string>

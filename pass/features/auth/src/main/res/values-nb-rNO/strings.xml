@@ -46,8 +46,8 @@
     <item quantity="other">Feil passord. %d forsøk gjenstår</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">%d forsøk gjenstår</item>
-    <item quantity="other">%d forsøk gjenstår</item>
+    <item quantity="one">%d forsøk igjen</item>
+    <item quantity="other">%d forsøk igjen</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">For mange mislykkede PIN-forsøk. Alle brukerne dine blir logget av.</string>
   <string name="auth_pin_too_many_attempts_dismiss">For mange mislykkede pin-forsøk.</string>

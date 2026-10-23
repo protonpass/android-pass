@@ -50,10 +50,10 @@
     <item quantity="other">Nesprávné heslo. Zbývá %d pokusů</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">Zbývá %d pokus</item>
-    <item quantity="few">Zbývají %d pokusy</item>
-    <item quantity="many">Zbývá %d pokusů</item>
-    <item quantity="other">Zbývá %d pokusů</item>
+    <item quantity="one">%d zbývající pokus</item>
+    <item quantity="few">%d zbývající pokusy</item>
+    <item quantity="many">%d zbývajících pokusů</item>
+    <item quantity="other">%d zbývajících pokusů</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Příliš mnoho chybných pokusů PIN. Všichni vaši uživatelé jsou odhlašováni.</string>
   <string name="auth_pin_too_many_attempts_dismiss">Příliš mnoho neúspěšných pokusů o zadání PIN</string>

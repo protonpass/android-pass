@@ -9,7 +9,7 @@
     <item quantity="one">%s znak</item>
     <item quantity="few">%s znaky</item>
     <item quantity="many">%s znakov</item>
-    <item quantity="other">%s znaky</item>
+    <item quantity="other">%s znakov</item>
   </plurals>
   <string name="bottomsheet_option_capital_letters">Veľké písmená (A-Z)</string>
   <string name="bottomsheet_option_include_numbers">Vrátane čísiel (0-9)</string>

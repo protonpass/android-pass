@@ -82,7 +82,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Feil under lasting av tilpassede e-postadresser</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Fikk ikke tak i e-postadresser</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Fjern</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Siste brudd den %s.</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Siste brudd på %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Funnet i %s brudd</item>
     <item quantity="other">Funnet i %s brudd</item>

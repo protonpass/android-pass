@@ -42,10 +42,10 @@
   <string name="secure_links_list_title">Các liên kết bảo mật</string>
   <string name="secure_links_list_empty_title">Không có liên kết an toàn</string>
   <string name="secure_links_list_empty_subtitle">Bạn có thể bắt đầu tạo liên kết an toàn từ tùy chọn chia sẻ.</string>
-  <string name="secure_links_list_expiration_description">Hết hạn trong %s</string>
+  <string name="secure_links_list_expiration_description">Hết hạn sau %s</string>
   <string name="secure_links_list_expired_description">Đã hết hạn</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="other">%d lượt xem</item>
+    <item quantity="other">%d views</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Đã xảy ra lỗi khi tải liên kết an toàn</string>
   <string name="secure_links_list_header_title_inactive">Liên kết không hoạt động</string>

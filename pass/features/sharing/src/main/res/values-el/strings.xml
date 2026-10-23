@@ -51,7 +51,7 @@
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας μια κοινόχρηστη κρύπτη.</string>
   <string name="sharing_vault_invitation_accept">Συμμετοχή σε κοινόχρηστη κρύπτη</string>
   <string name="sharing_item_invitation_title">Πρόσκληση για κοινόχρηστο αντικείμενο</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας ένα αντικείμενο.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί ένα στοιχείο μαζί σας.</string>
   <string name="sharing_item_invitation_accept">Αποδοχή και προβολή αντικειμένου</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">Ο %1$s θέλει να μοιραστεί μία κρύπτη με την ομάδα σας %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">Ο %1$s θέλει να μοιραστεί ένα στοιχείο με την ομάδα σας %2$s.</string>

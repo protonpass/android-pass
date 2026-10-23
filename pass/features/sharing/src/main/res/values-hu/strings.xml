@@ -26,7 +26,7 @@
   <string name="sharing_can_manage_description">Megadhat és megvonhat elérést ehhez a tárolóhoz.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d elem</item>
-    <item quantity="other">%d elemek</item>
+    <item quantity="other">%d elem</item>
   </plurals>
   <plurals name="sharing_invite_item_count">
     <item quantity="one">%d item (including trashed)</item>
@@ -48,14 +48,14 @@
   <string name="share_permissions_title">Elérési szint megadása</string>
   <string name="sharing_reject_invitation">Meghívó elutasítása</string>
   <string name="sharing_vault_invitation_title">Megosztott tároló értesítés</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s szeretne megosztani önnel egy tárolót.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s szeretne megosztani veled egy tárolót.</string>
   <string name="sharing_vault_invitation_accept">Csatlakozás megosztott tárolóhoz</string>
   <string name="sharing_item_invitation_title">Megosztott elem meghívó</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s szeretne megosztani önnel egy elemet.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s szeretne megosztani veled egy elemet.</string>
   <string name="sharing_item_invitation_accept">Elfogadás és az elem megtekintése</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="sharing_group_invitation_accept">Accept invitation</string>
+  <string name="sharing_group_invitation_accept">Meghívás elfogadása</string>
   <string name="sharing_invite_more">Tőbb meghívása…</string>
   <string name="sharing_snackbar_invite_accepted">Meghívás elfogadva</string>
   <string name="sharing_snackbar_invite_accept_error">Hiba a meghívás elfogadásakor</string>
@@ -87,7 +87,7 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d elem</item>
-    <item quantity="other">%d elemek</item>
+    <item quantity="other">%d elem</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Meghívó elküldve</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Fiók létrehozására várakozik</string>
@@ -96,7 +96,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Tagok</string>
   <string name="share_manage_vault_current_user_indicator">Ön</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Újra</string>
   <string name="share_role_viewer">Néző</string>
   <string name="share_role_editor">Szerkesztő</string>
   <string name="share_role_admin">Adminisztrátor</string>

@@ -72,8 +72,8 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Voeg nieuw gepersonaliseerd e-mailadres toe</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Toevoegen</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Gebruikt in %d login</item>
-    <item quantity="other">Gebruikt in %d logins</item>
+    <item quantity="one">Gebruikt bij %d login</item>
+    <item quantity="other">Gebruikt bij %d logins</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="one">%d inbreuk gedetecteerd</item>

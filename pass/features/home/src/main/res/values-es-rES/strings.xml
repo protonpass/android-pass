@@ -54,7 +54,7 @@
   <string name="sl_sync_banner_title">Sincroniza tus alias desde SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">Tienes %d alias en SimpleLogin pero no aparece en Proton Pass. ¿Deseas sincronizarlo?</item>
-    <item quantity="other">Tienes %d alias en SimpleLogin pero no aparecen en Proton Pass. ¿Deseas sincronizarlos?</item>
+    <item quantity="other">Tienes %d alias en SimpleLogin pero no aparecen en Proton Pass. ¿Quieres sincronizarlos?</item>
   </plurals>
   <string name="home_notification_permission_banner_title">Obtén actualizaciones importantes</string>
   <string name="home_notification_permission_banner_text">Habilite las notificaciones automáticas para recibir información cuando otros compartan una bóveda con usted.</string>
@@ -63,7 +63,7 @@
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s quiere compartir una caja fuerte con tu grupo %2$s.</string>
   <string name="home_item_invite_card_title">Invitación a un elemento compartido</string>
   <string name="home_vault_invite_card_title">Invitación a una caja fuerte compartida</string>
-  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s quiere compartir una caja fuerte contigo.</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s desea compartir una caja fuerte contigo.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>

@@ -163,7 +163,7 @@
   <string name="autofill_mode_label_exact">(Sub)domínio exato</string>
   <string name="autofill_mode_label_never">Nunca preencher neste site</string>
   <string name="autofill_mode_label_start_with">Iniciar com</string>
-  <string name="autofill_mode_label_pattern">Wildcard pattern</string>
+  <string name="autofill_mode_label_pattern">Padrão curinga</string>
   <string name="autofill_mode_label_regular_expression">Expressão regular</string>
   <string name="autofill_mode_label_exact_path">Correspondência exata de URL</string>
   <string name="autofill_mode_label_unsupported">Esta URL será ignorada pelo preenchimento automático</string>
@@ -255,7 +255,7 @@
     <item quantity="other">%d horas</item>
   </plurals>
   <plurals name="time_unit_minutes">
-    <item quantity="one">%d minutos</item>
+    <item quantity="one">%d minuto</item>
     <item quantity="other">%d minutos</item>
   </plurals>
   <plurals name="time_unit_seconds">

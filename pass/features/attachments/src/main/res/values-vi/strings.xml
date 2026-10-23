@@ -36,13 +36,13 @@
   <string name="storage_full_title">Lưu trữ của bạn sắp đầy.</string>
   <string name="storage_full_body">Nâng cấp để tăng dung lượng lưu trữ của bạn.</string>
   <string name="storage_full_upgrade">Nâng cấp</string>
-  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s trên %2$s</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s trong tổng số %2$s</string>
   <string name="attachments_saved_to_location_success">Attachment saved to location</string>
   <string name="attachments_saved_to_location_error">Could not save attachment to location</string>
   <string name="attachment_sync_dialog_title_waiting">Waiting for connection</string>
   <string name="attachment_sync_dialog_title_downloading">Downloading attachments</string>
-  <string name="attachment_sync_dialog_title_done">Download complete</string>
-  <string name="attachment_sync_dialog_title_partial_failure">Download failed</string>
+  <string name="attachment_sync_dialog_title_done">Tải xuống hoàn tất</string>
+  <string name="attachment_sync_dialog_title_partial_failure">Tải xuống thất bại</string>
   <string name="attachment_sync_dialog_subtitle_waiting">Waiting for network connection to download attachments.</string>
   <string name="attachment_sync_dialog_subtitle_downloading">Downloading %1$d/%2$d attachments</string>
   <string name="attachment_sync_dialog_subtitle_done">All attachments have been downloaded successfully.</string>

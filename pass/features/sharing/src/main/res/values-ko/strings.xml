@@ -31,7 +31,7 @@
     <item quantity="other">%d개 항목 (휴지통 내 항목 포함)</item>
   </plurals>
   <plurals name="sharing_member_count">
-    <item quantity="other">%d명 회원</item>
+    <item quantity="other">%d명 구성원</item>
   </plurals>
   <string name="sharing_member_count_header">구성원</string>
   <string name="shared_via_title">다음으로 공유</string>
@@ -106,7 +106,7 @@
   <string name="sharing_bottomsheet_resend_invite">초대장 재전송</string>
   <string name="sharing_bottomsheet_cancel_invite">초대 취소</string>
   <string name="sharing_transfer_ownership_confirm_title">소유권 이전</string>
-  <string name="sharing_transfer_ownership_confirm_message">금고의 소유권을 %s으로 이동하시겠어요?</string>
+  <string name="sharing_transfer_ownership_confirm_message">금고의 소유권을 %s님으로 이동하시겠어요?</string>
   <string name="sharing_snackbar_cancel_invite_success">초대가 취소됨</string>
   <string name="sharing_snackbar_cancel_invite_error">초대 취소 실패</string>
   <string name="sharing_snackbar_resend_invite_success">초대 다시 보내기</string>

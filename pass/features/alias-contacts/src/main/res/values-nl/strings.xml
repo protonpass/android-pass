@@ -24,7 +24,7 @@
   <string name="create_contact_title">Contact aanmaken</string>
   <string name="detail_contact_title">Contacten</string>
   <string name="email_input_error">Ongeldig e-mailadres</string>
-  <string name="detail_contact_display_name" comment="sender email address">Een contactpersoon wordt gemaakt voor elk e-mailadres dat e-mails naar of ontvangt van %1$s</string>
+  <string name="detail_contact_display_name" comment="sender email address">Er wordt een contactpersoon aangemaakt voor elk e-mailadres dat e-mails verzendt naar of ontvangt van %1$s.</string>
   <string name="empty_alias_contacts_title">Alias contacten</string>
   <string name="empty_alias_contacts_body">Om uw persoonlijke e-mailadres verborgen te houden, kunt u een alias-contactpersoon maken die uw adres maskert.</string>
   <string name="empty_alias_contacts_learn_more">Meer informatie</string>

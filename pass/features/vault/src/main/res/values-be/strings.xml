@@ -25,10 +25,10 @@
   <string name="folder_delete_dialog_title">Выдаліць папку</string>
   <string name="folder_delete_dialog_body">Дзеянне прывядзе да незваротнага выдалення папкі з назвай __FOLDER_NAME__ і ўсяго яе змесціва. Увядзіце назву папкі, каб пацвердзіць выдаленне.</string>
   <plurals name="folder_delete_dialog_body_with_items" comment="%1$d is the number of items in the folder and all its subfolders. %2$s is the folder name">
-    <item quantity="one">This will permanently delete the folder %2$s and all its contents (%1$d item). Enter the folder name to confirm deletion.</item>
-    <item quantity="few">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
-    <item quantity="many">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
-    <item quantity="other">This will permanently delete the folder %2$s and all its contents (%1$d items). Enter the folder name to confirm deletion.</item>
+    <item quantity="one">Дзеянне прывядзе да незваротнага выдалення папкі з назвай %2$s і ўсяго яе змесціва (%1$d элемент). Увядзіце назву папкі, каб пацвердзіць выдаленне.</item>
+    <item quantity="few">Дзеянне прывядзе да незваротнага выдалення папкі з назвай %2$s і ўсяго яе змесціва (%1$d элементы). Увядзіце назву папкі, каб пацвердзіць выдаленне.</item>
+    <item quantity="many">Дзеянне прывядзе да незваротнага выдалення папкі з назвай %2$s і ўсяго яе змесціва (%1$d элементаў). Увядзіце назву папкі, каб пацвердзіць выдаленне.</item>
+    <item quantity="other">Дзеянне прывядзе да незваротнага выдалення папкі з назвай %2$s і ўсяго яе змесціва (%1$d элементаў). Увядзіце назву папкі, каб пацвердзіць выдаленне.</item>
   </plurals>
   <string name="folder_delete_dialog_placeholder">Назва папкі</string>
   <string name="folder_delete_dialog_delete_action">Выдаліць</string>
@@ -72,6 +72,6 @@
     <item quantity="one">%d элемент</item>
     <item quantity="few">%d элементы</item>
     <item quantity="many">%d элементаў</item>
-    <item quantity="other">%d элементаў</item>
+    <item quantity="other">%d элементы</item>
   </plurals>
 </resources>

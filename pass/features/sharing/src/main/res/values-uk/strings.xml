@@ -39,7 +39,7 @@
   <plurals name="sharing_member_count">
     <item quantity="one">%d учасник</item>
     <item quantity="few">%d учасники</item>
-    <item quantity="many">%d учасників</item>
+    <item quantity="many">%d учасники</item>
     <item quantity="other">%d учасників</item>
   </plurals>
   <string name="sharing_member_count_header">Учасники</string>
@@ -61,7 +61,7 @@
   <string name="sharing_item_invitation_accept">Прийняти та переглянути елемент</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s хоче поділитися сховищем із вашою групою %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="sharing_group_invitation_accept">Accept invitation</string>
+  <string name="sharing_group_invitation_accept">Прийняти запрошення</string>
   <string name="sharing_invite_more">Запросити більше…</string>
   <string name="sharing_snackbar_invite_accepted">Запрошення прийнято</string>
   <string name="sharing_snackbar_invite_accept_error">Помилка приймання запрошення</string>
@@ -95,9 +95,9 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d елемент</item>
-    <item quantity="few">%d елементи</item>
-    <item quantity="many">%d елементів</item>
-    <item quantity="other">%d елементів</item>
+    <item quantity="few">%d елементів</item>
+    <item quantity="many">%d елементи</item>
+    <item quantity="other">%d елементи</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Запрошення надіслано</string>
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Очікується створення облікового запису</string>
@@ -106,7 +106,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Учасники</string>
   <string name="share_manage_vault_current_user_indicator">Ви</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Повторити спробу</string>
   <string name="share_role_viewer">Користувач</string>
   <string name="share_role_editor">Редактор</string>
   <string name="share_role_admin">Адміністратор</string>

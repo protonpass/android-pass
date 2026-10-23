@@ -27,7 +27,7 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Verschieben</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Eintrag befindet sich bereits in diesem Ordner</item>
-    <item quantity="other">%d Einträge befindet sich bereits in diesem Ordner</item>
+    <item quantity="other">%d Einträge befinden sich bereits in diesem Ordner</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Der Ordner befindet sich bereits in diesem Speicherort</string>
   <string name="migrate_disabled_folder_reason_being_moved">Dieser Ordner wird verschoben</string>

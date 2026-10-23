@@ -17,5 +17,5 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="通过浏览器打开">打开方式：</string>
+  <string name="browser_open_with">打开方式：</string>
 </resources>

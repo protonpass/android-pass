@@ -20,7 +20,7 @@
   <string name="sharing_can_view">Người xem</string>
   <string name="sharing_can_edit">Chỉnh sửa</string>
   <string name="sharing_can_manage">Quản trị viên</string>
-  <string name="sharing_can_manage_v2">Manager</string>
+  <string name="sharing_can_manage_v2">Quản lý</string>
   <string name="sharing_can_view_description">Cho phép xem nội dung trong két sắt này.</string>
   <string name="sharing_can_edit_description">Cho phép tạo, chỉnh sửa, xóa và xuất nội dung trong két sắt này.</string>
   <string name="sharing_can_manage_description">Cho phép cấp và thu hồi quyền truy cập vào két sắt này.</string>
@@ -48,7 +48,7 @@
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s muốn chia sẻ một két sắt với bạn.</string>
   <string name="sharing_vault_invitation_accept">Tham gia dùng két sắt</string>
   <string name="sharing_item_invitation_title">Lời mời chia sẻ mục</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s muốn chia sẻ một mục với bạn.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s muốn chia sẻ một nội dung với bạn.</string>
   <string name="sharing_item_invitation_accept">Chấp nhận và xem mục</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
@@ -91,17 +91,17 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Thành viên</string>
   <string name="share_manage_vault_current_user_indicator">Bạn</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Thử lại</string>
   <string name="share_role_viewer">Người xem</string>
   <string name="share_role_editor">Trình chỉnh sửa</string>
   <string name="share_role_admin">Quản trị viên</string>
-  <string name="share_role_manager">Manager</string>
+  <string name="share_role_manager">Quản lý</string>
   <string name="share_role_owner">Chủ sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Bạn không thể chuyển quyền sở hữu két sắt cuối cùng của mình.</string>
   <string name="sharing_bottomsheet_remove_access">Thu hồi quyền truy cập</string>
   <string name="sharing_bottomsheet_item_admin_subtitle">Có thể cấp và thu hồi quyền truy cập vào mục này.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit and delete this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Có thể sửa và xoá mục này.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Có thể xem mục này.</string>
   <string name="sharing_bottomsheet_resend_invite">Gửi lại lời mời</string>
   <string name="sharing_bottomsheet_cancel_invite">Hủy lời mời</string>

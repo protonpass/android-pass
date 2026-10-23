@@ -22,7 +22,7 @@
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
   <string name="migrate_dissolve_folder_dialog_title">Move folder contents</string>
   <string name="migrate_dissolve_folder_dialog_message">This folder is already at the vault root. Its items and subfolders will be moved to the vault root.</string>
-  <string name="migrate_dissolve_folder_dialog_confirm">Move</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">移動</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="other">%d items are already in this folder</item>
   </plurals>
@@ -33,14 +33,14 @@
   <string name="migrate_disabled_vault_reason_no_permission">您無法於保管庫創建項目</string>
   <string name="migrate_disabled_vault_reason_same_vault">您無法將項目移動到同一個保管庫。</string>
   <plurals name="migrate_items_shared_warning_title">
-    <item quantity="other">要將 %d 個項目移動到另一個保管庫嗎？</item>
+    <item quantity="other">Move %d items to another vault?</item>
   </plurals>
   <string name="migrate_item_shared_warning_message">此項目目前為共享中。移至另一個保管庫的同時，將移除所有其他使用者的存取權限。</string>
   <plurals name="migrate_items_shared_warning_message">
     <item quantity="other">%d 個項目目前為共享狀態。將這些項目移至另一個保管庫，將會移除所有其他使用者的存取權限。</item>
   </plurals>
-  <string name="migrate_select_vault_title">Select a vault</string>
+  <string name="migrate_select_vault_title">選取保管庫</string>
   <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
-  <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
-  <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>
+  <string name="migrate_folder_items_moved_success_snackbar">項目已移動</string>
+  <string name="migrate_folder_items_moved_error_snackbar">移動項目時發生錯誤</string>
 </resources>

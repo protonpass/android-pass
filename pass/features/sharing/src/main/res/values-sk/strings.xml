@@ -39,7 +39,7 @@
   <plurals name="sharing_member_count">
     <item quantity="one">%d člen</item>
     <item quantity="few">%d členovia</item>
-    <item quantity="many">%d členov</item>
+    <item quantity="many">%d členovia</item>
     <item quantity="other">%d členov</item>
   </plurals>
   <string name="sharing_member_count_header">Členovia</string>
@@ -54,10 +54,10 @@
   <string name="share_permissions_title">Nastavte úroveň prístupu</string>
   <string name="sharing_reject_invitation">Odmietnuť pozvánku</string>
   <string name="sharing_vault_invitation_title">Pozvánka do zdieľaného trezora</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s s vami chce zdieľať trezor.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vami zdieľať trezor.</string>
   <string name="sharing_vault_invitation_accept">Pripojiť sa k zdieľanému trezoru</string>
   <string name="sharing_item_invitation_title">Pozvánka ku zdieľanej položke</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vami zdieľať položku.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s s vami chce zdieľať položku.</string>
   <string name="sharing_item_invitation_accept">Prijať a zobraziť novú položku</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s chce zdieľať trezor s vašou skupinou %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s chce zdieľať položku s vašou skupinou %2$s.</string>
@@ -95,8 +95,8 @@
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d položka</item>
-    <item quantity="few">%d položky</item>
-    <item quantity="many">%d položiek</item>
+    <item quantity="few">%d položiek</item>
+    <item quantity="many">%d položky</item>
     <item quantity="other">%d položiek</item>
   </plurals>
   <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Pozvánka odoslaná</string>

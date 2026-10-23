@@ -24,7 +24,7 @@
   <string name="create_contact_title">Buat kontak</string>
   <string name="detail_contact_title">Kontak</string>
   <string name="email_input_error">Alamat email tidak valid</string>
-  <string name="detail_contact_display_name" comment="sender email address">Kontak dibuat untuk setiap alamat email yang mengirim email atau menerima email dari %1$s</string>
+  <string name="detail_contact_display_name" comment="sender email address">Kontak dibuat untuk setiap alamat email yang mengirim atau menerima email dari %1$s</string>
   <string name="empty_alias_contacts_title">Kontak alias</string>
   <string name="empty_alias_contacts_body">Untuk menjaga alamat email pribadi Anda tetap tersembunyi, Anda dapat membuat kontak alias yang menyamarkan alamat Anda.</string>
   <string name="empty_alias_contacts_learn_more">Pelajari lebih lanjut</string>

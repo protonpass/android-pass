@@ -55,7 +55,7 @@
   <string name="sharing_item_invitation_accept">Aceitar e visualizar o item</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share a vault with your group %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s wants to share an item with your group %2$s.</string>
-  <string name="sharing_group_invitation_accept">Accept invitation</string>
+  <string name="sharing_group_invitation_accept">Aceitar o convite</string>
   <string name="sharing_invite_more">Convide mais…</string>
   <string name="sharing_snackbar_invite_accepted">O convite foi aceite.</string>
   <string name="sharing_snackbar_invite_accept_error">Erro ao aceitar o convite.</string>
@@ -96,7 +96,7 @@
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membros</string>
   <string name="share_manage_vault_current_user_indicator">Você</string>
   <string name="share_manage_vault_members_error" comment="Shown when the vault member list fails to load">Couldn\'t load members</string>
-  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Retry</string>
+  <string name="share_manage_vault_members_error_retry" comment="Button to retry loading the vault members">Repetir</string>
   <string name="share_role_viewer">Leitor</string>
   <string name="share_role_editor">Editor</string>
   <string name="share_role_admin">Administrador</string>

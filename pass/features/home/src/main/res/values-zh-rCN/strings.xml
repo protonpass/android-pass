@@ -62,7 +62,7 @@
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s 希望与您的群组 %2$s 共享一个保险库。</string>
   <string name="home_item_invite_card_title">共享项目邀请</string>
   <string name="home_vault_invite_card_title">共享保险库邀请</string>
-  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s 希望与您共享一个保险库</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s 想和您分享一个保险库。</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">复制密码</string>
   <string name="bottomsheet_copy_username">复制用户名</string>

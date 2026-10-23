@@ -22,12 +22,12 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">給 %s 的建議</string>
   <string name="error_loading_items">無法載入項目</string>
-  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
+  <string name="error_no_vaults_available">您沒有任何具有編輯者或管理員存取的保管庫。嘗試在主要應用程式中建立一個，或詢問您的組織機構管理員以取得支援服務。</string>
   <string name="topbar_search_query">於保存庫中搜尋…</string>
   <string name="topbar_search_pinned_items">於標籤中搜尋…</string>
   <string name="topbar_search_query_oldest_vaults">於最舊的保存庫搜尋…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">搜尋…</string>
-  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">所有帳號 (%1$s)</string>
+  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">所有帳戶 (%1$s)</string>
   <plurals name="select_item_autosave_banner">
     <item quantity="other">Items with the same name already exist.\nSelect one to update or create a new item.</item>
   </plurals>

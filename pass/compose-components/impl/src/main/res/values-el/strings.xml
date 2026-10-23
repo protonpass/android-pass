@@ -239,7 +239,7 @@
     <item quantity="other">%d έτη</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d μήνα</item>
+    <item quantity="one">%d μήνας</item>
     <item quantity="other">%d μήνες</item>
   </plurals>
   <plurals name="time_unit_weeks">

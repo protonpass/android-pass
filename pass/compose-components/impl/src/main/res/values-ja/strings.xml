@@ -30,13 +30,13 @@
   <string name="bottomsheet_view_item_history">履歴を表示</string>
   <string name="bottomsheet_monitor_exclude">監視から除外</string>
   <string name="bottomsheet_monitor_include">監視に含める</string>
-  <string name="bottomsheet_migrate_item_v2">Move</string>
+  <string name="bottomsheet_migrate_item_v2">移動</string>
   <string name="bottomsheet_create_folder">フォルダを作成</string>
   <string name="folder_tree_create_folder">フォルダを作成</string>
   <string name="bottomsheet_rename_folder">リネーム</string>
   <string name="bottomsheet_create_sub_folder">サブフォルダを作成</string>
   <string name="bottomsheet_move_folder">Move folder</string>
-  <string name="bottomsheet_move_all_items_in_folder">Move all items</string>
+  <string name="bottomsheet_move_all_items_in_folder">すべてのアイテムを移動する</string>
   <string name="bottomsheet_copy_item_note">メモをコピー</string>
   <string name="bottomsheet_delete_permanently">完全に削除する</string>
   <string name="bottomsheet_restore">復元</string>
@@ -101,7 +101,7 @@
   <string name="search_topbar_icon_content_description">検索アイコン</string>
   <!-- Select Vault BottomSheet -->
   <plurals name="bottomsheet_select_vault_item_count">
-    <item quantity="other">%d 個のアイテム</item>
+    <item quantity="other">%d個のアイテム</item>
   </plurals>
   <!-- Confirm close dialog -->
   <string name="confirm_close_dialog_title">変更を破棄しますか?</string>
@@ -236,7 +236,7 @@
     <item quantity="other">%d年</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="other">%d ヶ月</item>
+    <item quantity="other">%dか月</item>
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="other">%d週間</item>
@@ -281,7 +281,7 @@
   <string name="simple_login_widget_action">エイリアスを同期する</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">コードを受け取っていませんか?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">迷惑メールフォルダに\"%s\"という件名のメールがないか確認してください</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">スパムフォルダに\"%s\"という件名のメールがないか確認してください</string>
   <string name="verification_code_suggestion_subject_new_email_address">Proton Passのメールアドレスを確認してください</string>
   <string name="verification_code_suggestion_subject_new_mailbox">受信箱を確認してください</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">メールが見つからない場合、%sできます。</string>
@@ -289,7 +289,7 @@
   <string name="field_display_name_title">表示名</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="other">%1$s 個のファイル</item>
+    <item quantity="other">%1$s個のファイル</item>
   </plurals>
   <string name="attachment_title">添付ファイル</string>
   <string name="attachment_no_files">デバイスからファイルをアップロード</string>
@@ -302,10 +302,10 @@
     <item quantity="other">%d個の共有アイテム</item>
   </plurals>
   <plurals name="users_count">
-    <item quantity="other">%d人のユーザー</item>
+    <item quantity="other">%d 人のユーザー</item>
   </plurals>
   <plurals name="members_count">
-    <item quantity="other">%d 人のメンバー</item>
+    <item quantity="other">%d人のメンバー</item>
   </plurals>
   <string name="show_network_qr_code">ネットワークのQRコードを表示</string>
   <string name="expand_collpased_text">詳細</string>
@@ -315,14 +315,14 @@
   <string name="login_item_monitor_widget_compromised_pass_title">Compromised password</string>
   <string name="login_item_monitor_widget_compromised_pass_subtitle">This login password appears in a data breach. Please visit the service and change the password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d件の他のログインで同じパスワードが使用されています</item>
+    <item quantity="other">%d 件の他のログインで同じパスワードが使用されています</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">2要素認証を設定するとより安全になります</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">このサービスは 2FA を提供します。アカウントのセキュリティを強化するには、これを有効にしてください。</string>
-  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_ignore">無視</string>
   <string name="login_item_monitor_action_restore">Restore alert</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
-  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_weak">弱いパスワード</string>
   <string name="login_item_monitor_label_compromised">Compromised password</string>
   <string name="login_item_monitor_label_reused">Reused password</string>
   <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
@@ -334,13 +334,13 @@
   <string name="field_detail_display_name_title">表示名</string>
   <string name="display_name_section_description">このエイリアスからメールを送る際の表示名</string>
   <plurals name="alias_forwards_count">
-    <item quantity="other">%1$s件の転送</item>
+    <item quantity="other">%1$s個の転送</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="other">%1$s件の返信</item>
+    <item quantity="other">%1$s個の返信</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="other">%1$s件のブロック</item>
+    <item quantity="other">%1$s個のブロック</item>
   </plurals>
   <string name="alias_create_login_from_alias">ログイン情報を作成</string>
   <string name="banner_contacts_title">ご存知ですか？</string>
@@ -370,7 +370,7 @@
     <item quantity="other">%s 語</item>
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
-  <string name="password_strength_prefix">Password strength</string>
+  <string name="password_strength_prefix">パスワードの強度</string>
   <string name="password_check_min_length">Password is too short</string>
   <string name="password_check_lowercase">Lowercase letters</string>
   <string name="password_check_uppercase">Uppercase letters</string>

@@ -34,22 +34,22 @@
   <string name="no_activity_contact">Отсутствие активности за последние 14 дней.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">за последние 14 дней.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$dпереслано</item>
+    <item quantity="one">%1$dпересланы</item>
     <item quantity="few">%1$dпересланы</item>
-    <item quantity="many">%1$dпереслано</item>
-    <item quantity="other">%1$dпереслано</item>
+    <item quantity="many">%1$dпересланы</item>
+    <item quantity="other">%1$dпересланы</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d отправлено</item>
+    <item quantity="one">%1$d отправлены</item>
     <item quantity="few">%1$d отправлены</item>
-    <item quantity="many">%1$d отправлено</item>
-    <item quantity="other">%1$d отправлено</item>
+    <item quantity="many">%1$d отправлены</item>
+    <item quantity="other">%1$d отправлены</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d заблокировано</item>
+    <item quantity="one">%1$d заблокированы</item>
     <item quantity="few">%1$d заблокированы</item>
-    <item quantity="many">%1$d заблокировано</item>
-    <item quantity="other">%1$d заблокировано</item>
+    <item quantity="many">%1$d заблокированы</item>
+    <item quantity="other">%1$d заблокированы</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Заблокированные адреса</string>
   <string name="forwarding_addresses_subtitle">Адреса для пересылки</string>

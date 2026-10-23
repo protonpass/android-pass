@@ -34,19 +34,19 @@
   <string name="no_activity_contact">V zadnjih 14 dneh ni bilo nobene dejavnosti.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">v zadnjih 14 dneh.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d posredovano</item>
+    <item quantity="one">%1$d posredovani</item>
     <item quantity="two">%1$d posredovana</item>
     <item quantity="few">%1$d posredovani</item>
     <item quantity="other">%1$d posredovani</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d poslan</item>
+    <item quantity="one">%1$d poslani</item>
     <item quantity="two">%1$d poslana</item>
     <item quantity="few">%1$d poslani</item>
     <item quantity="other">%1$d poslani</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d blokiran</item>
+    <item quantity="one">%1$d blokirani</item>
     <item quantity="two">%1$d blokirana</item>
     <item quantity="few">%1$d blokirani</item>
     <item quantity="other">%1$d blokirani</item>

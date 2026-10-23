@@ -22,7 +22,7 @@
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">%s への提案</string>
   <string name="error_loading_items">アイテムを読み込むことができませんでした</string>
-  <string name="error_no_vaults_available">You don\'t have any vaults with editor or admin access. Try creating one in the main app, or ask your organization\'s administrator for support.</string>
+  <string name="error_no_vaults_available">編集者または管理者権限を持つ保管庫がありません。メインアプリで作成するか、組織の管理者にサポートを依頼してください。</string>
   <string name="topbar_search_query">すべての保管庫を検索...</string>
   <string name="topbar_search_pinned_items">ピン留めされたものを検索...</string>
   <string name="topbar_search_query_oldest_vaults">最も古い保管庫を検索してください…</string>

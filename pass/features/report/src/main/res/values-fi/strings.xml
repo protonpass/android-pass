@@ -48,7 +48,7 @@
   <string name="tips_passkey_android_not_supported">Android-versiosi on liian vanha. Pyri päivittämään laitteesi.</string>
   <string name="tips_passkey_supported">Pääsyavaimia tuetaan</string>
   <string name="tips_passkey_not_supported">Pääsyavaimia ei tueta</string>
-  <string name="report_steps" comment="Indicator showing report progress">Vaihe %1$d/%2$d</string>
+  <string name="report_steps" comment="Indicator showing report progress">Vaihe %1$d / %2$d</string>
   <string name="description_cannot_be_blank">Kuvaus ei voi olla tyhjä</string>
   <string name="description_is_too_short">Kuvaus on liian lyhyt</string>
   <string name="description_is_too_long">Kuvaus on liian pitkä</string>

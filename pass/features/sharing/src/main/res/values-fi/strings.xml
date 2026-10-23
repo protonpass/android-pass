@@ -48,7 +48,7 @@
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
   <string name="sharing_reject_invitation">Kieltäydy kutsusta</string>
   <string name="sharing_vault_invitation_title">Kutsu jaettuun holviin</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa sinulle holvin.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa holvin kanssasi.</string>
   <string name="sharing_vault_invitation_accept">Liity jaettuun holviin</string>
   <string name="sharing_item_invitation_title">Kutsu jaettuun kohteeseen</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa sinulle kohteen.</string>
@@ -111,7 +111,7 @@
   <string name="sharing_bottomsheet_resend_invite">Lähetä kutsu uudelleen</string>
   <string name="sharing_bottomsheet_cancel_invite">Peru kutsu</string>
   <string name="sharing_transfer_ownership_confirm_title">Siirrä omistajuus</string>
-  <string name="sharing_transfer_ownership_confirm_message">Siirretäänkö holvin omistajuus tunnukselle %s?</string>
+  <string name="sharing_transfer_ownership_confirm_message">Siirretäänkö holvin omistajuus käyttäjälle %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Kutsu peruttiin</string>
   <string name="sharing_snackbar_cancel_invite_error">Virhe peruttaessa kutsua</string>
   <string name="sharing_snackbar_resend_invite_success">Kutsu lähetettiin uudelleen</string>

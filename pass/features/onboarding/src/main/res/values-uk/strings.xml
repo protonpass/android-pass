@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="on_boarding_autofill_content_v2">Proton pass fill in login details for you. No typing or copy paste required.</string>
-  <string name="on_boarding_autofill_title_v2">Enjoy the magic of AutoFill</string>
+  <string name="on_boarding_autofill_title_v2">Насолоджуйтеся магією автозаповнення</string>
   <string name="on_boarding_autofill_button">Автозаповнення з Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Налаштуйте Proton Pass на розблокування за допомогою відбитка пальця, щоб лише ви мали доступ.</string>
   <string name="on_boarding_fingerprint_title">Захистіть свої найвразливіші дані</string>
@@ -10,7 +10,7 @@
   <string name="on_boarding_last_page_title">Контролюйте, що потрапляє до вашої поштової скриньки.</string>
   <string name="on_boarding_last_page_button">Почніть користуватися Proton Pass</string>
   <string name="on_boarding_skip">Не зараз</string>
-  <string name="on_boarding_tutorial_v2">Learn how to use Proton Pass</string>
+  <string name="on_boarding_tutorial_v2">Дізнайтеся, як користуватися Proton Pass</string>
   <string name="on_boarding_pending_invite_content">З міркувань безпеки ваш доступ потребує підтвердження.</string>
   <string name="on_boarding_pending_invite_title">Очікування доступу до спільних даних</string>
   <string name="on_boarding_pending_invite_button">Докладніше про Proton Pass</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <plurals name="migrate_item_confirm_title_bottom_sheet">
-    <item quantity="other">Chuyển %d mục vào két sắt này?</item>
+    <item quantity="other">Chuyển %d nội dung vào kho lưu trữ này?</item>
   </plurals>
   <plurals name="migrate_item_to_folder_confirm_title_bottom_sheet">
     <item quantity="other">Move %d items to the following folder?</item>
@@ -22,7 +22,7 @@
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
   <string name="migrate_dissolve_folder_dialog_title">Move folder contents</string>
   <string name="migrate_dissolve_folder_dialog_message">This folder is already at the vault root. Its items and subfolders will be moved to the vault root.</string>
-  <string name="migrate_dissolve_folder_dialog_confirm">Move</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Di chuyển</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="other">%d items are already in this folder</item>
   </plurals>
@@ -35,12 +35,12 @@
   <plurals name="migrate_items_shared_warning_title">
     <item quantity="other">Move %d items to another vault?</item>
   </plurals>
-  <string name="migrate_item_shared_warning_message">This item is currently shared. Moving it to another vault will remove access for all other users.</string>
+  <string name="migrate_item_shared_warning_message">Mục này hiện đang được chia sẻ. Việc di chuyển mục này sang kho lưu trữ khác sẽ xóa quyền truy cập của tất cả người dùng còn lại.</string>
   <plurals name="migrate_items_shared_warning_message">
     <item quantity="other">%d items are currently shared. Moving them to another vault will remove access for all other users.</item>
   </plurals>
-  <string name="migrate_select_vault_title">Select a vault</string>
+  <string name="migrate_select_vault_title">Chọn một két sắt</string>
   <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
-  <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
-  <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Đã di chuyển nội dung</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Lỗi khi di chuyển nội dung</string>
 </resources>

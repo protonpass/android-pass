@@ -24,9 +24,9 @@
   <string name="attachment_download_channel">Attachment downloads</string>
   <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
   <string name="downloading_attachments">Downloading attachments</string>
-  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s files</string>
-  <string name="plan_subscription_auto_renews_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_subscription_auto_renews_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s tệp</string>
+  <string name="plan_subscription_auto_renews_monthly">Gói đăng ký tự động gia hạn với mức phí %1$s/tháng</string>
+  <string name="plan_subscription_auto_renews_annual">Gói đăng ký tự động gia hạn với mức phí %1$s/năm</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Ưu đãi chào mừng. Tự động gia hạn với mức %1$s/tháng</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Ưu đãi chào mừng. Tự động gia hạn ở mức %1$s/năm</string>
 </resources>

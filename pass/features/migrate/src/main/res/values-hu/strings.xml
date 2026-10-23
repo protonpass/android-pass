@@ -24,7 +24,7 @@
   <string name="migrate_folder_already_same_parent_snackbar">Folder is already in this location</string>
   <string name="migrate_dissolve_folder_dialog_title">Move folder contents</string>
   <string name="migrate_dissolve_folder_dialog_message">This folder is already at the vault root. Its items and subfolders will be moved to the vault root.</string>
-  <string name="migrate_dissolve_folder_dialog_confirm">Move</string>
+  <string name="migrate_dissolve_folder_dialog_confirm">Áthelyezés</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">Item is already in this folder</item>
     <item quantity="other">%d items are already in this folder</item>
@@ -44,8 +44,8 @@
     <item quantity="one">%d elem jelenleg meg van osztva. Ha áthelyezi egy másik tárolóba, az összes többi felhasználó számára megszűnik a hozzáférés.</item>
     <item quantity="other">%d elem jelenleg meg van osztva. Ha áthelyezi egy másik tárolóba, az összes többi felhasználó számára megszűnik a hozzáférés.</item>
   </plurals>
-  <string name="migrate_select_vault_title">Select a vault</string>
+  <string name="migrate_select_vault_title">Válasszon tárolót</string>
   <string name="migrate_select_destination_for_source_title">Select the destination to move all items from %s</string>
-  <string name="migrate_folder_items_moved_success_snackbar">Items moved</string>
-  <string name="migrate_folder_items_moved_error_snackbar">Error moving the items</string>
+  <string name="migrate_folder_items_moved_success_snackbar">Elemek áthelyezve</string>
+  <string name="migrate_folder_items_moved_error_snackbar">Hiba az elemek áthelyezésekor</string>
 </resources>

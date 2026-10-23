@@ -53,8 +53,8 @@
   <string name="home_drawer_all_items">Tutti gli elementi</string>
   <string name="sl_sync_banner_title">Sincronizza i tuoi alias da SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="one">Hai un alias %d presente in SimpleLogin ma mancante in Proton Pass. Desideri sincronizzarlo?</item>
-    <item quantity="other">Hai alias %d presenti in SimpleLogin ma mancanti in Proton Pass. Desideri sincronizzarli?</item>
+    <item quantity="one">Hai %d alias presente in SimpleLogin ma mancante in Proton Pass. Desideri sincronizzarlo?</item>
+    <item quantity="other">Hai %d alias presenti in SimpleLogin ma mancanti in Proton Pass. Desideri sincronizzarli?</item>
   </plurals>
   <string name="home_notification_permission_banner_title">Ricevi gli aggiornamenti importanti</string>
   <string name="home_notification_permission_banner_text">Abilita le notifiche push per sapere quando qualcuno condivide una cassaforte con te.</string>
@@ -98,7 +98,7 @@
   <string name="snackbar_delete_vault_error">Cassaforte non eliminata</string>
   <!-- Search top bar -->
   <string name="search_topbar_placeholder_all_items">Cerca in tutti gli elementi...</string>
-  <string name="search_topbar_placeholder_vault">Cerca in %s…</string>
+  <string name="search_topbar_placeholder_vault">Cerca in %s...</string>
   <string name="search_topbar_placeholder_trash">Cerca nel cestino…</string>
   <string name="search_topbar_placeholder_pinning">Cerca negli elementi fissati…</string>
   <string name="search_topbar_placeholder_shared_by_me">Cerca in Condivisi da me...</string>
@@ -158,7 +158,7 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Sei sicuro di voler eliminare l\'elemento? Questa azione è irreversibile</item>
-    <item quantity="other">Sei sicuro di voler eliminare definitivamente %d elementi? Questa azione è irreversibile</item>
+    <item quantity="other">Sei sicuro di voler eliminare definitivamente %d elementi?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">L\'elemento %d è attualmente condiviso. L\'eliminazione rimuoverà l\'accesso per tutti gli altri utenti.</item>

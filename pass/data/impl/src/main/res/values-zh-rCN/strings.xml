@@ -23,10 +23,10 @@
   <string name="logging_out_free_users">注销超额免费用户</string>
   <string name="attachment_download_channel">Attachment downloads</string>
   <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
-  <string name="downloading_attachments">Downloading attachments</string>
-  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s files</string>
-  <string name="plan_subscription_auto_renews_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_subscription_auto_renews_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="downloading_attachments">正在下载附件</string>
+  <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s 个文件</string>
+  <string name="plan_subscription_auto_renews_monthly">%1$s/月自动续订</string>
+  <string name="plan_subscription_auto_renews_annual">%1$s/年自动续订</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">新人特惠。%1$s/月自动续订</string>
+  <string name="plan_welcome_offer_auto_renews_annual">新人特惠。%1$s/年自动续订</string>
 </resources>

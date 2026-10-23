@@ -24,7 +24,7 @@
   <string name="create_contact_title">연락처 추가</string>
   <string name="detail_contact_title">연락처</string>
   <string name="email_input_error">유효하지 않은 이메일 주소</string>
-  <string name="detail_contact_display_name" comment="sender email address">%1$s(으)로 이메일을 보내거나 받는 모든 이메일 주소에 대해 연락처가 생성됩니다.</string>
+  <string name="detail_contact_display_name" comment="sender email address">%1$s (으)로/부터 이메일을 송/수신하는 모든 이메일 주소에 대해 연락처가 생성됩니다.</string>
   <string name="empty_alias_contacts_title">별칭 연락처</string>
   <string name="empty_alias_contacts_body">개인 이메일 주소를 숨기려면, 별칭 연락처를 생성하세요.</string>
   <string name="empty_alias_contacts_learn_more">자세히 알아보기</string>

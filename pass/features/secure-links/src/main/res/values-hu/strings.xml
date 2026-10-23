@@ -46,8 +46,8 @@
   <string name="secure_links_list_expiration_description">Lejár: %s</string>
   <string name="secure_links_list_expired_description">Lejárt</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="one">%d megtekintés</item>
-    <item quantity="other">%d megtekintés</item>
+    <item quantity="one">%d view</item>
+    <item quantity="other">%d views</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Egy hiba történt a biztonságos hivatkozások lekérése során</string>
   <string name="secure_links_list_header_title_inactive">Inaktív hivatkozások</string>

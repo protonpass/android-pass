@@ -201,7 +201,7 @@
   <string name="create_alias_content_limit_banner">Anda telah mencapai batas jumlah alias yang dapat Anda buat. Dapatkan kemampuan untuk membuat alias tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplikasi perlu diperbarui untuk menyunting item ini</string>
   <string name="remove_passkey_dialog_title">Hapus passkey ini?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Anda akan menghapus passkey situs \'%2$s\' milik pengguna \'%1$s\'. Apakah Anda yakin?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Anda akan menghapus kunci sandi untuk pengguna \'%1$s\' untuk \'%2$s\'. Apakah Anda yakin?</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Lampiran</string>
   <string name="banner_body_attachments">Anda dapat melampirkan item ke berkas untuk pengelolaan yang lebih baik</string>
@@ -261,7 +261,7 @@
   <string name="template_ssh_key_field_username">Nama pengguna</string>
   <string name="template_ssh_key_field_host">Host</string>
   <!-- SSH Key Generation -->
-  <string name="ssh_key_generate_button">Generate</string>
+  <string name="ssh_key_generate_button">Hasilkan</string>
   <string name="ssh_key_type_ed25519">Ed25519</string>
   <string name="ssh_key_type_rsa_2048">RSA-2048</string>
   <string name="ssh_key_type_rsa_4096">RSA-4096</string>
@@ -347,7 +347,7 @@
   <string name="autofill_suggestions_title">URL Matching</string>
   <string name="autofill_suggestions_description">Adjust autofill behaviors to change where logins are suggested and filled for %s.</string>
   <string name="autofill_suggestions_tab_basic">Basic</string>
-  <string name="autofill_suggestions_tab_advanced">Advanced</string>
+  <string name="autofill_suggestions_tab_advanced">Tingkat Lanjut</string>
   <string name="autofill_suggestions_mode_default">Parent domain and subdomains</string>
   <string name="autofill_suggestions_mode_exact">Exact (sub)domain</string>
   <string name="autofill_suggestions_mode_never">Never fill on this website</string>
@@ -358,6 +358,6 @@
   <string name="autofill_suggestions_android_limitation">Advanced rules are not available on Android due to limitations in the operating system APIs.</string>
   <string name="autofill_suggestions_mode_default_badge">DEFAULT</string>
   <string name="autofill_suggestions_url_column">URL</string>
-  <string name="autofill_suggestions_suggested_column">Suggested</string>
+  <string name="autofill_suggestions_suggested_column">Disarankan</string>
   <string name="field_website_skipped_autofill">This url will be skipped for autofill</string>
 </resources>

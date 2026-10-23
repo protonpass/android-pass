@@ -183,7 +183,7 @@
   <string name="update_identity_item_creation_error">无法更新身份</string>
   <!--  Common create items  -->
   <string name="title_create">创建</string>
-  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s (已复制)</string>
+  <string name="title_duplicate" comment="Default title when duplicating an item. Placeholder is the title of the item being duplicated.">%s（已复制）</string>
   <string name="changes_saved">更改已保存</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA 密钥 (TOTP)</string>

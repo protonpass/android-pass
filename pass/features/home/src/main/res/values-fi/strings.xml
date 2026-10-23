@@ -58,12 +58,12 @@
   </plurals>
   <string name="home_notification_permission_banner_title">Vastaanota tärkeitä ilmoituksia</string>
   <string name="home_notification_permission_banner_text">Ota push-ilmoitukset käyttöön saadaksesi tiedon kun muut jakavat holvejaan sinulle.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s haluaa jakaa sinulle kohteen.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s haluaa jakaa kohteen kanssasi.</string>
   <string name="home_group_item_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s haluaa jakaa kohteen ryhmällesi %2$s.</string>
   <string name="home_group_invite_banner_title" comment="%1$s = inviter email, %2$s = group name">%1$s haluaa jakaa holvin ryhmällesi %2$s.</string>
-  <string name="home_item_invite_card_title">Shared item invitation</string>
-  <string name="home_vault_invite_card_title">Shared vault invitation</string>
-  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s haluaa jakaa sinulle holvin.</string>
+  <string name="home_item_invite_card_title">Kutsu jaettuun kohteeseen</string>
+  <string name="home_vault_invite_card_title">Kutsu jaettuun holviin</string>
+  <string name="home_vault_invite_banner_body" comment="placeholder is replaced by an email address">%s haluaa jakaa holvin kanssasi.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopioi salasana</string>
   <string name="bottomsheet_copy_username">Kopioi käyttäjätunnus</string>
@@ -85,7 +85,7 @@
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">Sisältö oli liian pitkä ja kopioitiin leikepöydälle vain osittain</string>
   <!-- Vault drawer -->
   <plurals name="vault_drawer_vaults_item_count">
-    <item quantity="one">%d kohteen</item>
+    <item quantity="one">%d kohde</item>
     <item quantity="other">%d kohdetta</item>
   </plurals>
   <string name="vault_drawer_create_vault">Luo holvi</string>
@@ -158,7 +158,7 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Haluatko varmasti poistaa kohteen? Tämän peruminen ei ole mahdollista.</item>
-    <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Tämän peruminen ei ole mahdollista.</item>
+    <item quantity="other">Haluatko varmasti poistaa %d kohdetta? Tätä ei ole mahdollista kumota.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">%d kohde on tällä hetkellä jaettuna. Sen poistaminen poistaa pääsyn kaikilta muilta käyttäjiltä.</item>

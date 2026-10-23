@@ -58,13 +58,13 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">あなたのAndroidバージョンはパスキーをサポートしていません.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">パスキーのサポートを確認できませんでした</string>
   <plurals name="profile_after_days">
-    <item quantity="other">%d日後</item>
+    <item quantity="other">%d 日後</item>
   </plurals>
   <plurals name="profile_after_minutes">
-    <item quantity="other">%d分後</item>
+    <item quantity="other">%d 分後</item>
   </plurals>
   <plurals name="profile_after_hours">
-    <item quantity="other">%d時間後</item>
+    <item quantity="other">%d 時間後</item>
   </plurals>
   <string name="profile_less_than_a_minute">一分未満</string>
   <string name="account_switcher_manage_account">アカウントを管理</string>
@@ -80,9 +80,9 @@
   <string name="filtered_by_credit_cards">クレジットカードでフィルタリングされています。ゴミ箱に入ったアイテムは表示されません。</string>
   <string name="filtered_by_identities">ユーザー情報でフィルタリングされています。ゴミ箱に入ったアイテムは表示されません。</string>
   <string name="filtered_by_custom_items">カスタムアイテムでフィルターされています。ゴミ箱にあるアイテムは表示されません。</string>
-  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">管理するためには%1$sに切り替える必要があります</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">管理するには%1$sに切り替える必要があります</string>
   <string name="account_switch_confirmation_title">アカウントを管理</string>
   <string name="account_switch_confirmation_confirm">切り替えて管理</string>
   <string name="profile_storage_data_title">ストレージ容量</string>
-  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s/%2$s</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%2$s の中の%1$s</string>
 </resources>

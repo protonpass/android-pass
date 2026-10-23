@@ -14,7 +14,7 @@
   <plurals name="bulk_delete_alias_title">
     <item quantity="one">Trajno boste izbrisali vzdevek %d</item>
     <item quantity="two">Trajno boste izbrisali %d vzdevka</item>
-    <item quantity="few">Trajno boste izbrisali %d vzdevkov</item>
+    <item quantity="few">Trajno boste izbrisali %d vzdevke</item>
     <item quantity="other">Trajno boste izbrisali %d vzdevkov</item>
   </plurals>
   <string name="bulk_delete_alias_subtitle">Upoštevajte, da ko so vzdevki izbrisani, jih ni mogoče obnoviti.</string>

@@ -38,10 +38,10 @@
   <string name="view_logs_clear_logs">Clear logs</string>
   <string name="view_logs_clear_logs_confirmation_title">Clear logs?</string>
   <string name="view_logs_clear_logs_confirmation_message">This will permanently delete the logs currently shown on this device.</string>
-  <string name="view_logs_share_logs">Share logs</string>
+  <string name="view_logs_share_logs">Поділитися журналами</string>
   <string name="view_logs_load_older_logs">Load older logs</string>
   <string name="view_logs_loading_older_logs">Loading older logs...</string>
-  <string name="view_logs_empty">No logs available</string>
+  <string name="view_logs_empty">Немає доступних журналів</string>
   <string name="clipboard_bottomsheet_title">Буфер обміну</string>
   <string name="clipboard_option_clear_clipboard_label">Очистити буфер обміну</string>
   <string name="clipboard_option_copy_totp_code">Копіювати коди автентифікації</string>
@@ -55,7 +55,7 @@
   <string name="settings_autofill_display_inline">Inline (above keyboard)</string>
   <string name="settings_autofill_display_popup">Popup (over input field)</string>
   <string name="settings_autofill_display_subtitle">Inline mode requires a compatible keyboard (e.g. Gboard). If unsupported, popup mode will be used automatically.</string>
-  <string name="settings_autosave_prompt_title">Prompt for auto-save</string>
+  <string name="settings_autosave_prompt_title">Запит на автозбереження</string>
   <string name="settings_autosave_prompt_subtitle">Proton Pass will prompt you to save or update logins</string>
   <string name="settings_offline_attachments_section_title">Offline attachments</string>
   <string name="settings_offline_attachments_download_all">Make attachments available offline</string>
@@ -63,13 +63,13 @@
   <string name="settings_offline_attachments_download_status">Download status</string>
   <string name="notification_permission_dialog_title">Notification permission required</string>
   <string name="notification_permission_dialog_message">To show download progress notifications, you need to enable notifications for this app in system settings.</string>
-  <string name="notification_permission_dialog_open_settings">Open settings</string>
-  <string name="notification_permission_dialog_cancel">Cancel</string>
+  <string name="notification_permission_dialog_open_settings">Відкрити налаштування</string>
+  <string name="notification_permission_dialog_cancel">Скасувати</string>
   <string name="attachment_config_dialog_title">Download options</string>
-  <string name="attachment_config_dialog_all_vaults">All vaults</string>
+  <string name="attachment_config_dialog_all_vaults">Усі сховища</string>
   <string name="attachment_config_dialog_select_vaults">Select vaults to download</string>
-  <string name="attachment_config_dialog_shared_items">Shared with me</string>
-  <string name="attachment_config_dialog_start">Download</string>
-  <string name="attachment_config_dialog_cancel">Cancel</string>
-  <string name="settings_offline_attachments_shared_items">Shared with me</string>
+  <string name="attachment_config_dialog_shared_items">Поширено для мене</string>
+  <string name="attachment_config_dialog_start">Завантажити</string>
+  <string name="attachment_config_dialog_cancel">Скасувати</string>
+  <string name="settings_offline_attachments_shared_items">Поширено для мене</string>
 </resources>

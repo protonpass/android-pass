@@ -90,7 +90,7 @@
     <item quantity="one">%d položka</item>
     <item quantity="few">%d položky</item>
     <item quantity="many">%d položek</item>
-    <item quantity="other">%d položek</item>
+    <item quantity="other">%d položky</item>
   </plurals>
   <string name="vault_drawer_create_vault">Vytvořit trezor</string>
   <string name="vault_drawer_item_trash">Koš</string>
@@ -148,9 +148,9 @@
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="one">Opravdu chcete obnovit položku z koše?</item>
-    <item quantity="few">Opravdu chcete obnovit %d položky z koše?</item>
-    <item quantity="many">Opravdu chcete obnovit %d položek z koše?</item>
-    <item quantity="other">Opravdu chcete obnovit %d položek z koše?</item>
+    <item quantity="few">Jste si jisti, že chcete obnovit %d položky z koše?</item>
+    <item quantity="many">Jste si jisti, že chcete obnovit %d položek z koše?</item>
+    <item quantity="other">Jste si jisti, že chcete obnovit %d položek z koše?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">Přesunout do koše %d položku?</item>
@@ -172,9 +172,9 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Opravdu chcete smazat položku? Tato akce je nevratná.</item>
-    <item quantity="few">Opravdu chcete smazat %d položky? Tato akce je nevratná.</item>
-    <item quantity="many">Opravdu chcete smazat %d položek? Tato akce je nevratná.</item>
-    <item quantity="other">Opravdu chcete smazat %d položek? Tato akce je nevratná.</item>
+    <item quantity="few">Jste si jisti, že chcete smazat %d položky? Tato akce je nevratná.</item>
+    <item quantity="many">Jste si jisti, že chcete smazat %d položek? Tato akce je nevratná.</item>
+    <item quantity="other">Jste si jisti, že chcete smazat %d položek? Tato akce je nevratná.</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_shared_warning_message">
     <item quantity="one">%d položka je v současné době sdílena. Jejím smazáním se zruší přístup pro všechny ostatní uživatele.</item>

@@ -35,9 +35,9 @@
   <string name="secure_links_overview_widget_open_times_title">Otvorené:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d-krát</item>
-    <item quantity="few">%d-krát</item>
-    <item quantity="many">%d-krát</item>
-    <item quantity="other">%d-krát</item>
+    <item quantity="few">%d -krát</item>
+    <item quantity="many">%d -krát</item>
+    <item quantity="other">%d -krát</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Bez obmedzenia</string>
   <string name="secure_links_overview_button_view_all_links">Zobraziť všetky vaše bezpečné odkazy</string>

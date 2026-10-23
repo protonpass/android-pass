@@ -50,7 +50,7 @@
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d ogled</item>
     <item quantity="two">%d ogleda</item>
-    <item quantity="few">%d ogledov</item>
+    <item quantity="few">%d ogledi</item>
     <item quantity="other">%d ogledov</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Pri pridobivanju varnih povezav je prišlo do napake</string>

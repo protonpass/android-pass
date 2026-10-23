@@ -21,6 +21,6 @@
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Válasszon egy másik hozzáférési kulcsot a Proton Passből</string>
   <string name="passkeys_user_logged_out">Ön kijelentkezett. Jelentkezzen be újra az alkalmazás megnyitásával.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Hozzáférési kulcs létrehozása</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Biztosan szeretne egy hozzáférési kulcsot létrehozni ennek az elemnek: %s?</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Biztosan generálni kíván egy Hozzáférési kulcsot az \'%s\' elemhez?</string>
   <string name="passkey_error_generating_passkey">Hozzáférési kulcs létrehozása sikertelen</string>
 </resources>

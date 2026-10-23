@@ -51,7 +51,7 @@
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol posar a la vostra disposició una caixa forta compartida.</string>
   <string name="sharing_vault_invitation_accept">Uniu-vos a la caixa forta compartida</string>
   <string name="sharing_item_invitation_title">Invitació a un element compartit</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol posar a la vostra disposició un element compartit.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol compartir un element amb vosaltres.</string>
   <string name="sharing_item_invitation_accept">Accepta i mostra l\'element</string>
   <string name="sharing_group_vault_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s vol compartir una caixa forta amb el vostre grup %2$s.</string>
   <string name="sharing_group_item_invitation_subtitle" comment="first placeholder is replaced by an email address, second by a group name">%1$s vol compartir un element amb el vostre grup %2$s.</string>
@@ -143,7 +143,7 @@
   <string name="share_with_secure_link_shared_title">Mitjançant un enllaç segur</string>
   <string name="share_with_secure_link_shared_description">Per a una compartició puntual.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Estableix el nivell d\'accés per a tots els membres</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Defineix el nivell d\'accés per a %s</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Definiu el nivell d\'accés per a %s</string>
   <string name="sharing_edit_permissions_remove_user">Esborra l\'usuari</string>
   <string name="sharing_edit_permissions_remove_group">Esborra el grup</string>
   <string name="sharing_error_dialog_title">Error desconegut</string>

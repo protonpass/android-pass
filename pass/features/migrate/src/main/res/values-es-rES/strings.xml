@@ -27,7 +27,7 @@
   <string name="migrate_dissolve_folder_dialog_confirm">Mover</string>
   <plurals name="migrate_disabled_folder_reason_same_folder">
     <item quantity="one">El elemento ya está en esta carpeta</item>
-    <item quantity="other">Ya hay %d elementos en esta carpeta</item>
+    <item quantity="other">%d items are already in this folder</item>
   </plurals>
   <string name="migrate_disabled_folder_reason_same_location">Esta carpeta ya se encuentra en esta ubicación.</string>
   <string name="migrate_disabled_folder_reason_being_moved">Esta carpeta se está moviendo.</string>

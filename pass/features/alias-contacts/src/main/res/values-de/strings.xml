@@ -24,7 +24,7 @@
   <string name="create_contact_title">Kontakt erstellen</string>
   <string name="detail_contact_title">Kontakte</string>
   <string name="email_input_error">Ungültige E-Mail-Adresse</string>
-  <string name="detail_contact_display_name" comment="sender email address">Für jede E-Mail-Adresse mit E-Mails gesendet an oder empfangen von %1$s, wird ein Kontakt erstellt.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Für jede E-Mail-Adresse, die Nachrichten an %1$s sendet oder von dieser Adresse empfängt, wird ein Kontakt angelegt</string>
   <string name="empty_alias_contacts_title">Alias-Kontakte</string>
   <string name="empty_alias_contacts_body">Um deine persönliche E-Mail-Adresse zu verbergen, kannst du einen Alias-Kontakt erstellen, der deine Adresse verschleiert.</string>
   <string name="empty_alias_contacts_learn_more">Erfahre mehr</string>

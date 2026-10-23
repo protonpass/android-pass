@@ -44,7 +44,7 @@
     <item quantity="other">パスワードが正しくありません。あと %d 回試行できます。</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="other">残りの試行回数%d</item>
+    <item quantity="other">残りの試行回数 %d回</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">試行回数が多すぎます。すべてのユーザーがログアウトされます。</string>
   <string name="auth_pin_too_many_attempts_dismiss">PINの試行が多すぎます</string>

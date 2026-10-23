@@ -46,7 +46,7 @@
   <string name="simple_login_sync_mailbox_change_email_already_in_use_message_error">E-mail allerede i brug</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Bekræft din postkasse</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vi sendte en bekræftelseskode til %s. Indtast den nedenfor:</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vi har sendt en bekræftelseskode til %s. Indtast den nedenfor:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">din e-mailadresse</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Ugyldig postkasse-bekræftelseskode</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Grænsen for ugyldig postkasse-bekræftelseskode er nået, postkassen blev slettet</string>
@@ -56,7 +56,7 @@
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Bekræftelseskode sendt</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Slet postkasse</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">Alle aliasser, der bruger postkassen %s vil også blive slettet. Hvis du vil fortsætte med at modtage e-mails, skal du overføre disse aliasser til en anden postkasse:</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Alle aliasser, der bruger postkassen %s, slettes også. For at fortsætte med at modtage e-mails skal du overføre disse aliasser til en anden postkasse:</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Overfør aliasser</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Til postkasse</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Slet postkasse</string>

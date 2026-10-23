@@ -21,6 +21,6 @@
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Выберите ключ доступа из Proton Pass</string>
   <string name="passkeys_user_logged_out">Был произведён выход из учётной записи. Пожалуйста, войдите снова, открыв приложение.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Создать ключ доступа</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Вы уверены, что хотите создать ключ доступа для элемента \'%s\'?</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Вы точно хотите создать ключ доступа для элемента \"%s\"?</string>
   <string name="passkey_error_generating_passkey">Не получилось создать ключ доступа</string>
 </resources>

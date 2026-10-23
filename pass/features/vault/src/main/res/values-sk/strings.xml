@@ -71,7 +71,7 @@
   <plurals name="organise_vaults_item_count">
     <item quantity="one">%d položka</item>
     <item quantity="few">%d položky</item>
-    <item quantity="many">%d položiek</item>
+    <item quantity="many">%d položky</item>
     <item quantity="other">%d položiek</item>
   </plurals>
 </resources>

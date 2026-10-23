@@ -246,9 +246,9 @@
   </plurals>
   <plurals name="time_unit_months">
     <item quantity="one">%d mesec</item>
-    <item quantity="two">%d meseca</item>
-    <item quantity="few">%d meseci</item>
-    <item quantity="other">%d mesecev</item>
+    <item quantity="two">%d months</item>
+    <item quantity="few">%d months</item>
+    <item quantity="other">%d months</item>
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d teden</item>
@@ -307,9 +307,9 @@
   <string name="simple_login_widget_title">Omogočanje sinhronizacije SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="one">Zaznali smo, da imate %d vzdevek, ki je prisoten v SimpleLogin, vendar manjka v Proton Pass. Ali ga želite uvoziti?</item>
-    <item quantity="two">Zaznali smo, da imate %d vzdevka, ki sta v SimpleLogin, vendar ju ni v Proton Pass. Ju želite uvoziti?</item>
-    <item quantity="few">Zaznali smo, da imate %d vzdevke, ki so prisotni v SimpleLogin, a jih v programu Proton Pass ni. Jih želite uvoziti?</item>
-    <item quantity="other">Zaznali smo, da imate v SimpleLogin %d vzdevkov, ki manjkajo v programu Proton Pass. Jih želite uvoziti?</item>
+    <item quantity="two">Zaznali smo, da imate v SimpleLogin %d vzdevkov, ki manjkajo v programu Proton Pass. Jih želite uvoziti?</item>
+    <item quantity="few">Zaznali smo, da imate v SimpleLogin %d vzdevkov, ki manjkajo v programu Proton Pass. Jih želite uvoziti?</item>
+    <item quantity="other">Zaznali smo, da imate %d vzdevke, ki so prisotni v SimpleLogin, a jih v programu Proton Pass ni. Jih želite uvoziti?</item>
   </plurals>
   <string name="simple_login_widget_action">Sinhroniziranje vzdevkov</string>
   <!-- Verification codes -->
@@ -325,7 +325,7 @@
     <item quantity="one">Datoteka %1$s</item>
     <item quantity="two">Datoteki %1$s</item>
     <item quantity="few">Datotek %1$s</item>
-    <item quantity="other">Datotek %1$s</item>
+    <item quantity="other">%1$s datoteki</item>
   </plurals>
   <string name="attachment_title">Priponke</string>
   <string name="attachment_no_files">Naloži datoteke iz vaše naprave</string>
@@ -342,8 +342,8 @@
   </plurals>
   <plurals name="users_count">
     <item quantity="one">%d uporabnik</item>
-    <item quantity="two">%d uporabnika</item>
-    <item quantity="few">%d uporabniki</item>
+    <item quantity="two">%d uporabnikov</item>
+    <item quantity="few">%d uporabnikov</item>
     <item quantity="other">%d uporabnikov</item>
   </plurals>
   <plurals name="members_count">
@@ -367,10 +367,10 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavite 2FA za večjo varnost</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ta storitev ponuja 2FA. Omogočite ga za dodatno varnost računa.</string>
-  <string name="login_item_monitor_action_ignore">Ignore</string>
+  <string name="login_item_monitor_action_ignore">Prezri</string>
   <string name="login_item_monitor_action_restore">Restore alert</string>
   <string name="login_item_monitor_header">Pass Monitor</string>
-  <string name="login_item_monitor_label_weak">Weak password</string>
+  <string name="login_item_monitor_label_weak">Šibko geslo</string>
   <string name="login_item_monitor_label_compromised">Compromised password</string>
   <string name="login_item_monitor_label_reused">Reused password</string>
   <string name="login_item_monitor_label_missing_2fa">Missing 2FA</string>
@@ -385,19 +385,19 @@
     <item quantity="one">%1$s posredovan</item>
     <item quantity="two">%1$s posredovana</item>
     <item quantity="few">%1$s posredovani</item>
-    <item quantity="other">%1$s posredovani</item>
+    <item quantity="other">%1$s posredovanih</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s odgovor</item>
-    <item quantity="two">%1$s odgovora</item>
-    <item quantity="few">%1$s odgovori</item>
-    <item quantity="other">%1$s odgovori</item>
+    <item quantity="two">%1$s odgovorov</item>
+    <item quantity="few">%1$s odgovorov</item>
+    <item quantity="other">%1$s odgovorov</item>
   </plurals>
   <plurals name="alias_blocks_count">
     <item quantity="one">%1$s blokiran</item>
-    <item quantity="two">%1$s blokirana</item>
-    <item quantity="few">%1$s blokirani</item>
-    <item quantity="other">%1$s blokirani</item>
+    <item quantity="two">%1$s blokiranih</item>
+    <item quantity="few">%1$s blokiranih</item>
+    <item quantity="other">%1$s blokiranih</item>
   </plurals>
   <string name="alias_create_login_from_alias">Ustvarite prijavo</string>
   <string name="banner_contacts_title">Ali ste vedeli?</string>
@@ -430,8 +430,8 @@
     <item quantity="other">%s besed</item>
   </plurals>
   <!-- Password checks (Login create/edit + Generate Password BS) -->
-  <string name="password_strength_prefix">Password strength</string>
-  <string name="password_check_min_length">Password is too short</string>
+  <string name="password_strength_prefix">Moč gesla</string>
+  <string name="password_check_min_length">Geslo je prekratko</string>
   <string name="password_check_lowercase">Lowercase letters</string>
   <string name="password_check_uppercase">Uppercase letters</string>
   <string name="password_check_no_consecutive">No repeated characters</string>

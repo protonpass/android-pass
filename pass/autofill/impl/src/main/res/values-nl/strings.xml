@@ -30,7 +30,7 @@
   <string name="autofill_troubleshooting_browsers_inactive_body">Turn on autofill so that Proton Pass can fill your credentials. Tap a browser to open its settings.</string>
   <string name="autofill_troubleshooting_browsers_compatible_header">Browsers are compatible</string>
   <string name="autofill_troubleshooting_browsers_compatible_body">Your browsers are connected and ready to autofill.</string>
-  <string name="autofill_troubleshooting_browser_active">Active</string>
+  <string name="autofill_troubleshooting_browser_active">Actief</string>
   <string name="autofill_troubleshooting_inline_info">Inline suggestions appear in your keyboard. They need Android 11 or later and a compatible keyboard such as Gboard.</string>
   <string name="autofill_troubleshooting_share_diagnostics">Share diagnostics</string>
   <string name="autofill_troubleshooting_open_diagnostics">Advanced diagnostics</string>
@@ -45,6 +45,6 @@
   <string name="autofill_diagnostics_outcome_nothing">Autofill was triggered in %1$s, but no matching login was offered. The page may have no detectable login fields, or you have no item for this site.</string>
   <string name="autofill_diagnostics_outcome_error">Autofill ran into an error in %1$s.</string>
   <string name="autofill_diagnostics_recent_title">Recent attempts</string>
-  <string name="autofill_diagnostics_clear">Clear</string>
+  <string name="autofill_diagnostics_clear">Wissen</string>
   <string name="autofill_diagnostics_share">Share with support</string>
 </resources>

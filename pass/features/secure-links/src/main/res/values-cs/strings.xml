@@ -34,10 +34,10 @@
   <string name="secure_links_overview_widget_max_views_title">Lze zobrazit:</string>
   <string name="secure_links_overview_widget_open_times_title">Otevřeno:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
-    <item quantity="one">%dkrát</item>
-    <item quantity="few">%dkrát</item>
-    <item quantity="many">%dkrát</item>
-    <item quantity="other">%dkrát</item>
+    <item quantity="one">%d krát</item>
+    <item quantity="few">%d krát</item>
+    <item quantity="many">%d krát</item>
+    <item quantity="other">%d krát</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Neomezeně</string>
   <string name="secure_links_overview_button_view_all_links">Zobrazit všechny bezpečné odkazy</string>

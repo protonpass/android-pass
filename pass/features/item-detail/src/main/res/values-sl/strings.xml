@@ -115,19 +115,19 @@
     <item quantity="one">%1$s posredovan</item>
     <item quantity="two">%1$s posredovana</item>
     <item quantity="few">%1$s posredovani</item>
-    <item quantity="other">%1$s posredovani</item>
+    <item quantity="other">%1$s posredovanih</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s odgovor</item>
-    <item quantity="two">%1$s odgovora</item>
-    <item quantity="few">%1$s odgovori</item>
-    <item quantity="other">%1$s odgovori</item>
+    <item quantity="two">%1$s odgovorov</item>
+    <item quantity="few">%1$s odgovorov</item>
+    <item quantity="other">%1$s odgovorov</item>
   </plurals>
   <plurals name="alias_blocks_count">
     <item quantity="one">%1$s blokiran</item>
-    <item quantity="two">%1$s blokirana</item>
-    <item quantity="few">%1$s blokirani</item>
-    <item quantity="other">%1$s blokirani</item>
+    <item quantity="two">%1$s blokiranih</item>
+    <item quantity="few">%1$s blokiranih</item>
+    <item quantity="other">%1$s blokiranih</item>
   </plurals>
   <string name="open_with">Odpri z:</string>
   <string name="open_attachments_error">Ni bilo mogoče odpreti priponke</string>

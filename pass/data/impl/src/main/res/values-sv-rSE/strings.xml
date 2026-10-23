@@ -25,8 +25,8 @@
   <string name="attachment_download_channel_description">Notifications channel for attachment downloads</string>
   <string name="downloading_attachments">Laddar ner bilagor</string>
   <string name="downloading_attachments_progress" comment="%1$s is the download progress counter, e.g. 3 / 10">%1$s filer</string>
-  <string name="plan_subscription_auto_renews_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_subscription_auto_renews_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_welcome_offer_auto_renews_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_offer_auto_renews_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_subscription_auto_renews_monthly">Prenumerationen autoförnyas med %1$s/månad</string>
+  <string name="plan_subscription_auto_renews_annual">Prenumerationen autoförnyas med %1$s/år</string>
+  <string name="plan_welcome_offer_auto_renews_monthly">Välkomsterbjudande. Autoförnyas med %1$s/månad</string>
+  <string name="plan_welcome_offer_auto_renews_annual">Välkomsterbjudande. Autoförnyas med %1$s/år</string>
 </resources>

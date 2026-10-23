@@ -68,6 +68,8 @@ import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.DispatcherProvider
+import proton.android.pass.account.api.DeviceSettingsListener
+import proton.android.pass.account.api.DeviceSettingsRepository as PassDeviceSettingsRepository
 import proton.android.pass.account.fakes.accountmanager.FakeAccountWorkflowHandler
 import proton.android.pass.account.fakes.accountmanager.FakeSessionManager
 import proton.android.pass.account.fakes.auth.FakeAuthRepository
@@ -106,7 +108,13 @@ abstract class FakesAccountModule {
     abstract fun bindPaymentManager(impl: FakePaymentManager): PaymentManager
 
     @Binds
-    abstract fun bindDeviceSettingsRepository(impl: FakeDeviceSettingsRepository): DeviceSettingsRepository
+    abstract fun bindDeviceSettingsRepository(impl: FakeCoreDeviceSettingsRepository): DeviceSettingsRepository
+
+    @Binds
+    abstract fun bindPassDeviceSettingsRepository(impl: FakeDeviceSettingsRepository): PassDeviceSettingsRepository
+
+    @Binds
+    abstract fun bindDeviceSettingsListener(impl: FakeDeviceSettingsListener): DeviceSettingsListener
 
     @Binds
     abstract fun bindPublicAddressRepository(impl: FakePublicAddressRepository): PublicAddressRepository

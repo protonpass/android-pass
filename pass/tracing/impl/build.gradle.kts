@@ -34,12 +34,13 @@ android {
 }
 
 dependencies {
+    implementation(projects.pass.account.api)
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.log.api)
 
     implementation(libs.androidx.startup.runtime)
-    implementation(libs.core.userSettings.domain)
     implementation(libs.core.utilAndroidSentry)
+    implementation(libs.core.utilKotlin)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)

@@ -97,7 +97,7 @@ class TelemetryGrowthInstallEventSenderTest {
 
     @Test
     fun `does not query meta nor send install event when device telemetry is disabled`() = runTest {
-        deviceSettingsRepository.updateIsTelemetryEnabled(false)
+        deviceSettingsRepository.updateTelemetryEnabled(false)
 
         startSender()
 
@@ -137,14 +137,14 @@ class TelemetryGrowthInstallEventSenderTest {
 
     @Test
     fun `sends install event once when device telemetry is enabled later`() = runTest {
-        deviceSettingsRepository.updateIsTelemetryEnabled(false)
+        deviceSettingsRepository.updateTelemetryEnabled(false)
         startSender()
 
-        deviceSettingsRepository.updateIsTelemetryEnabled(true)
+        deviceSettingsRepository.updateTelemetryEnabled(true)
         runCurrent()
-        deviceSettingsRepository.updateIsTelemetryEnabled(false)
+        deviceSettingsRepository.updateTelemetryEnabled(false)
         runCurrent()
-        deviceSettingsRepository.updateIsTelemetryEnabled(true)
+        deviceSettingsRepository.updateTelemetryEnabled(true)
         runCurrent()
 
         assertThat(telemetryManager.getMemory()).hasSize(1)
@@ -161,9 +161,9 @@ class TelemetryGrowthInstallEventSenderTest {
         assertThat(internalSettingsRepository.hasTelemetryGrowthInstallEventBeenSent().first()).isFalse()
 
         installReferrerProvider.setException(null)
-        deviceSettingsRepository.updateIsTelemetryEnabled(false)
+        deviceSettingsRepository.updateTelemetryEnabled(false)
         runCurrent()
-        deviceSettingsRepository.updateIsTelemetryEnabled(true)
+        deviceSettingsRepository.updateTelemetryEnabled(true)
         runCurrent()
 
         assertThat(telemetryManager.getMemory()).hasSize(1)

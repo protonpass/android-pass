@@ -104,6 +104,7 @@ dependencies {
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
+    implementation(projects.pass.account.api)
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.common.api)

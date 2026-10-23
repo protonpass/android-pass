@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2026 Proton AG
+ * Copyright (c) 2026 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -21,29 +21,27 @@ package proton.android.pass.account.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import me.proton.core.usersettings.domain.entity.DeviceSettings
-import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
+import proton.android.pass.account.api.DeviceSettings
+import proton.android.pass.account.api.DeviceSettingsRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeDeviceSettingsRepository @Inject constructor() : DeviceSettingsRepository {
 
-    private val deviceSettingsFlow = MutableStateFlow(
-        DeviceSettings(
-            isTelemetryEnabled = true, isCrashReportEnabled = true
-        )
+    private val settingsFlow = MutableStateFlow(
+        DeviceSettings(isTelemetryEnabled = true, isCrashReportEnabled = true)
     )
 
-    override suspend fun getDeviceSettings(): DeviceSettings = deviceSettingsFlow.value
+    val current: DeviceSettings get() = settingsFlow.value
 
-    override fun observeDeviceSettings(): Flow<DeviceSettings> = deviceSettingsFlow
+    override fun observe(): Flow<DeviceSettings> = settingsFlow
 
-    override suspend fun updateIsCrashReportEnabled(isEnabled: Boolean) {
-        deviceSettingsFlow.update { it.copy(isCrashReportEnabled = isEnabled) }
+    override suspend fun updateTelemetryEnabled(isEnabled: Boolean) {
+        settingsFlow.update { it.copy(isTelemetryEnabled = isEnabled) }
     }
 
-    override suspend fun updateIsTelemetryEnabled(isEnabled: Boolean) {
-        deviceSettingsFlow.update { it.copy(isTelemetryEnabled = isEnabled) }
+    override suspend fun updateCrashReportEnabled(isEnabled: Boolean) {
+        settingsFlow.update { it.copy(isCrashReportEnabled = isEnabled) }
     }
 }

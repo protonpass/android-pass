@@ -57,7 +57,6 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.runtime)
-    implementation(libs.core.userSettings.domain)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
@@ -66,6 +65,7 @@ dependencies {
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
 
+    implementation(projects.pass.account.api)
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.api)
     implementation(projects.pass.common.api)

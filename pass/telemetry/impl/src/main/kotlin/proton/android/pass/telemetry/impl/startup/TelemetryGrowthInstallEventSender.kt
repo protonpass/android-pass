@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
-import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
+import proton.android.pass.account.api.DeviceSettingsRepository
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.ObservePrimaryUserId
 import proton.android.pass.domain.UserId
@@ -52,7 +52,7 @@ class TelemetryGrowthInstallEventSender @Inject constructor(
     suspend fun start() {
         combine(
             observePrimaryUserId(),
-            deviceSettingsRepository.observeDeviceSettings().map { it.isTelemetryEnabled }
+            deviceSettingsRepository.observe().map { it.isTelemetryEnabled }
         ) { userId, isDeviceTelemetryEnabled -> userId to isDeviceTelemetryEnabled }
             .distinctUntilChanged()
             .collect { (userId, isDeviceTelemetryEnabled) ->

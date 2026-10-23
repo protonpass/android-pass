@@ -33,8 +33,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.account.api.DeviceSettingsRepository
 import proton.android.pass.common.api.AppDispatchers
-import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.common.api.asLoadingResult
@@ -221,7 +221,7 @@ class SettingsViewModel @Inject constructor(
 
     internal val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
-        deviceSettingsRepository.observeDeviceSettings(),
+        deviceSettingsRepository.observe(),
         allowScreenshotsState,
         syncStatusRepository.observeSyncState().asLoadingResult(),
         eventState,
@@ -312,12 +312,12 @@ class SettingsViewModel @Inject constructor(
         if (!value) {
             telemetryManager.sendEvent(TelemetryGrowthOptOutEvent)
         }
-        deviceSettingsRepository.updateIsTelemetryEnabled(value)
+        deviceSettingsRepository.updateTelemetryEnabled(value)
         snackbarDispatcher(SettingsSnackbarMessage.PreferenceUpdated)
     }
 
     internal fun onCrashReportChange(value: Boolean) = viewModelScope.launch {
-        deviceSettingsRepository.updateIsCrashReportEnabled(value)
+        deviceSettingsRepository.updateCrashReportEnabled(value)
         snackbarDispatcher(SettingsSnackbarMessage.PreferenceUpdated)
     }
 

@@ -31,5 +31,7 @@ android {
     }}
 
 dependencies {
+    api(libs.kotlinx.coroutines.core)
+
     implementation(libs.androidx.activity)
 }

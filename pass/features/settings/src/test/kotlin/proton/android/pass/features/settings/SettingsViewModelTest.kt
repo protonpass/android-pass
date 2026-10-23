@@ -20,6 +20,7 @@ package proton.android.pass.features.settings
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -39,10 +40,12 @@ import proton.android.pass.data.fakes.usecases.FakePerformSync
 import proton.android.pass.data.fakes.usecases.attachments.FakeAttachmentDownloadScheduler
 import proton.android.pass.data.fakes.usecases.attachments.FakeEnableAllOfflineAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeSetSharedItemsOfflineAttachments
+import proton.android.pass.domain.UserId
 import proton.android.pass.image.fakes.FakeClearIconCache
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
+import proton.android.pass.telemetry.api.TelemetryGrowthOptOutEvent
 import proton.android.pass.telemetry.fakes.FakeCanConfigureTelemetry
 import proton.android.pass.telemetry.fakes.FakeTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -53,19 +56,25 @@ class SettingsViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var performSync: FakePerformSync
+    private lateinit var observePrimaryUserId: FakeObservePrimaryUserId
+    private lateinit var deviceSettingsRepository: FakeDeviceSettingsRepository
+    private lateinit var telemetryManager: FakeTelemetryManager
     private lateinit var instance: SettingsViewModel
 
     @Before
     fun setUp() {
         performSync = FakePerformSync()
+        observePrimaryUserId = FakeObservePrimaryUserId().apply { emitUserId(UserId("user-id")) }
+        deviceSettingsRepository = FakeDeviceSettingsRepository()
+        telemetryManager = FakeTelemetryManager()
         instance = SettingsViewModel(
             preferencesRepository = FakePreferenceRepository(),
             snackbarDispatcher = FakeSnackbarDispatcher(),
             performSync = performSync,
-            observePrimaryUserId = FakeObservePrimaryUserId(),
+            observePrimaryUserId = observePrimaryUserId,
             getPrimaryUserId = FakeGetPrimaryUserId(),
             clearIconCache = FakeClearIconCache(),
-            deviceSettingsRepository = FakeDeviceSettingsRepository(),
+            deviceSettingsRepository = deviceSettingsRepository,
             canConfigureTelemetry = FakeCanConfigureTelemetry(),
             initialWorkerLauncher = FakeInitialWorkerLauncher(),
             assetLinkRepository = FakeAssetLinkRepository(),
@@ -76,7 +85,7 @@ class SettingsViewModelTest {
             getUserPlan = FakeGetUserPlan(),
             autofillManager = FakeAutofillManager(),
             syncStatusRepository = FakeItemSyncStatusRepository(),
-            telemetryManager = FakeTelemetryManager(),
+            telemetryManager = telemetryManager,
             appDispatchers = FakeAppDispatchers()
         )
     }
@@ -125,5 +134,59 @@ class SettingsViewModelTest {
         advanceUntilIdle()
 
         assertThat(performSync.invocations).hasSize(2)
+    }
+
+    @Test
+    fun `telemetry status reflects the device settings`() = runTest {
+        deviceSettingsRepository.updateTelemetryEnabled(false)
+        deviceSettingsRepository.updateCrashReportEnabled(true)
+        instance.state.launchIn(backgroundScope)
+        advanceUntilIdle()
+
+        assertThat(instance.state.value.telemetryStatus).isEqualTo(
+            TelemetryStatus.Show(shareTelemetry = false, shareCrashes = true)
+        )
+    }
+
+    @Test
+    fun `telemetry status follows later device settings changes`() = runTest {
+        instance.state.launchIn(backgroundScope)
+        advanceUntilIdle()
+
+        deviceSettingsRepository.updateTelemetryEnabled(false)
+        deviceSettingsRepository.updateCrashReportEnabled(false)
+        advanceUntilIdle()
+
+        assertThat(instance.state.value.telemetryStatus).isEqualTo(
+            TelemetryStatus.Show(shareTelemetry = false, shareCrashes = false)
+        )
+    }
+
+    @Test
+    fun `disabling telemetry persists it and sends the opt out event`() = runTest {
+        instance.onTelemetryChange(false)
+        advanceUntilIdle()
+
+        assertThat(deviceSettingsRepository.current.isTelemetryEnabled).isFalse()
+        assertThat(telemetryManager.getMemory()).containsExactly(TelemetryGrowthOptOutEvent)
+    }
+
+    @Test
+    fun `enabling telemetry persists it without sending the opt out event`() = runTest {
+        deviceSettingsRepository.updateTelemetryEnabled(false)
+
+        instance.onTelemetryChange(true)
+        advanceUntilIdle()
+
+        assertThat(deviceSettingsRepository.current.isTelemetryEnabled).isTrue()
+        assertThat(telemetryManager.getMemory()).isEmpty()
+    }
+
+    @Test
+    fun `crash report change is persisted`() = runTest {
+        instance.onCrashReportChange(false)
+        advanceUntilIdle()
+
+        assertThat(deviceSettingsRepository.current.isCrashReportEnabled).isFalse()
     }
 }

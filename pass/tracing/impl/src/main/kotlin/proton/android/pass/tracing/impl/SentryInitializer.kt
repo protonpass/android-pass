@@ -45,10 +45,9 @@ import dagger.hilt.components.SingletonComponent
 import io.sentry.SentryLevel
 import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
-import me.proton.core.usersettings.domain.DeviceSettingsHandler
-import me.proton.core.usersettings.domain.onDeviceSettingsChanged
 import me.proton.core.util.android.sentry.TimberLoggerIntegration
 import me.proton.core.util.android.sentry.project.AccountSentryHubBuilder
+import proton.android.pass.account.api.DeviceSettingsListener
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.toValue
 import proton.android.pass.log.api.PrivacySanitizer
@@ -65,8 +64,8 @@ class SentryInitializer : Initializer<Unit> {
         val privacySanitizer = entryPoint.privacySanitizer()
         val isCrashReportEnabled = AtomicBoolean(true)
 
-        entryPoint.deviceSettingsHandler()
-            .onDeviceSettingsChanged { settings ->
+        entryPoint.deviceSettingsListener()
+            .onChanged { settings ->
                 isCrashReportEnabled.set(settings.isCrashReportEnabled)
 
                 // By default true, but should always minimal sentry logs.
@@ -138,7 +137,7 @@ class SentryInitializer : Initializer<Unit> {
     interface SentryInitializerEntryPoint {
         fun accountSentryHubBuilder(): AccountSentryHubBuilder
         fun appConfig(): AppConfig
-        fun deviceSettingsHandler(): DeviceSettingsHandler
+        fun deviceSettingsListener(): DeviceSettingsListener
         fun privacySanitizer(): PrivacySanitizer
     }
 }

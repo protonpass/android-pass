@@ -60,7 +60,6 @@ dependencies {
 
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
-    implementation(libs.core.user.domain)
     implementation(libs.core.userSettings.domain)
     implementation(libs.kotlinx.collections)
 

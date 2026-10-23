@@ -25,14 +25,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.take
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.onAccountState
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import proton.android.pass.common.api.FlowUtils.oneShot
@@ -40,10 +38,12 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.ObserveAccountStateChanges
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
+import proton.android.pass.domain.account.AccountState
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -53,17 +53,14 @@ class AccountViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeCurrentUserSettings: ObserveCurrentUserSettings,
     hasExtraPassword: HasExtraPassword,
-    accountManager: AccountManager,
+    observeAccountStateChanges: ObserveAccountStateChanges,
     isFido2Enabled: IsFido2Enabled,
     observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
 ) : ViewModel() {
 
     internal val hasBeenSignedOut: StateFlow<Boolean> =
-        accountManager.onAccountState(
-            AccountState.Disabled,
-            AccountState.Removed,
-            initialState = false
-        )
+        observeAccountStateChanges()
+            .filter { it.state == AccountState.Disabled || it.state == AccountState.Removed }
             .map { true }
             .stateIn(
                 scope = viewModelScope,

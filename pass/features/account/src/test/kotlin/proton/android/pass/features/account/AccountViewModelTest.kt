@@ -29,9 +29,9 @@ import org.junit.Test
 import proton.android.pass.account.fakes.FakeAccountRepository
 import proton.android.pass.account.fakes.FakeIsFido2Enabled
 import proton.android.pass.account.fakes.FakeUserSettingsRepository
-import proton.android.pass.account.fakes.FakeAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeObserveAccountStateChanges
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
@@ -39,8 +39,10 @@ import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.account.AccountState
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.AccountTestFactory
 import proton.android.pass.test.domain.UserTestFactory
 
 internal class AccountViewModelTest {
@@ -53,6 +55,7 @@ internal class AccountViewModelTest {
     private lateinit var observeCurrentUserSettings: FakeObserveCurrentUserSettings
     private lateinit var getUpgradeInfo: FakeObserveUpgradeInfo
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
+    private lateinit var observeAccountStateChanges: FakeObserveAccountStateChanges
 
     private lateinit var observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
 
@@ -62,6 +65,7 @@ internal class AccountViewModelTest {
         observeCurrentUserSettings = FakeObserveCurrentUserSettings()
         getUpgradeInfo = FakeObserveUpgradeInfo()
         snackbarDispatcher = FakeSnackbarDispatcher()
+        observeAccountStateChanges = FakeObserveAccountStateChanges()
         observeRegisteredSecurityKeys = ObserveRegisteredSecurityKeys(
             accountRepository = FakeAccountRepository(),
             isFido2Enabled = FakeIsFido2Enabled(),
@@ -73,7 +77,7 @@ internal class AccountViewModelTest {
             observeUpgradeInfo = getUpgradeInfo,
             observeCurrentUserSettings = observeCurrentUserSettings,
             hasExtraPassword = FakeHasExtraPassword(),
-            accountManager = FakeAccountManager(),
+            observeAccountStateChanges = observeAccountStateChanges,
             isFido2Enabled = FakeIsFido2Enabled(),
             observeRegisteredSecurityKeys = observeRegisteredSecurityKeys
         )
@@ -121,4 +125,58 @@ internal class AccountViewModelTest {
             assertThat(item.plan).isEqualTo(PlanSection.Data(planType.humanReadableName))
         }
     }
+
+    @Test
+    fun `hasBeenSignedOut is false initially`() = runTest {
+        instance.hasBeenSignedOut.test {
+            assertThat(awaitItem()).isFalse()
+        }
+    }
+
+    @Test
+    fun `hasBeenSignedOut stays false when an account becomes ready`() = runTest {
+        instance.hasBeenSignedOut.test {
+            assertThat(awaitItem()).isFalse()
+
+            observeAccountStateChanges.emitChange(accountWithState(AccountState.Ready))
+
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `hasBeenSignedOut stays false for other account states`() = runTest {
+        instance.hasBeenSignedOut.test {
+            assertThat(awaitItem()).isFalse()
+
+            observeAccountStateChanges.emitChange(accountWithState(AccountState.Other))
+
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `hasBeenSignedOut becomes true when an account is disabled`() = runTest {
+        instance.hasBeenSignedOut.test {
+            assertThat(awaitItem()).isFalse()
+
+            observeAccountStateChanges.emitChange(accountWithState(AccountState.Disabled))
+
+            assertThat(awaitItem()).isTrue()
+        }
+    }
+
+    @Test
+    fun `hasBeenSignedOut becomes true when an account is removed`() = runTest {
+        instance.hasBeenSignedOut.test {
+            assertThat(awaitItem()).isFalse()
+
+            observeAccountStateChanges.emitChange(accountWithState(AccountState.Removed))
+
+            assertThat(awaitItem()).isTrue()
+        }
+    }
+
+    private fun accountWithState(state: AccountState) =
+        AccountTestFactory.create(userId = AccountTestFactory.DEFAULT_ACCOUNT.userId, state = state)
 }

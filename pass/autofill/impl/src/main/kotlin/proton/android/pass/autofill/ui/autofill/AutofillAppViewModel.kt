@@ -25,7 +25,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -33,7 +32,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDisplayed
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
-import proton.android.pass.autofill.MFAAutofillCopied
+import proton.android.pass.autofill.CopyTotpAfterAutofill
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
@@ -41,8 +40,6 @@ import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.autofill.extensions.isTrustedAutofillPackage
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
-import proton.android.pass.autofill.service.R
-import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -57,13 +54,9 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.LastItemAutofillPreference
-import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.totp.api.GetTotpCodeFromUri
 import javax.inject.Inject
 
 @Immutable
@@ -92,11 +85,8 @@ sealed interface AutofillAppEvent {
 @HiltViewModel
 class AutofillAppViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val clipboardManager: ClipboardManager,
-    private val getTotpCodeFromUri: GetTotpCodeFromUri,
-    private val toastManager: ToastManager,
+    private val copyTotpAfterAutofill: CopyTotpAfterAutofill,
     private val updateAutofillItem: UpdateAutofillItem,
-    private val preferenceRepository: UserPreferencesRepository,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val getItemById: GetItemById,
@@ -291,20 +281,7 @@ class AutofillAppViewModel @Inject constructor(
         if (totp == null) return
 
         val totpUri = encryptionContextProvider.withEncryptionContext { decrypt(totp) }
-        viewModelScope.launch {
-            val copyTotpToClipboard = preferenceRepository.getCopyTotpToClipboardEnabled().first()
-            if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
-                getTotpCodeFromUri(totpUri)
-                    .onSuccess {
-                        clipboardManager.copyToClipboard(it)
-                        telemetryManager.sendEvent(MFAAutofillCopied)
-                        toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
-                    }
-                    .onFailure {
-                        PassLogger.w(TAG, "Could not copy totp code")
-                    }
-            }
-        }
+        copyTotpAfterAutofill.run(totpUri)
     }
 
     internal companion object {

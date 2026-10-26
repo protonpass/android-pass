@@ -26,6 +26,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.autofill.CopyTotpAfterAutofill
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillData
@@ -34,6 +35,7 @@ import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapterIm
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.common.api.None
+import proton.android.pass.common.fakes.FakeAppDispatchers
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContext
 import proton.android.pass.crypto.fakes.context.FakeEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
@@ -78,11 +80,15 @@ class AutofillAppViewModelTest {
 
         instance = AutofillAppViewModel(
             encryptionContextProvider = FakeEncryptionContextProvider(),
-            clipboardManager = FakeClipboardManager(),
-            getTotpCodeFromUri = FakeGetTotpCodeFromUri(),
-            toastManager = FakeToastManager(),
+            copyTotpAfterAutofill = CopyTotpAfterAutofill(
+                getTotpCodeFromUri = FakeGetTotpCodeFromUri(),
+                clipboardManager = FakeClipboardManager(),
+                toastManager = FakeToastManager(),
+                telemetryManager = FakeTelemetryManager(),
+                preferenceRepository = FakePreferenceRepository(),
+                appDispatchers = FakeAppDispatchers()
+            ),
             updateAutofillItem = updateAutofillItem,
-            preferenceRepository = FakePreferenceRepository(),
             telemetryManager = FakeTelemetryManager(),
             inAppReviewTriggerMetrics = FakeInAppReviewTriggerMetrics(),
             getItemById = getItemById,

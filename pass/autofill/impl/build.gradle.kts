@@ -139,6 +139,7 @@ dependencies {
 
     testImplementation(projects.pass.appConfig.fakes)
     testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.crypto.fakes)

@@ -27,10 +27,14 @@ class FakeClipboardManager @Inject constructor() : ClipboardManager {
 
     private var contents: String = ""
 
+    var lastCopiedWasSecure: Boolean? = null
+        private set
+
     fun getContents() = contents
 
     override fun copyToClipboard(text: String, isSecure: Boolean) {
         contents = text
+        lastCopiedWasSecure = isSecure
     }
 
     override fun clearClipboard() {

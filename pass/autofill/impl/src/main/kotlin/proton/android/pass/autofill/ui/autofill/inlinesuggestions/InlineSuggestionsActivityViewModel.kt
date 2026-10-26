@@ -29,22 +29,19 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
-import proton.android.pass.autofill.MFAAutofillCopied
+import proton.android.pass.autofill.CopyTotpAfterAutofill
 import proton.android.pass.autofill.api.suggestions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.extensions.isTrustedAutofillPackage
 import proton.android.pass.autofill.heuristics.ItemFieldMapper
-import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras
 import proton.android.pass.autofill.ui.autofill.common.AutofillConfirmMode
-import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.require
@@ -55,24 +52,18 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.totp.api.GetTotpCodeFromUri
 import javax.inject.Inject
 
 @HiltViewModel
 class InlineSuggestionsActivityViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val hasActiveAccount: HasActiveAccount,
-    private val clipboardManager: ClipboardManager,
-    private val getTotpCodeFromUri: GetTotpCodeFromUri,
-    private val toastManager: ToastManager,
+    private val copyTotpAfterAutofill: CopyTotpAfterAutofill,
     private val updateAutofillItem: UpdateAutofillItem,
     private val telemetryManager: TelemetryManager,
     private val internalSettingsRepository: InternalSettingsRepository,
@@ -105,10 +96,6 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         preference.value()?.let { internalSettingsRepository.setLastItemAutofill(it) }
     }
 
-    private val copyTotpToClipboardState = preferenceRepository
-        .getCopyTotpToClipboardEnabled()
-        .distinctUntilChanged()
-
     private val themeState: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
         .distinctUntilChanged()
@@ -126,11 +113,10 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     }
 
     val state: StateFlow<InlineSuggestionAutofillNoUiState> = combine(
-        copyTotpToClipboardState,
         themeState,
         isTrustedPackageState,
         hasActiveAccountState
-    ) { copyTotpToClipboard, theme, isTrusted, hasActiveAccount ->
+    ) { theme, isTrusted, hasActiveAccount ->
         if (!hasActiveAccount) {
             PassLogger.w(TAG, "Denying stale autofill suggestion: no active account for userId")
             return@combine InlineSuggestionAutofillNoUiState.Close
@@ -138,7 +124,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
 
         val mappingsOption = selectedAutofillItem
             .map { autofillItem ->
-                getMappings(autofillItem, copyTotpToClipboard, appState)
+                getMappings(autofillItem, appState)
             }
         if (mappingsOption is Some) {
             if (mappingsOption.value.mappings.isNotEmpty()) {
@@ -190,58 +176,35 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         }
     }
 
-    private fun getMappings(
-        autofillItem: AutofillItem,
-        copyTotpToClipboard: CopyTotpToClipboard,
-        autofillAppState: AutofillAppState
-    ): AutofillMappings = encryptionContextProvider.withEncryptionContext {
-        if (autofillItem is AutofillItem.Login) {
-            handleTotpUri(
+    private fun getMappings(autofillItem: AutofillItem, autofillAppState: AutofillAppState): AutofillMappings {
+        return encryptionContextProvider.withEncryptionContext {
+            if (autofillItem is AutofillItem.Login) {
+                handleTotpUri(encryptionContext = this@withEncryptionContext, totp = autofillItem.totp)
+            }
+
+            val (updatePackageInfo, updateUrl) = autofillAppState.updateAutofillFields()
+            val data = UpdateAutofillItemData(
+                shareId = autofillItem.shareId(),
+                itemId = autofillItem.itemId(),
+                packageInfo = updatePackageInfo,
+                url = updateUrl,
+                shouldAssociate = autofillItem.shouldAssociate()
+            )
+            updateAutofillItem(data)
+
+            ItemFieldMapper.mapFields(
                 encryptionContext = this@withEncryptionContext,
-                copyTotpToClipboard = copyTotpToClipboard,
-                totp = autofillItem.totp
+                autofillItem = autofillItem,
+                cluster = autofillAppState.autofillData.assistInfo.cluster
             )
         }
-
-        val (updatePackageInfo, updateUrl) = autofillAppState.updateAutofillFields()
-        val data = UpdateAutofillItemData(
-            shareId = autofillItem.shareId(),
-            itemId = autofillItem.itemId(),
-            packageInfo = updatePackageInfo,
-            url = updateUrl,
-            shouldAssociate = autofillItem.shouldAssociate()
-        )
-        updateAutofillItem(data)
-
-        ItemFieldMapper.mapFields(
-            encryptionContext = this@withEncryptionContext,
-            autofillItem = autofillItem,
-            cluster = autofillAppState.autofillData.assistInfo.cluster
-        )
     }
 
-
-    private fun handleTotpUri(
-        encryptionContext: EncryptionContext,
-        copyTotpToClipboard: CopyTotpToClipboard,
-        totp: EncryptedString?
-    ) {
+    private fun handleTotpUri(encryptionContext: EncryptionContext, totp: EncryptedString?) {
         if (totp == null) return
 
         val totpUri = encryptionContext.decrypt(totp)
-        if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
-            viewModelScope.launch {
-                getTotpCodeFromUri(totpUri)
-                    .onSuccess {
-                        clipboardManager.copyToClipboard(it)
-                        telemetryManager.sendEvent(MFAAutofillCopied)
-                        toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
-                    }
-                    .onFailure {
-                        PassLogger.w(TAG, "Could not copy totp code")
-                    }
-            }
-        }
+        copyTotpAfterAutofill.run(totpUri)
     }
 
     companion object {

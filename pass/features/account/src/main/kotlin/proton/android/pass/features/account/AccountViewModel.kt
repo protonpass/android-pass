@@ -31,16 +31,16 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.take
-import me.proton.core.auth.domain.feature.IsFido2Enabled
-import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.IsSecurityKeysEnabled
 import proton.android.pass.data.api.usecases.ObserveAccountStateChanges
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
+import proton.android.pass.data.api.usecases.ObserveSecurityKeys
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.domain.account.AccountState
@@ -54,8 +54,8 @@ class AccountViewModel @Inject constructor(
     observeCurrentUserSettings: ObserveCurrentUserSettings,
     hasExtraPassword: HasExtraPassword,
     observeAccountStateChanges: ObserveAccountStateChanges,
-    isFido2Enabled: IsFido2Enabled,
-    observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
+    isSecurityKeysEnabled: IsSecurityKeysEnabled,
+    observeSecurityKeys: ObserveSecurityKeys
 ) : ViewModel() {
 
     internal val hasBeenSignedOut: StateFlow<Boolean> =
@@ -79,7 +79,7 @@ class AccountViewModel @Inject constructor(
         upgradeInfoFlow.asLoadingResult(),
         observeCurrentUserSettings().asLoadingResult(),
         oneShot { hasExtraPassword() }.asLoadingResult(),
-        currentUserFlow.flatMapLatest { oneShot { observeRegisteredSecurityKeys(it.userId) } }
+        currentUserFlow.flatMapLatest { oneShot { observeSecurityKeys(it.userId) } }
     ) { userResult,
         upgradeInfoResult,
         currentUserSettingsResult,
@@ -109,7 +109,7 @@ class AccountViewModel @Inject constructor(
             is LoadingResult.Error -> AccountUiState(
                 userId = null,
                 email = null,
-                recoveryEmail = currentUserSettingsSuccess?.email?.value,
+                recoveryEmail = currentUserSettingsSuccess?.recoveryEmail,
                 recoveryState = null,
                 plan = PlanSection.Hide,
                 isLoadingState = IsLoadingState.NotLoading,
@@ -126,13 +126,13 @@ class AccountViewModel @Inject constructor(
             is LoadingResult.Success ->
                 AccountUiState(
                     email = userResult.data.email,
-                    recoveryEmail = currentUserSettingsSuccess?.email?.value,
+                    recoveryEmail = currentUserSettingsSuccess?.recoveryEmail,
                     recoveryState = userResult.data.recoveryState,
                     plan = plan,
                     isLoadingState = IsLoadingState.NotLoading,
                     showChangePassword = !userResult.data.isSso,
                     showRecoveryEmail = !userResult.data.isSso,
-                    showSecurityKeys = !userResult.data.isSso && isFido2Enabled(userResult.data.userId),
+                    showSecurityKeys = !userResult.data.isSso && isSecurityKeysEnabled(userResult.data.userId),
                     showUpgradeButton = !userResult.data.isSso && isUpgradeAvailable,
                     showSubscriptionButton = isSubscriptionAvailable,
                     showExtraPasswordButton = !userResult.data.isSso,

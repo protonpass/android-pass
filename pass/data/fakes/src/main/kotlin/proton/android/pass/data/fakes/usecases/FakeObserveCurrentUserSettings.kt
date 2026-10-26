@@ -20,9 +20,9 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import me.proton.core.usersettings.domain.entity.UserSettings
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
+import proton.android.pass.domain.account.UserSettings
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,5 +30,8 @@ import javax.inject.Singleton
 class FakeObserveCurrentUserSettings @Inject constructor() : ObserveCurrentUserSettings {
 
     private val observeVaultsFlow: MutableSharedFlow<UserSettings?> = testFlow()
+
+    fun emit(settings: UserSettings?) = observeVaultsFlow.tryEmit(settings)
+
     override fun invoke(): Flow<UserSettings?> = observeVaultsFlow
 }

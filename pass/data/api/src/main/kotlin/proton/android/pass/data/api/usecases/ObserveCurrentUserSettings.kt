@@ -19,7 +19,7 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.usersettings.domain.entity.UserSettings
+import proton.android.pass.domain.account.UserSettings
 
 interface ObserveCurrentUserSettings {
     operator fun invoke(): Flow<UserSettings?>

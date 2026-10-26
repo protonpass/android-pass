@@ -32,11 +32,15 @@ import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.CompromisedPasswordRepository
 import proton.android.pass.data.api.usecases.CheckFreeUserLimit
 import proton.android.pass.data.api.usecases.GetFreeUserCount
+import proton.android.pass.data.api.usecases.IsSecurityKeysEnabled
+import proton.android.pass.data.api.usecases.ObserveSecurityKeys
 import proton.android.pass.data.api.usecases.SignOutAccount
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.fakes.usecases.FakeCheckFreeUserLimit
 import proton.android.pass.data.fakes.usecases.FakeGetFreeUserCount
+import proton.android.pass.data.fakes.usecases.FakeIsSecurityKeysEnabled
+import proton.android.pass.data.fakes.usecases.FakeObserveSecurityKeys
 import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeObserveCompromisedPasswords
 import proton.android.pass.data.fakes.usecases.compromisedpassword.FakeRefreshCompromisedPasswords
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
@@ -644,6 +648,12 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveCurrentUserSettings(impl: FakeObserveCurrentUserSettings): ObserveCurrentUserSettings
+
+    @Binds
+    abstract fun bindIsSecurityKeysEnabled(impl: FakeIsSecurityKeysEnabled): IsSecurityKeysEnabled
+
+    @Binds
+    abstract fun bindObserveSecurityKeys(impl: FakeObserveSecurityKeys): ObserveSecurityKeys
 
     @Binds
     abstract fun bindObserveAliasOptions(impl: FakeObserveAliasOptions): ObserveAliasOptions

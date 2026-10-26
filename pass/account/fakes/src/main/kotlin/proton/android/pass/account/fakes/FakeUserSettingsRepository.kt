@@ -19,10 +19,14 @@
 package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
@@ -32,13 +36,18 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeUserSettingsRepository @Inject constructor() : UserSettingsRepository {
+    private val settings = MutableStateFlow<UserSettings?>(null)
+
     override suspend fun getUserSettings(sessionUserId: SessionUserId, refresh: Boolean): UserSettings {
         throw IllegalStateException("Not implemented")
     }
 
-    override fun getUserSettingsFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<UserSettings>> {
-        throw IllegalStateException("Not implemented")
+    fun setUserSettings(userSettings: UserSettings?) {
+        settings.value = userSettings
     }
+
+    override fun getUserSettingsFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<UserSettings>> =
+        settings.filterNotNull().map { DataResult.Success(ResponseSource.Local, it) }
 
     override fun markAsStale(userId: UserId) {
         throw IllegalStateException("Not implemented")

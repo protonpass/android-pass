@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.core.account)
     implementation(libs.core.accountManager)
+    implementation(libs.core.authFidoDomain)
     implementation(libs.core.challenge)
     implementation(libs.core.crypto)
     implementation(libs.core.data)

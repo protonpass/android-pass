@@ -27,12 +27,16 @@ import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.BatchChangeShareVisibility
 import proton.android.pass.data.api.usecases.CheckFreeUserLimit
 import proton.android.pass.data.api.usecases.GetFreeUserCount
+import proton.android.pass.data.api.usecases.IsSecurityKeysEnabled
+import proton.android.pass.data.api.usecases.ObserveSecurityKeys
 import proton.android.pass.data.api.usecases.SignOutAccount
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.data.api.usecases.compromisedpassword.RefreshCompromisedPasswords
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.impl.usecases.CheckFreeUserLimitImpl
 import proton.android.pass.data.impl.usecases.GetFreeUserCountImpl
+import proton.android.pass.data.impl.usecases.IsSecurityKeysEnabledImpl
+import proton.android.pass.data.impl.usecases.ObserveSecurityKeysImpl
 import proton.android.pass.data.impl.usecases.SignOutAccountImpl
 import proton.android.pass.data.impl.usecases.compromisedpassword.ObserveCompromisedPasswordsImpl
 import proton.android.pass.data.impl.usecases.compromisedpassword.RefreshCompromisedPasswordsImpl
@@ -900,6 +904,12 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveCurrentUserSettings(impl: ObserveCurrentUserSettingsImpl): ObserveCurrentUserSettings
+
+    @Binds
+    abstract fun bindIsSecurityKeysEnabled(impl: IsSecurityKeysEnabledImpl): IsSecurityKeysEnabled
+
+    @Binds
+    abstract fun bindObserveSecurityKeys(impl: ObserveSecurityKeysImpl): ObserveSecurityKeys
 
     @Binds
     abstract fun bindGetItemByAliasEmail(impl: GetItemByAliasEmailImpl): GetItemByAliasEmail

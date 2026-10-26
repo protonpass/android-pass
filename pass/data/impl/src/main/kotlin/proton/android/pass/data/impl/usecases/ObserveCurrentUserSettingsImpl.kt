@@ -21,10 +21,12 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.usersettings.domain.entity.UserSettings
+import kotlinx.coroutines.flow.map
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
+import proton.android.pass.data.impl.account.toDomain
+import proton.android.pass.domain.account.UserSettings
 import javax.inject.Inject
 
 class ObserveCurrentUserSettingsImpl @Inject constructor(
@@ -36,5 +38,6 @@ class ObserveCurrentUserSettingsImpl @Inject constructor(
         .flatMapLatest { user ->
             observeUserSettings(user.userId)
         }
+        .map { settings -> settings?.toDomain() }
         .distinctUntilChanged()
 }

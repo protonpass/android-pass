@@ -45,14 +45,15 @@ object UserTestFactory {
         email: String? = null,
         name: String? = null,
         userId: UserId = UserId("12345"),
-        isFree: Boolean = true
+        isFree: Boolean = true,
+        isSso: Boolean = false
     ): DomainUser = DomainUser(
         userId = userId,
         email = email,
         name = name,
         displayName = null,
         role = UserRole.NoOrganization,
-        isSso = false,
+        isSso = isSso,
         isFree = isFree,
         recoveryState = null
     )

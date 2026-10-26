@@ -29,7 +29,6 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.util.kotlin.orEmpty
@@ -41,6 +40,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.UserId
+import proton.android.pass.domain.account.SecurityKey
 import proton.android.pass.domain.account.UserRecoveryState
 
 @Composable
@@ -129,7 +129,7 @@ internal fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (Acc
 }
 
 @Composable
-fun securityKeysSettingsItemHint(registeredSecurityKeys: List<Fido2RegisteredKey>?): String = when {
+fun securityKeysSettingsItemHint(registeredSecurityKeys: List<SecurityKey>?): String = when {
     registeredSecurityKeys.isNullOrEmpty() ->
         stringResource(R.string.account_settings_list_item_security_keys_hint_not_set)
 

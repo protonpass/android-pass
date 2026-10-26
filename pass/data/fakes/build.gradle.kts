@@ -37,7 +37,6 @@ dependencies {
     api(projects.pass.data.api)
 
     implementation(libs.core.user.domain)
-    implementation(libs.core.userSettings.domain)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(libs.androidx.paging.common)

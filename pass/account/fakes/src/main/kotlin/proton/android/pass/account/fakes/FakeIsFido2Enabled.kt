@@ -25,9 +25,11 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeIsFido2Enabled @Inject constructor() : IsFido2Enabled {
-    override fun invoke(userId: UserId?): Boolean = false
+    var enabled: Boolean = false
 
-    override fun isLocalEnabled(): Boolean = false
+    override fun invoke(userId: UserId?): Boolean = enabled
 
-    override fun isRemoteEnabled(userId: UserId?): Boolean = false
+    override fun isLocalEnabled(): Boolean = enabled
+
+    override fun isRemoteEnabled(userId: UserId?): Boolean = enabled
 }

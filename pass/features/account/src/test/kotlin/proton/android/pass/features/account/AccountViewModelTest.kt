@@ -18,28 +18,28 @@
 
 package proton.android.pass.features.account
 
+import app.cash.turbine.ReceiveTurbine
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
-import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.FakeAccountRepository
-import proton.android.pass.account.fakes.FakeIsFido2Enabled
-import proton.android.pass.account.fakes.FakeUserSettingsRepository
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.fakes.usecases.FakeIsSecurityKeysEnabled
 import proton.android.pass.data.fakes.usecases.FakeObserveAccountStateChanges
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.FakeObserveCurrentUserSettings
+import proton.android.pass.data.fakes.usecases.FakeObserveSecurityKeys
 import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.account.AccountState
+import proton.android.pass.domain.account.SecurityKey
+import proton.android.pass.domain.account.UserSettings
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.AccountTestFactory
@@ -57,7 +57,8 @@ internal class AccountViewModelTest {
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var observeAccountStateChanges: FakeObserveAccountStateChanges
 
-    private lateinit var observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
+    private lateinit var isSecurityKeysEnabled: FakeIsSecurityKeysEnabled
+    private lateinit var observeSecurityKeys: FakeObserveSecurityKeys
 
     @Before
     fun setup() {
@@ -66,11 +67,8 @@ internal class AccountViewModelTest {
         getUpgradeInfo = FakeObserveUpgradeInfo()
         snackbarDispatcher = FakeSnackbarDispatcher()
         observeAccountStateChanges = FakeObserveAccountStateChanges()
-        observeRegisteredSecurityKeys = ObserveRegisteredSecurityKeys(
-            accountRepository = FakeAccountRepository(),
-            isFido2Enabled = FakeIsFido2Enabled(),
-            observeUserSettings = ObserveUserSettings(FakeUserSettingsRepository())
-        )
+        isSecurityKeysEnabled = FakeIsSecurityKeysEnabled()
+        observeSecurityKeys = FakeObserveSecurityKeys()
 
         instance = AccountViewModel(
             observeCurrentUser = observeCurrentUser,
@@ -78,8 +76,8 @@ internal class AccountViewModelTest {
             observeCurrentUserSettings = observeCurrentUserSettings,
             hasExtraPassword = FakeHasExtraPassword(),
             observeAccountStateChanges = observeAccountStateChanges,
-            isFido2Enabled = FakeIsFido2Enabled(),
-            observeRegisteredSecurityKeys = observeRegisteredSecurityKeys
+            isSecurityKeysEnabled = isSecurityKeysEnabled,
+            observeSecurityKeys = observeSecurityKeys
         )
     }
 
@@ -177,6 +175,105 @@ internal class AccountViewModelTest {
         }
     }
 
+    @Test
+    fun `recovery email is null when no user settings are emitted`() = runTest {
+        observeCurrentUser.sendUser(UserTestFactory.create(email = EMAIL))
+
+        instance.state.test {
+            val item = awaitMatching { it.userId != null }
+            assertThat(item.recoveryEmail).isNull()
+        }
+    }
+
+    @Test
+    fun `recovery email is taken from the current user settings`() = runTest {
+        observeCurrentUser.sendUser(UserTestFactory.create(email = EMAIL))
+        observeCurrentUserSettings.emit(UserSettings(recoveryEmail = RECOVERY_EMAIL))
+
+        instance.state.test {
+            val item = awaitMatching { it.recoveryEmail != null }
+            assertThat(item.recoveryEmail).isEqualTo(RECOVERY_EMAIL)
+        }
+    }
+
+    @Test
+    fun `recovery email is null when the user settings have no recovery email`() = runTest {
+        observeCurrentUser.sendUser(UserTestFactory.create(email = EMAIL))
+        observeCurrentUserSettings.emit(UserSettings(recoveryEmail = null))
+
+        instance.state.test {
+            val item = awaitMatching { it.userId != null }
+            assertThat(item.recoveryEmail).isNull()
+        }
+    }
+
+    @Test
+    fun `security keys section is hidden when security keys are disabled`() = runTest {
+        isSecurityKeysEnabled.enabled = false
+        observeCurrentUser.sendUser(UserTestFactory.create(email = EMAIL))
+
+        instance.state.test {
+            val item = awaitMatching { it.userId != null }
+            assertThat(item.showSecurityKeys).isFalse()
+        }
+    }
+
+    @Test
+    fun `security keys are shown with their names when security keys are enabled`() = runTest {
+        isSecurityKeysEnabled.enabled = true
+        observeSecurityKeys.setKeys(securityKeys("key one", "key two"))
+        observeCurrentUser.sendUser(UserTestFactory.create(email = EMAIL))
+
+        instance.state.test {
+            val item = awaitMatching { it.userId != null }
+            assertThat(item.showSecurityKeys).isTrue()
+            assertThat(item.registeredSecurityKeys?.map { it.name }).containsExactly("key one", "key two").inOrder()
+        }
+    }
+
+    @Test
+    fun `security keys section is shown empty when enabled and none are registered`() = runTest {
+        isSecurityKeysEnabled.enabled = true
+        observeSecurityKeys.setKeys(emptyList())
+        observeCurrentUser.sendUser(UserTestFactory.create(email = EMAIL))
+
+        instance.state.test {
+            val item = awaitMatching { it.userId != null }
+            assertThat(item.showSecurityKeys).isTrue()
+            assertThat(item.registeredSecurityKeys).isEmpty()
+        }
+    }
+
+    @Test
+    fun `sso users do not see security keys, change password or recovery email`() = runTest {
+        isSecurityKeysEnabled.enabled = true
+        observeSecurityKeys.setKeys(securityKeys("key one"))
+        observeCurrentUser.sendUser(UserTestFactory.create(email = EMAIL, isSso = true))
+
+        instance.state.test {
+            val item = awaitMatching { it.userId != null }
+            assertThat(item.showSecurityKeys).isFalse()
+            assertThat(item.showChangePassword).isFalse()
+            assertThat(item.showRecoveryEmail).isFalse()
+        }
+    }
+
+    private suspend fun ReceiveTurbine<AccountUiState>.awaitMatching(
+        predicate: (AccountUiState) -> Boolean
+    ): AccountUiState {
+        while (true) {
+            val item = awaitItem()
+            if (predicate(item)) return item
+        }
+    }
+
+    private fun securityKeys(vararg names: String): List<SecurityKey> = names.map { SecurityKey(name = it) }
+
     private fun accountWithState(state: AccountState) =
         AccountTestFactory.create(userId = AccountTestFactory.DEFAULT_ACCOUNT.userId, state = state)
+
+    private companion object {
+        const val EMAIL = "test@email.local"
+        const val RECOVERY_EMAIL = "recovery@email.local"
+    }
 }

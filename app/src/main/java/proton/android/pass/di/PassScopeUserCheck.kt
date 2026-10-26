@@ -20,90 +20,34 @@ package proton.android.pass.di
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.R
-import proton.android.pass.data.api.usecases.CheckFreeUserLimit
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
-import proton.android.pass.data.impl.account.toDomain
-import proton.android.pass.enterextrapassword.EnterExtraPasswordLauncher
-import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class PassScopeUserCheck @Inject constructor(
-    private val accountManager: AccountManager,
-    private val sessionManager: SessionManager,
-    private val authWithExtraPasswordListener: AuthWithExtraPasswordListener,
-    private val enterExtraPasswordLauncher: EnterExtraPasswordLauncher,
+    accountManager: AccountManager,
+    private val passScopeCheck: PassScopeCheck,
     @ApplicationContext private val context: Context,
-    private val userManager: UserManager,
-    private val checkFreeUserLimit: CheckFreeUserLimit
+    userManager: UserManager
 ) : DefaultUserCheck(context, accountManager, userManager) {
     override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult =
         when (val superResult = super.invoke(user)) {
-            is PostLoginAccountSetup.UserCheckResult.Success -> {
-                when (val passScopeResult = checkPassScope(user, authWithExtraPasswordListener)) {
-                    is PostLoginAccountSetup.UserCheckResult.Success -> performAdditionalChecks(user)
-                    else -> passScopeResult
-                }
-            }
-
+            is PostLoginAccountSetup.UserCheckResult.Success -> passScopeCheck(user).toUserCheckResult()
             else -> superResult
         }
 
-    private suspend fun checkPassScope(
-        user: User,
-        authWithExtraPasswordListener: AuthWithExtraPasswordListener
-    ): PostLoginAccountSetup.UserCheckResult {
-        val account = accountManager.getAccount(user.userId).firstOrNull()
-            ?: return PostLoginAccountSetup.UserCheckResult.Error(
-                context.getString(R.string.no_account_found)
-            )
-        val session = sessionManager.getSession(account.sessionId)
-            ?: return PostLoginAccountSetup.UserCheckResult.Error(
-                context.getString(R.string.no_session_found)
-            )
-
-        return if (session.scopes.contains(PASS_SCOPE)) {
-            PostLoginAccountSetup.UserCheckResult.Success
-        } else {
-            PassLogger.i(TAG, "Waiting for extra password to be ready")
-
-            authWithExtraPasswordListener.clearUserId(user.userId)
-            enterExtraPasswordLauncher.start(user.userId)
-
-            val res = authWithExtraPasswordListener.onAuthWithExtraPassword(user.userId)
-            authWithExtraPasswordListener.clearUserId(user.userId)
-            PassLogger.i(TAG, "Auth with extra password listener: $res")
-            when (res) {
-                AuthWithExtraPasswordResult.Failure -> {
-                    PostLoginAccountSetup.UserCheckResult.Error(
-                        context.getString(R.string.auth_with_extra_password_failed)
-                    )
-                }
-
-                AuthWithExtraPasswordResult.Success -> {
-                    PostLoginAccountSetup.UserCheckResult.Success
-                }
-            }
-        }
+    private fun PassScopeCheckResult.toUserCheckResult(): PostLoginAccountSetup.UserCheckResult = when (this) {
+        PassScopeCheckResult.Passed -> PostLoginAccountSetup.UserCheckResult.Success
+        PassScopeCheckResult.NoAccountFound -> error(R.string.no_account_found)
+        PassScopeCheckResult.NoSessionFound -> error(R.string.no_session_found)
+        PassScopeCheckResult.ExtraPasswordFailed -> error(R.string.auth_with_extra_password_failed)
+        PassScopeCheckResult.FreeUserLimitReached -> error(R.string.auth_only_1_proton_account_failed)
     }
 
-    private suspend fun performAdditionalChecks(user: User): PostLoginAccountSetup.UserCheckResult = when {
-        checkFreeUserLimit(user.toDomain()) -> PostLoginAccountSetup.UserCheckResult.Error(
-            context.getString(R.string.auth_only_1_proton_account_failed)
-        )
-        else -> PostLoginAccountSetup.UserCheckResult.Success
-    }
-
-    companion object {
-        private const val TAG = "PassScopeUserCheck"
-        private const val PASS_SCOPE = "pass"
-    }
+    private fun error(messageRes: Int): PostLoginAccountSetup.UserCheckResult =
+        PostLoginAccountSetup.UserCheckResult.Error(context.getString(messageRes))
 }

@@ -26,11 +26,14 @@ class FakeClearUserData @Inject constructor() : ClearUserData {
 
     private var result = Result.success(Unit)
 
+    val clearedUserIds: MutableList<UserId> = mutableListOf()
+
     fun setResult(value: Result<Unit>) {
         result = value
     }
 
     override suspend fun invoke(userId: UserId) {
+        clearedUserIds += userId
         result.getOrThrow()
     }
 }

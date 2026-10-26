@@ -24,7 +24,10 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeResetAppToDefaults @Inject constructor() : ResetAppToDefaults {
-    override suspend fun invoke() {
+    var invocations: Int = 0
+        private set
 
+    override suspend fun invoke() {
+        invocations++
     }
 }

@@ -558,8 +558,15 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
+    testImplementation(projects.pass.account.fakes)
+    testImplementation(projects.pass.appConfig.fakes)
+    testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.payments.fakes)
+    testImplementation(projects.pass.preferences.fakes)
 
     kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.bundles.test.android) {

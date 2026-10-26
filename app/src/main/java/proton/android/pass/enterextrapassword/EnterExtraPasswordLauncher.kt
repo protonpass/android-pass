@@ -29,9 +29,9 @@ import javax.inject.Inject
 class EnterExtraPasswordLauncher @Inject constructor(
     @ApplicationContext private val context: Context,
     private val foregroundActivityTracker: ForegroundActivityTracker
-) {
+) : ExtraPasswordPrompt {
 
-    fun start(userId: UserId) {
+    override fun start(userId: UserId) {
         val intent = Intent(context, EnterExtraPasswordActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra(EnterExtraPasswordActivity.EXTRA_USER_ID, userId.id)

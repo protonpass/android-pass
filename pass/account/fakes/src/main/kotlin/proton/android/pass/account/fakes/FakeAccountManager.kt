@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
@@ -41,13 +42,19 @@ class FakeAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     private val accountFlow: MutableStateFlow<Account> = MutableStateFlow(DEFAULT_ACCOUNT)
     private val accountsFlow = MutableStateFlow(listOf(DEFAULT_ACCOUNT))
+    private val accountsByUser = mutableMapOf<UserId, Account?>()
     private val accountStateChangesFlow = MutableSharedFlow<Account>(extraBufferCapacity = 16)
 
     override suspend fun addAccount(account: Account, session: Session) {
         // no-op
     }
 
-    override fun getAccount(userId: UserId): Flow<Account?> = accountFlow
+    override fun getAccount(userId: UserId): Flow<Account?> =
+        if (accountsByUser.containsKey(userId)) flowOf(accountsByUser[userId]) else accountFlow
+
+    fun setAccount(userId: UserId, account: Account?) {
+        accountsByUser[userId] = account
+    }
 
     override fun getAccounts(): Flow<List<Account>> = accountsFlow
 

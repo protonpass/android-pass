@@ -28,12 +28,17 @@ import javax.inject.Inject
 class FakeSessionManager @Inject constructor() : SessionManager {
 
     private val sessionIds = mutableMapOf<UserId, SessionId>()
+    private val sessions = mutableMapOf<SessionId, Session>()
 
     private val mutableRefreshedScopes = mutableListOf<SessionId>()
     val refreshedScopes: List<SessionId> = mutableRefreshedScopes
 
     fun setSessionId(userId: UserId, sessionId: SessionId) {
         sessionIds[userId] = sessionId
+    }
+
+    fun setSession(session: Session) {
+        sessions[session.sessionId] = session
     }
 
     override suspend fun <T> withLock(sessionId: SessionId?, action: suspend () -> T): T {
@@ -52,9 +57,7 @@ class FakeSessionManager @Inject constructor() : SessionManager {
         mutableRefreshedScopes.add(sessionId)
     }
 
-    override suspend fun getSession(sessionId: SessionId?): Session? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getSession(sessionId: SessionId?): Session? = sessions[sessionId]
 
     override suspend fun getSessions(): List<Session> {
         TODO("Not yet implemented")

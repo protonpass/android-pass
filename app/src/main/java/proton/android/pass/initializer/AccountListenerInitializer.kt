@@ -30,7 +30,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
@@ -39,7 +38,6 @@ import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.accountmanager.presentation.onSessionForceLogout
-import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
@@ -48,8 +46,6 @@ import proton.android.pass.data.api.usecases.GetReadyAccounts
 import proton.android.pass.data.api.usecases.ObserveAccountStateChanges
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.impl.db.DatabaseCleanupHelper
-import proton.android.pass.domain.UserId
-import proton.android.pass.domain.account.AccountState
 import proton.android.pass.log.api.LogAccountContext
 import proton.android.pass.log.api.LogoutLogger
 import proton.android.pass.log.api.LogoutReason
@@ -70,6 +66,15 @@ class AccountListenerInitializer : Initializer<Unit> {
         val accountManager = entryPoint.accountManager()
         val itemSyncStatusRepository = entryPoint.itemSyncStatusRepository()
         val snackbarDispatcher = entryPoint.snackbarDispatcher()
+        val cleanupHandler by lazy {
+            AccountCleanupHandler(
+                itemSyncStatusRepository = itemSyncStatusRepository,
+                clearUserData = entryPoint.clearUserData(),
+                getReadyAccounts = entryPoint.getReadyAccounts(),
+                resetAppToDefaults = entryPoint.resetAppToDefaults(),
+                cleanupLastUser = { entryPoint.databaseCleanupHelper().cleanupLastUser() }
+            )
+        }
 
         accountManager.observe(
             lifecycle = lifecycleProvider.lifecycle,
@@ -78,14 +83,14 @@ class AccountListenerInitializer : Initializer<Unit> {
             launchInAppLifecycleScope(lifecycleProvider) {
                 withContext(LogAccountContext(account.userId)) {
                     PassLogger.i(TAG, "Account disabled : ${account.userId}")
-                    performCleanup(account.userId, entryPoint)
+                    cleanupHandler(account.userId)
                 }
             }
         }.onAccountRemoved { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
                 withContext(LogAccountContext(account.userId)) {
                     PassLogger.i(TAG, "Account removed : ${account.userId}")
-                    performCleanup(account.userId, entryPoint)
+                    cleanupHandler(account.userId)
                 }
             }
         }.onSessionForceLogout {
@@ -99,18 +104,10 @@ class AccountListenerInitializer : Initializer<Unit> {
         }
 
         entryPoint.observeAccountStateChanges()()
-            .scan(emptyMap<UserId, AccountState>() to false) { accumulator, currentAccount ->
-                val (stateMap, _) = accumulator
-                val updatedMap = stateMap + (currentAccount.userId to currentAccount.state)
-                val justBecameReady = stateMap[currentAccount.userId] != AccountState.Ready &&
-                    currentAccount.state == AccountState.Ready
-                updatedMap to justBecameReady
-            }
-            .onEach { (_, justBecameReady) ->
-                if (justBecameReady) {
-                    launchInAppLifecycleScope(lifecycleProvider) {
-                        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
-                    }
+            .justBecameReady()
+            .onEach {
+                launchInAppLifecycleScope(lifecycleProvider) {
+                    itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
                 }
             }
             .flowWithLifecycle(lifecycleProvider.lifecycle)
@@ -130,35 +127,6 @@ class AccountListenerInitializer : Initializer<Unit> {
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()
-
-    private suspend fun performCleanup(userId: UserId, entryPoint: AccountListenerInitializerEntryPoint) {
-        val clearUserData = entryPoint.clearUserData()
-        val resetApp = entryPoint.resetAppToDefaults()
-        val getReadyAccounts = entryPoint.getReadyAccounts()
-        val databaseCleanupHelper = entryPoint.databaseCleanupHelper()
-
-        entryPoint.itemSyncStatusRepository().clear()
-
-        safeRunCatching { clearUserData(userId) }
-            .onSuccess { PassLogger.i(TAG, "Cleared user data") }
-            .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
-
-        val activeAccounts = getReadyAccounts()
-        PassLogger.i(TAG, "Active accounts remaining: ${activeAccounts.size}")
-
-        if (activeAccounts.isEmpty()) {
-            PassLogger.i(TAG, "No more active accounts - performing final cleanup")
-
-            safeRunCatching { databaseCleanupHelper.cleanupLastUser() }
-                .onSuccess { PassLogger.i(TAG, "Database cleanup completed") }
-                .onFailure {
-                    PassLogger.w(TAG, "Error during database cleanup")
-                    PassLogger.w(TAG, it)
-                }
-
-            resetApp()
-        }
-    }
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)

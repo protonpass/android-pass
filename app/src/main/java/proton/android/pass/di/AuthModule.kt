@@ -43,6 +43,8 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultHelpOptionHandler
 import me.proton.core.auth.presentation.HelpOptionHandler
+import proton.android.pass.enterextrapassword.EnterExtraPasswordLauncher
+import proton.android.pass.enterextrapassword.ExtraPasswordPrompt
 import javax.inject.Singleton
 
 @Module
@@ -52,6 +54,9 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideUserCheck(passScopeUserCheck: PassScopeUserCheck): PostLoginAccountSetup.UserCheck = passScopeUserCheck
+
+    @Provides
+    fun provideExtraPasswordPrompt(launcher: EnterExtraPasswordLauncher): ExtraPasswordPrompt = launcher
 
     @Provides
     @Singleton

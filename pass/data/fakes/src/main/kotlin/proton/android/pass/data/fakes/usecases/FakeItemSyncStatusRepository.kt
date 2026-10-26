@@ -54,6 +54,9 @@ class FakeItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
 
     val emittedModes: MutableList<SyncMode> = mutableListOf()
 
+    var clearCount: Int = 0
+        private set
+
     fun emitAccumulated(map: Map<ShareId, ItemSyncStatusPayload>) {
         accumulatedFlow.tryEmit(map)
     }
@@ -78,6 +81,7 @@ class FakeItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
     }
 
     override suspend fun clear() {
+        clearCount++
     }
 
     override fun observeMode(): Flow<SyncMode> = syncModeFlow

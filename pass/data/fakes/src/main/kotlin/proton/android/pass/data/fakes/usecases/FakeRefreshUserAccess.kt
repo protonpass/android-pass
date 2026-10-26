@@ -24,6 +24,13 @@ import javax.inject.Inject
 
 class FakeRefreshUserAccess @Inject constructor() : RefreshUserAccess {
 
+    var invocations: Int = 0
+        private set
+
+    var onInvoke: () -> Unit = {}
+
     override suspend fun invoke(userId: UserId) {
+        invocations++
+        onInvoke()
     }
 }

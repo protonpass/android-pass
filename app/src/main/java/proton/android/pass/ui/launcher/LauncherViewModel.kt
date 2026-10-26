@@ -37,10 +37,8 @@
 package proton.android.pass.ui.launcher
 
 import androidx.activity.ComponentActivity
-import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,17 +55,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.presentation.observe
-import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
-import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
-import me.proton.core.accountmanager.presentation.onAccountDeviceSecretNeeded
-import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
-import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
-import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
-import me.proton.core.auth.presentation.AuthOrchestrator
-import me.proton.core.auth.presentation.entity.AddAccountWorkflow
-import me.proton.core.auth.presentation.onAddAccountResult
-import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.supportPayment
 import proton.android.pass.biometry.ResetAuthPreferences
@@ -88,15 +75,11 @@ import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.Account
 import proton.android.pass.domain.account.AccountState as PassAccountState
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
-import proton.android.pass.log.api.LogoutLogger
-import proton.android.pass.log.api.LogoutReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.telemetry.api.TelemetryManager
-import proton.android.pass.telemetry.api.TelemetryGrowthSignupEvent
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
@@ -108,8 +91,7 @@ class LauncherViewModel @Inject constructor(
     private val getReadyAccounts: GetReadyAccounts,
     private val disableAccount: DisableAccount,
     private val setAsPrimaryAccount: SetAsPrimary,
-    private val authOrchestrator: AuthOrchestrator,
-    private val userSettingsOrchestrator: UserSettingsOrchestrator,
+    private val launcherFlows: LauncherFlows,
     private val initialWorkerLauncher: InitialWorkerLauncher,
     private val getUserPlan: GetUserPlan,
     private val refreshUserAccess: RefreshUserAccess,
@@ -121,7 +103,6 @@ class LauncherViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     commonLibraryVersionChecker: CommonLibraryVersionChecker,
     private val appConfig: AppConfig,
-    private val telemetryManager: TelemetryManager,
     private val appDispatchers: AppDispatchers,
     private val getPrimaryUserId: GetPrimaryUserId
 ) : ViewModel() {
@@ -166,34 +147,7 @@ class LauncherViewModel @Inject constructor(
     )
 
     internal fun register(context: ComponentActivity) {
-        authOrchestrator.register(context as ActivityResultCaller)
-        userSettingsOrchestrator.register(context)
-
-        authOrchestrator.onAddAccountResult { result ->
-            if (result != null && result.workflow == AddAccountWorkflow.SignUp) {
-                telemetryManager.sendEvent(TelemetryGrowthSignupEvent())
-            }
-            viewModelScope.launch {
-                if (result == null && getPrimaryUserIdOrNull() == null) {
-                    context.finish()
-                }
-            }
-        }
-
-
-        accountManager.observe(context.lifecycle, Lifecycle.State.CREATED)
-            .onAccountTwoPassModeFailed {
-                LogoutLogger.record(LogoutReason.AccountSetupTwoPassFailed)
-                disableAccount(it.userId)
-            }
-            .onAccountCreateAddressFailed {
-                LogoutLogger.record(LogoutReason.AccountSetupCreateAddressFailed)
-                disableAccount(it.userId)
-            }
-            .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
-            .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
-            .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
-            .onAccountDeviceSecretNeeded { authOrchestrator.startDeviceSecretWorkflow(it) }
+        launcherFlows.register(context, viewModelScope)
     }
 
     internal fun onAccountNeeded() = viewModelScope.launch {
@@ -208,11 +162,11 @@ class LauncherViewModel @Inject constructor(
     }
 
     internal fun addAccount() = viewModelScope.launch {
-        authOrchestrator.startAddAccountWorkflow()
+        launcherFlows.startAddAccount()
     }
 
     internal fun signUp() = viewModelScope.launch {
-        authOrchestrator.startSignupWorkflow()
+        launcherFlows.startSignup()
     }
 
     internal fun signIn(userId: UserId? = null) = viewModelScope.launch {
@@ -225,7 +179,7 @@ class LauncherViewModel @Inject constructor(
                 "Signing in with userId: $userId "
             }
         )
-        authOrchestrator.startLoginWorkflow(account?.username)
+        launcherFlows.startLogin(account?.username)
     }
 
     internal fun disable(userId: UserId) = viewModelScope.launch {
@@ -297,19 +251,19 @@ class LauncherViewModel @Inject constructor(
 
     internal fun passwordManagement() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
-            userSettingsOrchestrator.startPasswordManagementWorkflow(it)
+            launcherFlows.startPasswordManagement(it)
         }
     }
 
     internal fun recoveryEmail() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
-            userSettingsOrchestrator.startUpdateRecoveryEmailWorkflow(it)
+            launcherFlows.startRecoveryEmail(it)
         }
     }
 
     internal fun securityKeys() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
-            userSettingsOrchestrator.startSecurityKeysWorkflow(it)
+            launcherFlows.startSecurityKeys(it)
         }
     }
 

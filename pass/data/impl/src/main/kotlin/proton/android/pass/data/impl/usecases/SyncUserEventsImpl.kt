@@ -22,9 +22,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import proton.android.pass.common.api.safeRunCatchingWithCleanup
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.IndexingStatus
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.PromoteNewInviteToInvite
 import proton.android.pass.data.api.usecases.RefreshBreaches
@@ -55,9 +61,12 @@ import proton.android.pass.domain.events.UserEventList
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.log.api.PassLogger
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Suppress("LongParameterList")
+@Singleton
 class SyncUserEventsImpl @Inject constructor(
     private val userEventRepository: UserEventRepository,
     private val shareRepository: ShareRepository,
@@ -76,10 +85,36 @@ class SyncUserEventsImpl @Inject constructor(
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val eventRepository: EventRepository,
     private val aliasRepository: AliasRepository,
-    private val refreshAliasSlNotes: RefreshAliasSlNotes
+    private val refreshAliasSlNotes: RefreshAliasSlNotes,
+    private val searchIndexRepository: SearchIndexRepository
 ) : SyncUserEvents {
 
+    private val userLocks = ConcurrentHashMap<UserId, Mutex>()
+
     override suspend fun invoke(
+        userId: UserId,
+        forceSync: Boolean,
+        trigger: String,
+        syncReason: SyncReason,
+        syncMode: SyncMode
+    ) {
+        val lock = userLocks.getOrPut(userId) { Mutex() }
+        if (forceSync) {
+            lock.withLock { sync(userId, forceSync, trigger, syncReason, syncMode) }
+            return
+        }
+        if (!lock.tryLock()) {
+            PassLogger.i(TAG, "Sync in progress, skipping")
+            return
+        }
+        val result = safeRunCatchingWithCleanup(onCancellation = { lock.unlock() }) {
+            sync(userId, forceSync, trigger, syncReason, syncMode)
+        }
+        lock.unlock()
+        result.getOrThrow()
+    }
+
+    private suspend fun sync(
         userId: UserId,
         forceSync: Boolean,
         trigger: String,
@@ -269,31 +304,74 @@ class SyncUserEventsImpl @Inject constructor(
         trigger: String,
         syncReason: SyncReason,
         syncMode: SyncMode
-    ) = coroutineScope {
-        PassLogger.i(TAG, "start full refresh (forceSync=$forceSync)")
-
-        refreshUserAccess(userId)
-
-        val syncType = if (forceSync && syncMode == SyncMode.ShownToUser) {
-            RefreshSharesAndEnqueueSync.SyncType.FULL
-        } else {
-            RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND
+    ) {
+        val isDeferred = forceSync && syncMode == SyncMode.ShownToUser
+        var isDialogSettled = false
+        val settleOnError: suspend () -> Unit = {
+            if (isDeferred && !isDialogSettled) {
+                if (itemSyncStatusRepository.observeSyncStatus().first() !is ItemSyncStatus.SyncError) {
+                    itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.DownloadError())
+                }
+                itemSyncStatusRepository.setMode(SyncMode.Background)
+            }
         }
-        val refreshShares = refreshSharesAndEnqueueSync(
-            userId = userId,
-            syncType = syncType,
-            workerOrigin = "trigger=$trigger reason=$reason",
-            syncReason = syncReason
+        safeRunCatchingWithCleanup(onCancellation = settleOnError) {
+            coroutineScope {
+                PassLogger.i(TAG, "start full refresh (forceSync=$forceSync)")
+
+                refreshUserAccess(userId)
+
+                val syncType = if (isDeferred) {
+                    RefreshSharesAndEnqueueSync.SyncType.FULL
+                } else {
+                    RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND
+                }
+                val refreshShares = refreshSharesAndEnqueueSync(
+                    userId = userId,
+                    syncType = syncType,
+                    workerOrigin = "trigger=$trigger reason=$reason",
+                    syncReason = syncReason,
+                    deferSuccess = isDeferred
+                )
+
+                val didCompleteItemWorker =
+                    refreshShares is RefreshSharesResult.SharesFound && refreshShares.isWorkerEnqueued
+                if (didCompleteItemWorker) {
+                    PassLogger.i(TAG, "waiting worker")
+                    waitForFetchItemsWorker(userId)
+                    PassLogger.i(TAG, "worker finished")
+                }
+
+                if (isDeferred) {
+                    completeDeferredSync(refreshShares, didCompleteItemWorker)
+                    isDialogSettled = true
+                }
+
+                refreshRemainingData(userId)
+            }
+        }.onFailure { settleOnError() }.getOrThrow()
+    }
+
+    private suspend fun completeDeferredSync(refreshShares: RefreshSharesResult, workerRan: Boolean) {
+        val syncState = itemSyncStatusRepository.observeSyncState().first()
+        if (!syncState.isSyncing) {
+            itemSyncStatusRepository.setMode(SyncMode.Background)
+            return
+        }
+        itemSyncStatusRepository.emit(
+            ItemSyncStatus.SyncSuccess(
+                hasInactiveShares = refreshShares.hasInactiveShares(),
+                hasInvalidGroupShares = refreshShares.hasInvalidGroupShares()
+            )
         )
-
-        val didCompleteItemWorker =
-            refreshShares is RefreshSharesResult.SharesFound && refreshShares.isWorkerEnqueued
-        if (didCompleteItemWorker) {
-            PassLogger.i(TAG, "waiting worker")
-            waitForFetchItemsWorker(userId)
-            PassLogger.i(TAG, "worker finished")
+        val isIndexReady = searchIndexRepository.observeIndexingStatus().first() == IndexingStatus.Ready
+        val keepDialogOpen = workerRan && isIndexReady
+        if (!keepDialogOpen) {
+            itemSyncStatusRepository.setMode(SyncMode.Background)
         }
+    }
 
+    private suspend fun refreshRemainingData(userId: UserId) = coroutineScope {
         val userInvitesDeferred = async {
             val result = refreshUserInvites(userId)
             PassLogger.i(TAG, "finished refreshUserInvites")
@@ -343,6 +421,18 @@ class SyncUserEventsImpl @Inject constructor(
         events.forEach { (shareId, itemId, _) ->
             aliasRepository.refreshAliasSlNote(userId, shareId, itemId)
         }
+    }
+
+    private fun RefreshSharesResult.hasInactiveShares(): Boolean = when (this) {
+        is RefreshSharesResult.SharesFound -> hasInactiveShares
+        is RefreshSharesResult.NoSharesSkipped -> hasInactiveShares
+        is RefreshSharesResult.NoSharesVaultCreated -> hasInactiveShares
+    }
+
+    private fun RefreshSharesResult.hasInvalidGroupShares(): Boolean = when (this) {
+        is RefreshSharesResult.SharesFound -> hasInvalidGroupShares
+        is RefreshSharesResult.NoSharesSkipped -> hasInvalidGroupShares
+        is RefreshSharesResult.NoSharesVaultCreated -> hasInvalidGroupShares
     }
 
     private suspend fun waitForFetchItemsWorker(userId: UserId) {

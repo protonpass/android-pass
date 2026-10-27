@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import kotlinx.coroutines.CompletableDeferred
 import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.api.usecases.RefreshSharesResult
@@ -32,12 +33,14 @@ class FakeRefreshSharesAndEnqueueSync @Inject constructor() : RefreshSharesAndEn
         val userId: UserId,
         val syncType: RefreshSharesAndEnqueueSync.SyncType,
         val workerOrigin: String,
-        val syncReason: SyncReason
+        val syncReason: SyncReason,
+        val deferSuccess: Boolean
     )
 
     val invocations = mutableListOf<Invocation>()
 
-    private var result: RefreshSharesResult = RefreshSharesResult.NoSharesSkipped
+    private var result: RefreshSharesResult = RefreshSharesResult.NoSharesSkipped()
+    var gate: CompletableDeferred<Unit>? = null
 
     fun setResult(value: RefreshSharesResult) {
         result = value
@@ -47,9 +50,11 @@ class FakeRefreshSharesAndEnqueueSync @Inject constructor() : RefreshSharesAndEn
         userId: UserId,
         syncType: RefreshSharesAndEnqueueSync.SyncType,
         workerOrigin: String,
-        syncReason: SyncReason
+        syncReason: SyncReason,
+        deferSuccess: Boolean
     ): RefreshSharesResult {
-        invocations += Invocation(userId, syncType, workerOrigin, syncReason)
+        invocations += Invocation(userId, syncType, workerOrigin, syncReason, deferSuccess)
+        gate?.await()
         return result
     }
 }

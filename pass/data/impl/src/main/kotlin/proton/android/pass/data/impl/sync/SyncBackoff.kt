@@ -25,6 +25,8 @@ internal class SyncBackoff(private val maxDelay: Duration = DEFAULT_MAX_DELAY) {
 
     private var consecutiveFailures = 0
 
+    val hasFailed: Boolean get() = consecutiveFailures > 0
+
     fun onSuccess() {
         consecutiveFailures = 0
     }

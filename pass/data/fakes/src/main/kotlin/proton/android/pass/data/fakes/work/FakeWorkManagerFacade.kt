@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.work
 
+import kotlinx.coroutines.CompletableDeferred
 import proton.android.pass.data.api.work.FetchItemsState
 import proton.android.pass.data.api.work.UniqueWorkRequest
 import proton.android.pass.data.api.work.WorkManagerFacade
@@ -26,6 +27,9 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeWorkManagerFacade @Inject constructor() : WorkManagerFacade {
+
+    var awaitGate: CompletableDeferred<Unit>? = null
+    var awaitResult: FetchItemsState = FetchItemsState.Success
 
     private val awaitedWorkNames: MutableList<String> = mutableListOf()
     private val enqueuedWork: MutableList<Pair<String, UniqueWorkRequest>> = mutableListOf()
@@ -39,7 +43,8 @@ class FakeWorkManagerFacade @Inject constructor() : WorkManagerFacade {
 
     override suspend fun awaitUniqueWorkFinished(name: String): FetchItemsState {
         awaitedWorkNames.add(name)
-        return FetchItemsState.Success
+        awaitGate?.await()
+        return awaitResult
     }
 
     override fun enqueueUniqueWork(name: String, request: UniqueWorkRequest) {

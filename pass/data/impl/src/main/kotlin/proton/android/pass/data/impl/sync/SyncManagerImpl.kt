@@ -23,12 +23,9 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
@@ -36,7 +33,6 @@ import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.repositories.SearchIndexRepository
 import proton.android.pass.data.api.usecases.ObserveReadyAccounts
-import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
 import proton.android.pass.domain.account.Account
 import proton.android.pass.log.api.LogAccountContext
@@ -49,10 +45,10 @@ import kotlin.time.Duration
 class SyncManagerImpl @Inject constructor(
     private val workManager: WorkManager,
     private val eventWorkerManager: EventWorkerManager,
-    private val performSync: PerformSync,
     private val appLifecycleProvider: AppLifecycleProvider,
     private val observeReadyAccounts: ObserveReadyAccounts,
-    private val searchIndexRepository: SearchIndexRepository
+    private val searchIndexRepository: SearchIndexRepository,
+    private val foregroundSyncLoop: ForegroundSyncLoop
 ) : SyncManager {
 
     private var rebuildJob: Job? = null
@@ -91,28 +87,7 @@ class SyncManagerImpl @Inject constructor(
                     }
                 }
 
-                val backoff = SyncBackoff()
-                while (currentCoroutineContext().isActive) {
-                    var anyFailed = false
-                    accounts.forEach { account ->
-                        withContext(LogAccountContext(account.userId)) {
-                            safeRunCatching {
-                                performSync(userId = account.userId, trigger = "foreground_manager")
-                                    .getOrThrow()
-                            }
-                                .onSuccess { PassLogger.i(TAG, "Sync finished") }
-                                .onFailure { error ->
-                                    anyFailed = true
-                                    PassLogger.w(TAG, "Error in performSync")
-                                    PassLogger.w(TAG, error)
-                                }
-                        }
-                    }
-
-                    if (anyFailed) backoff.onFailure() else backoff.onSuccess()
-
-                    delay(backoff.nextDelay(eventWorkerManager.getRepeatIntervalForeground()))
-                }
+                foregroundSyncLoop.run(accounts, eventWorkerManager.getRepeatIntervalForeground())
             }
         }
     }

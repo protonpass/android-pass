@@ -126,6 +126,44 @@ class ForceSyncItemsImplTest {
     }
 
     @Test
+    fun `deferred success emits nothing and keeps the dialog visible`() = runTest {
+        val shareId = ShareId("share-1")
+        itemRepository.setDownloadItemsResult(shareId, List(3) { ItemRevisionTestFactory.create(itemId = "item-$it") })
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+
+        val result = invoke(shareIds = setOf(shareId), deferSuccess = true)
+
+        assertThat(result).isEqualTo(ForceSyncResult.Success)
+        assertThat(itemSyncStatusRepository.emittedStatuses.filterIsInstance<ItemSyncStatus.SyncSuccess>())
+            .isEmpty()
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.ShownToUser)
+    }
+
+    @Test
+    fun `deferred success is not honoured when the dialog is no longer shown`() = runTest {
+        val shareId = ShareId("share-1")
+        itemRepository.setDownloadItemsResult(shareId, List(3) { ItemRevisionTestFactory.create(itemId = "item-$it") })
+        itemSyncStatusRepository.setMode(SyncMode.Background)
+
+        invoke(shareIds = setOf(shareId), deferSuccess = true)
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+    }
+
+    @Test
+    fun `deferred success still reports a download error and resets the mode`() = runTest {
+        val shareId = ShareId("share-1")
+        itemRepository.downloadItemsException = RuntimeException("network error")
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+
+        val result = invoke(shareIds = setOf(shareId), deferSuccess = true)
+
+        assertThat(result).isEqualTo(ForceSyncResult.Error)
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.Background)
+    }
+
+    @Test
     fun `emits CryptoError when items fail to decrypt`() = runTest {
         val shareId = ShareId("share-1")
         itemRepository.setDownloadItemsResult(shareId, List(3) { ItemRevisionTestFactory.create(itemId = "item-$it") })
@@ -222,12 +260,14 @@ class ForceSyncItemsImplTest {
     private suspend fun invoke(
         shareIds: Set<ShareId>,
         hasInactiveShares: Boolean = false,
-        hasInvalidGroupShares: Boolean = false
+        hasInvalidGroupShares: Boolean = false,
+        deferSuccess: Boolean = false
     ) = instance.invoke(
         userId = USER_ID,
         shareIds = shareIds,
         hasInactiveShares = hasInactiveShares,
-        hasInvalidGroupShares = hasInvalidGroupShares
+        hasInvalidGroupShares = hasInvalidGroupShares,
+        deferSuccess = deferSuccess
     )
 
     private companion object {

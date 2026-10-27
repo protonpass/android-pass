@@ -28,6 +28,7 @@ import proton.android.pass.data.api.repositories.SyncReason
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
 import proton.android.pass.data.fakes.usecases.FakeCanCreateDefaultVault
 import proton.android.pass.data.fakes.usecases.FakeCreateVault
+import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.fakes.usecases.FakeItemSyncStatusRepository
 import proton.android.pass.data.impl.fakes.FakeDefaultVaultContentProvider
 import proton.android.pass.data.impl.fakes.FakeShareRepository
@@ -45,6 +46,7 @@ class RefreshSharesAndEnqueueSyncImplTest {
     private lateinit var createVault: FakeCreateVault
     private lateinit var canCreateDefaultVault: FakeCanCreateDefaultVault
     private lateinit var internalSettingsRepository: FakeInternalSettingsRepository
+    private lateinit var itemSyncStatusRepository: FakeItemSyncStatusRepository
     private lateinit var instance: RefreshSharesAndEnqueueSyncImpl
 
     @Before
@@ -63,11 +65,12 @@ class RefreshSharesAndEnqueueSyncImplTest {
         createVault = FakeCreateVault().apply { setResult(Result.success(ShareTestFactory.Vault.create())) }
         canCreateDefaultVault = FakeCanCreateDefaultVault()
         internalSettingsRepository = FakeInternalSettingsRepository()
+        itemSyncStatusRepository = FakeItemSyncStatusRepository()
 
         instance = RefreshSharesAndEnqueueSyncImpl(
             defaultVaultContentProvider = FakeDefaultVaultContentProvider(),
             shareRepository = shareRepository,
-            itemSyncStatusRepository = FakeItemSyncStatusRepository(),
+            itemSyncStatusRepository = itemSyncStatusRepository,
             encryptionContextProvider = FakeEncryptionContextProvider(),
             createVault = createVault,
             decideDefaultVaultCreation = DecideDefaultVaultCreationImpl(
@@ -83,7 +86,7 @@ class RefreshSharesAndEnqueueSyncImplTest {
     fun `creates default vault when no shares and default vault was never created`() = runTest {
         val result = refresh()
 
-        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesVaultCreated)
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesVaultCreated())
         assertThat(createVault.memory()).hasSize(1)
     }
 
@@ -93,7 +96,7 @@ class RefreshSharesAndEnqueueSyncImplTest {
 
         val result = refresh()
 
-        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped)
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped())
         assertThat(createVault.memory()).isEmpty()
     }
 
@@ -103,7 +106,7 @@ class RefreshSharesAndEnqueueSyncImplTest {
 
         val result = refresh()
 
-        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped)
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped())
         assertThat(createVault.memory()).isEmpty()
     }
 
@@ -113,7 +116,7 @@ class RefreshSharesAndEnqueueSyncImplTest {
 
         val result = refresh(RefreshSharesAndEnqueueSync.SyncType.FULL)
 
-        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesVaultCreated)
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesVaultCreated())
         assertThat(createVault.memory()).hasSize(1)
     }
 
@@ -124,7 +127,7 @@ class RefreshSharesAndEnqueueSyncImplTest {
 
         val result = refresh(RefreshSharesAndEnqueueSync.SyncType.FULL)
 
-        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped)
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped())
         assertThat(createVault.memory()).isEmpty()
     }
 
@@ -134,7 +137,7 @@ class RefreshSharesAndEnqueueSyncImplTest {
 
         val result = refresh(RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND)
 
-        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped)
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped())
         assertThat(createVault.memory()).isEmpty()
     }
 
@@ -157,13 +160,61 @@ class RefreshSharesAndEnqueueSyncImplTest {
         assertThat(createVault.memory()).isEmpty()
     }
 
+    private fun successes() = itemSyncStatusRepository.emittedStatuses.filterIsInstance<ItemSyncStatus.SyncSuccess>()
+
+    @Test
+    fun `empty shares emits sync success when not deferred`() = runTest {
+        refresh(RefreshSharesAndEnqueueSync.SyncType.FULL)
+
+        assertThat(successes()).hasSize(1)
+    }
+
+    @Test
+    fun `deferred empty shares with vault created emits no sync success`() = runTest {
+        val result = refresh(RefreshSharesAndEnqueueSync.SyncType.FULL, deferSuccess = true)
+
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesVaultCreated())
+        assertThat(successes()).isEmpty()
+    }
+
+    @Test
+    fun `deferred empty shares skipped emits no sync success`() = runTest {
+        internalSettingsRepository.setDefaultVaultHasBeenCreated(USER_ID)
+        canCreateDefaultVault.setResult(false)
+
+        val result = refresh(RefreshSharesAndEnqueueSync.SyncType.FULL, deferSuccess = true)
+
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped())
+        assertThat(successes()).isEmpty()
+    }
+
+    @Test
+    fun `empty shares result carries the warning flags`() = runTest {
+        shareRepository.setRefreshSharesResult(
+            RefreshSharesResult(
+                allShareIds = emptySet(),
+                newShareIds = emptySet(),
+                wasFirstSync = false,
+                hasInactiveShares = true,
+                hasInvalidGroupShares = true
+            )
+        )
+        internalSettingsRepository.setDefaultVaultHasBeenCreated(USER_ID)
+
+        val result = refresh()
+
+        assertThat(result).isEqualTo(UseCaseRefreshSharesResult.NoSharesSkipped(true, true))
+    }
+
     private suspend fun refresh(
-        syncType: RefreshSharesAndEnqueueSync.SyncType = RefreshSharesAndEnqueueSync.SyncType.INCREMENTAL
+        syncType: RefreshSharesAndEnqueueSync.SyncType = RefreshSharesAndEnqueueSync.SyncType.INCREMENTAL,
+        deferSuccess: Boolean = false
     ): UseCaseRefreshSharesResult = instance(
         userId = USER_ID,
         syncType = syncType,
         workerOrigin = "test",
-        syncReason = SyncReason.Default
+        syncReason = SyncReason.Default,
+        deferSuccess = deferSuccess
     )
 
     private companion object {

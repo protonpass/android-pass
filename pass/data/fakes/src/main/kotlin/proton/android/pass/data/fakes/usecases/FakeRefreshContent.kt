@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 class FakeRefreshContent @Inject constructor() : RefreshContent {
 
-    private var result: Result<RefreshSharesResult> = Result.success(RefreshSharesResult.NoSharesSkipped)
+    private var result: Result<RefreshSharesResult> = Result.success(RefreshSharesResult.NoSharesSkipped())
 
     fun setResult(value: Result<RefreshSharesResult>) {
         result = value

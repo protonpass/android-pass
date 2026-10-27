@@ -57,7 +57,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         userId: UserId,
         syncType: RefreshSharesAndEnqueueSync.SyncType,
         workerOrigin: String,
-        syncReason: SyncReason
+        syncReason: SyncReason,
+        deferSuccess: Boolean
     ): RefreshSharesResult {
         PassLogger.i(
             TAG,
@@ -89,10 +90,11 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                     userId,
                     repositoryResult.hasInactiveShares,
                     repositoryResult.hasInvalidGroupShares,
-                    isForceSync = isFullSync
+                    isForceSync = isFullSync,
+                    deferSuccess = deferSuccess
                 )
             } else {
-                handleNonEmptyShares(userId, repositoryResult, syncType, workerOrigin)
+                handleNonEmptyShares(userId, repositoryResult, syncType, workerOrigin, deferSuccess)
             }
         }.onFailure {
             if (isFullSync) {
@@ -127,7 +129,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         userId: UserId,
         repositoryResult: RepositoryRefreshSharesResult,
         syncType: RefreshSharesAndEnqueueSync.SyncType,
-        workerOrigin: String
+        workerOrigin: String,
+        deferSuccess: Boolean
     ): RefreshSharesResult.SharesFound {
         val existingShareIds = repositoryResult.allShareIds - repositoryResult.newShareIds
         val fetchSource = getSharesAndSource(repositoryResult, syncType)
@@ -151,7 +154,8 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
                 warnings = FetchItemsWorker.SyncWarnings(
                     hasInactiveShares = repositoryResult.hasInactiveShares,
                     hasInvalidGroupShares = repositoryResult.hasInvalidGroupShares
-                )
+                ),
+                deferSuccess = deferSuccess
             )
         }
 
@@ -182,13 +186,15 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         userId: UserId,
         fetchSource: FetchItemsWorker.FetchSource,
         workerOrigin: String,
-        warnings: FetchItemsWorker.SyncWarnings
+        warnings: FetchItemsWorker.SyncWarnings,
+        deferSuccess: Boolean
     ) {
         val request = FetchItemsWorker.getRequestFor(
             source = fetchSource,
             userId = userId,
             origin = workerOrigin,
-            warnings = warnings
+            warnings = warnings,
+            deferSuccess = deferSuccess && fetchSource is FetchItemsWorker.FetchSource.ForceSync
         )
         val policy = if (fetchSource is FetchItemsWorker.FetchSource.ForceSync) {
             ExistingWorkPolicy.REPLACE
@@ -207,27 +213,28 @@ class RefreshSharesAndEnqueueSyncImpl @Inject constructor(
         userId: UserId,
         hasUndecryptableShares: Boolean,
         hasUndecryptableSharesDueToGroup: Boolean,
-        isForceSync: Boolean
+        isForceSync: Boolean,
+        deferSuccess: Boolean
     ): RefreshSharesResult {
         return when (decideDefaultVaultCreation(userId, isForceSync)) {
             DefaultVaultDecision.SkipAlreadyCreated -> {
                 PassLogger.i(TAG, "Default vault already created")
-                setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
-                RefreshSharesResult.NoSharesSkipped
+                if (!deferSuccess) setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
+                RefreshSharesResult.NoSharesSkipped(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
             }
 
             DefaultVaultDecision.SkipNotAllowed -> {
                 PassLogger.i(TAG, "Skipping default vault creation")
-                setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
-                RefreshSharesResult.NoSharesSkipped
+                if (!deferSuccess) setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
+                RefreshSharesResult.NoSharesSkipped(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
             }
 
             DefaultVaultDecision.Create -> {
                 PassLogger.i(TAG, "Creating default vault")
                 createDefaultVault(userId)
                 internalSettingsRepository.setDefaultVaultHasBeenCreated(userId)
-                setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
-                RefreshSharesResult.NoSharesVaultCreated
+                if (!deferSuccess) setSyncSuccess(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
+                RefreshSharesResult.NoSharesVaultCreated(hasUndecryptableShares, hasUndecryptableSharesDueToGroup)
             }
         }
     }

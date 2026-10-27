@@ -71,6 +71,7 @@ open class FetchItemsWorker @AssistedInject constructor(
             val hasInactiveShares = inputData.getBoolean(ARG_INACTIVE_SHARES, false)
             val hasInvalidGroupShares = inputData.getBoolean(ARG_INVALID_GROUP_SHARES, false)
             val origin = inputData.getString(ARG_ORIGIN) ?: UNKNOWN_ORIGIN
+            val deferSuccess = inputData.getBoolean(ARG_DEFER_SUCCESS, false)
 
             val fetchSource = getFetchSource() ?: return@withContext Result.failure()
 
@@ -95,7 +96,8 @@ open class FetchItemsWorker @AssistedInject constructor(
                     userId = userId,
                     shareIds = shareIds,
                     hasInactiveShares = hasInactiveShares,
-                    hasInvalidGroupShares = hasInvalidGroupShares
+                    hasInvalidGroupShares = hasInvalidGroupShares,
+                    deferSuccess = deferSuccess
                 )
             }.getOrElse { error ->
                 // Without this the worker fails outright and the status stays at SyncStarted
@@ -200,6 +202,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val ARG_INACTIVE_SHARES = "inactive_shares"
         private const val ARG_INVALID_GROUP_SHARES = "invalid_group_shares"
         private const val ARG_ORIGIN = "origin"
+        private const val ARG_DEFER_SUCCESS = "defer_success"
 
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
@@ -213,14 +216,16 @@ open class FetchItemsWorker @AssistedInject constructor(
             source: FetchSource,
             userId: UserId,
             origin: String = UNKNOWN_ORIGIN,
-            warnings: SyncWarnings
+            warnings: SyncWarnings,
+            deferSuccess: Boolean = false
         ): OneTimeWorkRequest {
             val extras = mutableMapOf<String, Any>(
                 ARG_FETCH_SOURCE to source.sourceName(),
                 ARG_USER_ID to userId.id,
                 ARG_ORIGIN to origin,
                 ARG_INACTIVE_SHARES to warnings.hasInactiveShares,
-                ARG_INVALID_GROUP_SHARES to warnings.hasInvalidGroupShares
+                ARG_INVALID_GROUP_SHARES to warnings.hasInvalidGroupShares,
+                ARG_DEFER_SUCCESS to deferSuccess
             )
             if (source is FetchSource.NewShare) {
                 extras[ARG_SHARE_IDS] = source.shareIds.map { it.id }.toTypedArray()

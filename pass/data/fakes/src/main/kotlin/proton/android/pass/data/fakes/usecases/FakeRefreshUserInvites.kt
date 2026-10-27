@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import kotlinx.coroutines.CompletableDeferred
 import proton.android.pass.data.api.usecases.RefreshUserInvites
 import proton.android.pass.domain.UserId
 import proton.android.pass.domain.events.EventToken
@@ -27,6 +28,8 @@ import javax.inject.Singleton
 @Singleton
 class FakeRefreshUserInvites @Inject constructor() : RefreshUserInvites {
 
+    var gate: CompletableDeferred<Unit>? = null
+
     private var refreshResult: Result<Unit> = Result.success(Unit)
 
     fun setRefreshResult(value: Result<Unit>) {
@@ -34,6 +37,7 @@ class FakeRefreshUserInvites @Inject constructor() : RefreshUserInvites {
     }
 
     override suspend fun invoke(userId: UserId?, eventToken: EventToken?) {
+        gate?.await()
         refreshResult.getOrThrow()
     }
 }

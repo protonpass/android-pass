@@ -19,14 +19,24 @@
 package proton.android.pass.data.impl.usecases
 
 import com.google.common.truth.Truth.assertThat
+import proton.android.pass.data.api.repositories.IndexingStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatus
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.RefreshSharesAndEnqueueSync
+import proton.android.pass.data.api.work.FetchItemsState
 import proton.android.pass.data.api.usecases.RefreshSharesResult
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.FakeItemRepository
+import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.data.fakes.usecases.FakePromoteNewInviteToInvite
 import proton.android.pass.data.fakes.usecases.FakeRefreshAliasSlNotes
 import proton.android.pass.data.fakes.usecases.FakeRefreshBreaches
@@ -61,6 +71,7 @@ import kotlin.test.assertFailsWith
 internal class SyncUserEventsImplTest {
 
     private lateinit var instance: SyncUserEventsImpl
+    private lateinit var searchIndexRepository: FakeSearchIndexRepository
     private lateinit var userEventRepository: FakeUserEventRepository
     private lateinit var shareRepository: FakeShareRepository
     private lateinit var itemRepository: FakeItemRepository
@@ -100,6 +111,7 @@ internal class SyncUserEventsImplTest {
         eventRepository = FakeEventRepository()
         aliasRepository = FakeAliasRepository()
         refreshAliasSlNotes = FakeRefreshAliasSlNotes()
+        searchIndexRepository = FakeSearchIndexRepository()
 
         instance = SyncUserEventsImpl(
             userEventRepository = userEventRepository,
@@ -119,7 +131,8 @@ internal class SyncUserEventsImplTest {
             itemSyncStatusRepository = itemSyncStatusRepository,
             eventRepository = eventRepository,
             aliasRepository = aliasRepository,
-            refreshAliasSlNotes = refreshAliasSlNotes
+            refreshAliasSlNotes = refreshAliasSlNotes,
+            searchIndexRepository = searchIndexRepository
         )
     }
 
@@ -148,7 +161,7 @@ internal class SyncUserEventsImplTest {
                 fullRefresh = false
             )
         )
-        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped())
 
         instance.invoke(USER_ID)
 
@@ -175,6 +188,328 @@ internal class SyncUserEventsImplTest {
             .isEqualTo(RefreshSharesAndEnqueueSync.SyncType.FULL_BACKGROUND)
     }
 
+    @Test
+    fun `shown force sync defers the success and keeps the dialog open for the user to continue`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = true,
+                hasInvalidGroupShares = false
+            )
+        )
+
+        instance.invoke(USER_ID, forceSync = true)
+
+        assertThat(refreshSharesAndEnqueueSync.invocations.first().deferSuccess).isTrue()
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isEqualTo(ItemSyncStatus.SyncSuccess(hasInactiveShares = true, hasInvalidGroupShares = false))
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.ShownToUser)
+    }
+
+    @Test
+    fun `shown force sync closes the dialog when the search index is not ready`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        searchIndexRepository.setIndexingStatus(IndexingStatus.Idle)
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
+
+        instance.invoke(USER_ID, forceSync = true)
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last()).isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.Background)
+    }
+
+    @Test
+    fun `shown force sync keeps the reported success when a step after the item download fails`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
+        refreshUserInvites.setRefreshResult(Result.failure(IllegalStateException("boom")))
+
+        val result = runCatching { instance.invoke(USER_ID, forceSync = true) }
+
+        assertThat(result.isFailure).isTrue()
+        assertThat(itemSyncStatusRepository.emittedStatuses.last()).isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+        assertThat(itemSyncStatusRepository.emittedStatuses.filterIsInstance<ItemSyncStatus.SyncError>()).isEmpty()
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.ShownToUser)
+    }
+
+    @Test
+    fun `shown force sync reports an error and closes the dialog when the worker fails`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
+        workManagerFacade.awaitResult = FetchItemsState.Failure
+
+        val result = runCatching { instance.invoke(USER_ID, forceSync = true) }
+
+        assertThat(result.isFailure).isTrue()
+        assertThat(itemSyncStatusRepository.emittedStatuses.filterIsInstance<ItemSyncStatus.SyncSuccess>()).isEmpty()
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncError.DownloadError::class.java)
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.Background)
+    }
+
+    @Test
+    fun `shown force sync keeps the error the worker reported when the worker fails`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.CryptoError(failedShareIds = setOf(ShareId(SHARE_ID_1))))
+        workManagerFacade.awaitResult = FetchItemsState.Failure
+
+        val result = runCatching { instance.invoke(USER_ID, forceSync = true) }
+
+        assertThat(result.isFailure).isTrue()
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isEqualTo(ItemSyncStatus.SyncError.CryptoError(failedShareIds = setOf(ShareId(SHARE_ID_1))))
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.Background)
+    }
+
+    @Test
+    fun `shown force sync that fails before the sync started reports an error and closes the dialog`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        refreshPlan.onInvoke = { throw IllegalStateException("access refresh failed") }
+
+        val result = runCatching { instance.invoke(USER_ID, forceSync = true) }
+
+        assertThat(result.isFailure).isTrue()
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncError.DownloadError::class.java)
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.Background)
+    }
+
+    @Test
+    fun `shown force sync with no shares emits the success and closes the dialog`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped(hasInactiveShares = true))
+
+        instance.invoke(USER_ID, forceSync = true)
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isEqualTo(ItemSyncStatus.SyncSuccess(hasInactiveShares = true, hasInvalidGroupShares = false))
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.Background)
+    }
+
+    @Test
+    fun `shown force sync with no shares keeps the success when a later step fails`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesVaultCreated())
+        refreshUserInvites.setRefreshResult(Result.failure(IllegalStateException("boom")))
+
+        runCatching { instance.invoke(USER_ID, forceSync = true) }
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last()).isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+        assertThat(itemSyncStatusRepository.emittedStatuses.filterIsInstance<ItemSyncStatus.SyncError>()).isEmpty()
+    }
+
+    @Test
+    fun `deferred success does not overwrite an error the worker already reported`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncError.CryptoError(failedShareIds = setOf(ShareId(SHARE_ID_1))))
+
+        instance.invoke(USER_ID, forceSync = true)
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncError.CryptoError::class.java)
+    }
+
+    @Test
+    fun `success is still emitted when the dialog is dismissed during a shares found sync`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        itemSyncStatusRepository.setMode(SyncMode.Background)
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
+
+        instance.invoke(USER_ID, forceSync = true, syncMode = SyncMode.ShownToUser)
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+        assertThat(itemSyncStatusRepository.observeSyncState().first().isSyncing).isFalse()
+    }
+
+    @Test
+    fun `success is still emitted when the dialog is dismissed during an empty shares sync`() = runTest {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        itemSyncStatusRepository.setMode(SyncMode.Background)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesVaultCreated())
+
+        instance.invoke(USER_ID, forceSync = true, syncMode = SyncMode.ShownToUser)
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+    }
+
+    @Test
+    fun `cancelling a sync that is still syncing settles the status with an error`() =
+        runTest(UnconfinedTestDispatcher()) {
+            givenNoLocalEventId()
+            refreshSharesAndEnqueueSync.setResult(
+                RefreshSharesResult.SharesFound(
+                    shareIds = setOf(ShareId(SHARE_ID_1)),
+                    isWorkerEnqueued = true,
+                    hasInactiveShares = false,
+                    hasInvalidGroupShares = false
+                )
+            )
+            itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+            itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+            workManagerFacade.awaitGate = CompletableDeferred()
+
+            val job = launch { instance.invoke(USER_ID, forceSync = true) }
+            job.cancelAndJoin()
+
+            assertThat(itemSyncStatusRepository.emittedStatuses.last())
+                .isInstanceOf(ItemSyncStatus.SyncError.DownloadError::class.java)
+            assertThat(itemSyncStatusRepository.observeSyncState().first().isSyncing).isFalse()
+        }
+
+    @Test
+    fun `cancelling a shown force sync while waiting for the worker resets the dialog mode`() =
+        runTest(UnconfinedTestDispatcher()) {
+            givenNoLocalEventId()
+            refreshSharesAndEnqueueSync.setResult(
+                RefreshSharesResult.SharesFound(
+                    shareIds = setOf(ShareId(SHARE_ID_1)),
+                    isWorkerEnqueued = true,
+                    hasInactiveShares = false,
+                    hasInvalidGroupShares = false
+                )
+            )
+            itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+            workManagerFacade.awaitGate = CompletableDeferred()
+
+            val job = launch { instance.invoke(USER_ID, forceSync = true) }
+            job.cancelAndJoin()
+
+            assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.Background)
+        }
+
+    @Test
+    fun `background force sync does not defer the success`() = runTest {
+        givenNoLocalEventId()
+
+        instance.invoke(USER_ID, forceSync = true, syncMode = SyncMode.Background)
+
+        assertThat(refreshSharesAndEnqueueSync.invocations.first().deferSuccess).isFalse()
+    }
+
+    @Test
+    fun `cancelling after the success was reported leaves the dialog open`() = runTest(UnconfinedTestDispatcher()) {
+        givenNoLocalEventId()
+        itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+        refreshSharesAndEnqueueSync.setResult(
+            RefreshSharesResult.SharesFound(
+                shareIds = setOf(ShareId(SHARE_ID_1)),
+                isWorkerEnqueued = true,
+                hasInactiveShares = false,
+                hasInvalidGroupShares = false
+            )
+        )
+        val gate = CompletableDeferred<Unit>()
+        refreshUserInvites.gate = gate
+
+        val job = launch { instance.invoke(USER_ID, forceSync = true) }
+        job.cancelAndJoin()
+
+        assertThat(itemSyncStatusRepository.emittedStatuses.last())
+            .isInstanceOf(ItemSyncStatus.SyncSuccess::class.java)
+        assertThat(itemSyncStatusRepository.observeMode().first()).isEqualTo(SyncMode.ShownToUser)
+    }
+
+    @Test
+    fun `background force sync does not report a dialog error when a step fails`() = runTest {
+        givenNoLocalEventId()
+        refreshUserInvites.setRefreshResult(Result.failure(IllegalStateException("boom")))
+
+        runCatching { instance.invoke(USER_ID, forceSync = true, syncMode = SyncMode.Background) }
+
+        assertThat(itemSyncStatusRepository.emittedStatuses).isEmpty()
+    }
+
+    @Test
+    fun `concurrent non forced syncs for the same user run only once`() = runTest(UnconfinedTestDispatcher()) {
+        givenNoLocalEventId()
+        val gate = CompletableDeferred<Unit>()
+        refreshSharesAndEnqueueSync.gate = gate
+
+        val calls = List(7) { launch { instance.invoke(USER_ID, syncMode = SyncMode.Background) } }
+        gate.complete(Unit)
+        calls.joinAll()
+
+        assertThat(refreshSharesAndEnqueueSync.invocations).hasSize(1)
+    }
+
+    @Test
+    fun `releases the lock after a sync so the next one runs`() = runTest {
+        givenNoLocalEventId()
+
+        instance.invoke(USER_ID, syncMode = SyncMode.Background)
+        userEventRepository.setGetLatestEventIdFlow(null)
+        instance.invoke(USER_ID, syncMode = SyncMode.Background)
+
+        assertThat(refreshSharesAndEnqueueSync.invocations).hasSize(2)
+    }
+
     private suspend fun givenNoLocalEventId() {
         val remoteEventId = UserEventId(EVENT_ID_1)
         userEventRepository.setGetLatestEventIdFlow(null)
@@ -182,7 +517,7 @@ internal class SyncUserEventsImplTest {
         userEventRepository.setGetUserEventsResult(
             createUserEventList(lastEventId = remoteEventId, fullRefresh = false)
         )
-        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped())
     }
 
     @Test
@@ -470,7 +805,7 @@ internal class SyncUserEventsImplTest {
                 fullRefresh = true
             )
         )
-        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped())
 
         instance.invoke(USER_ID)
 
@@ -541,7 +876,7 @@ internal class SyncUserEventsImplTest {
                 fullRefresh = true
             )
         )
-        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped())
 
         instance.invoke(USER_ID)
 
@@ -558,7 +893,7 @@ internal class SyncUserEventsImplTest {
                 fullRefresh = true
             )
         )
-        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped())
         refreshAliasSlNotes.setResult(Result.failure(IllegalStateException("SL notes refresh failed")))
 
         assertFailsWith<IllegalStateException> {
@@ -577,7 +912,7 @@ internal class SyncUserEventsImplTest {
                 fullRefresh = true
             )
         )
-        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped)
+        refreshSharesAndEnqueueSync.setResult(RefreshSharesResult.NoSharesSkipped())
 
         instance.invoke(USER_ID)
 

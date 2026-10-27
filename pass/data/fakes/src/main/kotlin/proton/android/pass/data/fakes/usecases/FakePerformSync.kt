@@ -41,10 +41,15 @@ class FakePerformSync @Inject constructor() : PerformSync {
     val invokedUserIds = mutableListOf<UserId>()
     val invocations = mutableListOf<Invocation>()
     private var result: Result<Unit> = Result.success(Unit)
+    private val resultsByUser = mutableMapOf<UserId, Result<Unit>>()
     var gate: CompletableDeferred<Unit>? = null
 
     fun setResult(value: Result<Unit>) {
         result = value
+    }
+
+    fun setResultFor(userId: UserId, value: Result<Unit>) {
+        resultsByUser[userId] = value
     }
 
     override suspend fun invoke(
@@ -57,7 +62,8 @@ class FakePerformSync @Inject constructor() : PerformSync {
         invokedUserIds += userId
         invocations += Invocation(userId, forceSync, trigger, syncReason, syncMode)
         gate?.await()
-        result.exceptionOrNull()?.let { if (it is CancellationException) throw it }
-        return result
+        val outcome = resultsByUser[userId] ?: result
+        outcome.exceptionOrNull()?.let { if (it is CancellationException) throw it }
+        return outcome
     }
 }

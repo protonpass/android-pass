@@ -27,7 +27,8 @@ interface RefreshSharesAndEnqueueSync {
         userId: UserId,
         syncType: SyncType,
         workerOrigin: String = "unknown",
-        syncReason: SyncReason = SyncReason.Default
+        syncReason: SyncReason = SyncReason.Default,
+        deferSuccess: Boolean = false
     ): RefreshSharesResult
 
     enum class SyncType {
@@ -44,6 +45,12 @@ sealed interface RefreshSharesResult {
         val hasInactiveShares: Boolean,
         val hasInvalidGroupShares: Boolean
     ) : RefreshSharesResult
-    data object NoSharesVaultCreated : RefreshSharesResult
-    data object NoSharesSkipped : RefreshSharesResult
+    data class NoSharesVaultCreated(
+        val hasInactiveShares: Boolean = false,
+        val hasInvalidGroupShares: Boolean = false
+    ) : RefreshSharesResult
+    data class NoSharesSkipped(
+        val hasInactiveShares: Boolean = false,
+        val hasInvalidGroupShares: Boolean = false
+    ) : RefreshSharesResult
 }

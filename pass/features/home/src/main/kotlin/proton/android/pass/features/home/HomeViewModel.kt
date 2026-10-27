@@ -891,20 +891,24 @@ class HomeViewModel @Inject constructor(
         hasEnteredSearch = true
     }
 
-    fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
-        isRefreshing.update { IsRefreshingState.Refreshing }
+    fun onRefresh() {
+        if (!isRefreshing.compareAndSet(IsRefreshingState.NotRefreshing, IsRefreshingState.Refreshing)) {
+            return
+        }
 
-        try {
-            safeRunCatching {
-                val userId = observeCurrentUser().firstOrNull()?.userId
-                    ?: throw IllegalStateException("User not found")
-                performSync(userId, trigger = "home_pull_to_refresh").getOrThrow()
-            }.onFailure {
-                PassLogger.e(TAG, it, "Apply pending events failed")
-                snackbarDispatcher(RefreshError)
+        viewModelScope.launch(coroutineExceptionHandler) {
+            try {
+                safeRunCatching {
+                    val userId = observeCurrentUser().firstOrNull()?.userId
+                        ?: throw IllegalStateException("User not found")
+                    performSync(userId, trigger = "home_pull_to_refresh").getOrThrow()
+                }.onFailure {
+                    PassLogger.e(TAG, it, "Apply pending events failed")
+                    snackbarDispatcher(RefreshError)
+                }
+            } finally {
+                isRefreshing.update { IsRefreshingState.NotRefreshing }
             }
-        } finally {
-            isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
     }
 

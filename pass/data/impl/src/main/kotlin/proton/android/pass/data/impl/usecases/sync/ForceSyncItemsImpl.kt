@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases.sync
 
+import kotlinx.coroutines.flow.first
 import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.common.api.safeRunCatchingWithCleanup
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -50,7 +51,8 @@ class ForceSyncItemsImpl @Inject constructor(
         userId: UserId,
         shareIds: Set<ShareId>,
         hasInactiveShares: Boolean,
-        hasInvalidGroupShares: Boolean
+        hasInvalidGroupShares: Boolean,
+        deferSuccess: Boolean
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
@@ -115,6 +117,9 @@ class ForceSyncItemsImpl @Inject constructor(
         }
         val failedShareIds: Set<ShareId> = downloadFailedShareIds + setShareItemsResult.failedShareIds
 
+        val shouldDeferSuccess = deferSuccess &&
+            itemSyncStatusRepository.observeMode().first() == SyncMode.ShownToUser
+
         val result = when {
             failedShareIds.isEmpty() -> {
                 val syncSuccess = ItemSyncStatus.SyncSuccess(
@@ -137,7 +142,9 @@ class ForceSyncItemsImpl @Inject constructor(
                         "Search index rebuild failed: ${error::class.simpleName}"
                     )
                 }
-                itemSyncStatusRepository.emit(status = syncSuccess)
+                if (!shouldDeferSuccess) {
+                    itemSyncStatusRepository.emit(status = syncSuccess)
+                }
                 ForceSyncResult.Success
             }
 
@@ -153,7 +160,9 @@ class ForceSyncItemsImpl @Inject constructor(
             }
         }
 
-        itemSyncStatusRepository.setMode(SyncMode.Background)
+        if (!(shouldDeferSuccess && result == ForceSyncResult.Success)) {
+            itemSyncStatusRepository.setMode(SyncMode.Background)
+        }
         return result
     }
 

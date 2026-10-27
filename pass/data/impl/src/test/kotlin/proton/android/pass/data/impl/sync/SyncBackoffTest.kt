@@ -61,6 +61,18 @@ class SyncBackoffTest {
         assertThat(backoff.nextDelay(BASE)).isEqualTo(BASE)
     }
 
+    @Test
+    fun `reports failure only while consecutive failures are pending`() {
+        val backoff = SyncBackoff()
+        assertThat(backoff.hasFailed).isFalse()
+
+        backoff.onFailure()
+        assertThat(backoff.hasFailed).isTrue()
+
+        backoff.onSuccess()
+        assertThat(backoff.hasFailed).isFalse()
+    }
+
     private companion object {
         private val BASE = 30.seconds
     }

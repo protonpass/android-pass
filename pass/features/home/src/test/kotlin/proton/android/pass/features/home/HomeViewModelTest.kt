@@ -21,8 +21,10 @@ package proton.android.pass.features.home
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
@@ -772,7 +774,8 @@ internal class HomeViewModelTest {
         performSync.setResult(Result.failure(IllegalStateException("sync failed")))
 
         instance.homeUiState.test {
-            instance.onRefresh().join()
+            instance.onRefresh()
+            advanceUntilIdle()
 
             assertThat(expectMostRecentItem().homeListUiState.isRefreshing)
                 .isEqualTo(IsRefreshingState.NotRefreshing)
@@ -786,12 +789,35 @@ internal class HomeViewModelTest {
         performSync.setResult(Result.failure(CancellationException("refresh cancelled")))
 
         instance.homeUiState.test {
-            instance.onRefresh().join()
+            instance.onRefresh()
+            advanceUntilIdle()
 
             assertThat(expectMostRecentItem().homeListUiState.isRefreshing)
                 .isEqualTo(IsRefreshingState.NotRefreshing)
         }
         assertThat(snackbarDispatcher.invocationCount).isEqualTo(0)
+    }
+
+    @Test
+    fun `onRefresh ignores calls while a refresh is in flight`() = runTest {
+        val gate = CompletableDeferred<Unit>()
+        performSync.gate = gate
+
+        repeat(7) { instance.onRefresh() }
+        gate.complete(Unit)
+        advanceUntilIdle()
+
+        assertThat(performSync.invokedUserIds).hasSize(1)
+    }
+
+    @Test
+    fun `onRefresh can run again once the previous refresh finished`() = runTest {
+        instance.onRefresh()
+        advanceUntilIdle()
+        instance.onRefresh()
+        advanceUntilIdle()
+
+        assertThat(performSync.invokedUserIds).hasSize(2)
     }
 
     private fun createViewModel() {

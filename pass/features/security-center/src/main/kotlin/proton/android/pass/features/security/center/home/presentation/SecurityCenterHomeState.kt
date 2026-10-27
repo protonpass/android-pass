@@ -38,8 +38,7 @@ internal data class SecurityCenterHomeState(
     private val missing2faResult: LoadingResult<Missing2faResult>,
     private val compromisedPasswordsLoadingResult: LoadingResult<CompromisedPasswordsResult>,
     private val excludedLoginItemsLoadingResult: LoadingResult<List<Item>>,
-    private val planType: PlanType,
-    internal val isCompromisedPasswordsEnabled: Boolean
+    private val planType: PlanType
 ) {
 
     private val dataBreachesCount: Int = when (breachLoadingResult) {
@@ -157,8 +156,7 @@ internal data class SecurityCenterHomeState(
             missing2faResult = LoadingResult.Loading,
             compromisedPasswordsLoadingResult = LoadingResult.Loading,
             excludedLoginItemsLoadingResult = LoadingResult.Loading,
-            planType = PlanType.Unknown(),
-            isCompromisedPasswordsEnabled = false
+            planType = PlanType.Unknown()
         )
 
         private const val DATA_BREACHED_DOMAIN_DEFAULT = ""

@@ -59,7 +59,6 @@ import proton.android.pass.passkeys.fakes.FakeCanDeviceSupportPasskeys
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
@@ -103,7 +102,6 @@ class ProfileViewModelTest {
             observeUser = FakeObserveUser(),
             performSync = FakePerformSync(),
             searchOptionsRepository = FakeHomeSearchOptionsRepository(),
-            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository(),
             observeAccounts = FakeObserveAccounts(),
             observePrimaryAccount = FakeObservePrimaryAccount(),
             observeItemCount = observeItemCount,

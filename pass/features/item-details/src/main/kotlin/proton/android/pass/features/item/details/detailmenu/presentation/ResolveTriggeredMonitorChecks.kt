@@ -18,15 +18,12 @@
 
 package proton.android.pass.features.item.details.detailmenu.presentation
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.compromisedpassword.ObserveCompromisedPasswords
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemType
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.securitycenter.api.SecurityCheck
 import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
@@ -39,12 +36,8 @@ class ResolveTriggeredMonitorChecks @Inject constructor(
     private val duplicatedPasswordChecker: DuplicatedPasswordChecker,
     private val missingTfaChecker: MissingTfaChecker,
     private val observeCompromisedPasswords: ObserveCompromisedPasswords,
-    private val getUserPlan: GetUserPlan,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val getUserPlan: GetUserPlan
 ) {
-
-    private val compromisedPasswordsEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_COMPROMISED_PASSWORDS]
 
     suspend operator fun invoke(item: Item): Set<ItemFlag> = buildSet {
         if (item.itemType !is ItemType.Login) return emptySet()
@@ -75,7 +68,7 @@ class ResolveTriggeredMonitorChecks @Inject constructor(
         !isCheckExcluded(check) && fires()
 
     private suspend fun isPasswordCompromised(item: Item): Boolean {
-        val isAllowed = compromisedPasswordsEnabledFlow.first() && getUserPlan().first().isPaidPlan
+        val isAllowed = getUserPlan().first().isPaidPlan
 
         return isAllowed && observeCompromisedPasswords(item.userId, item.shareId, item.id).first()
     }

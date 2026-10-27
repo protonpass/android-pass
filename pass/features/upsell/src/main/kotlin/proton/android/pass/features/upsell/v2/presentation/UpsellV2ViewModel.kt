@@ -56,8 +56,6 @@ import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.payments.api.PaymentSessionState
 import proton.android.pass.payments.api.Payments
 import proton.android.pass.payments.api.ReconciledPayment
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageAction
 import proton.android.pass.telemetry.api.TelemetryGrowthFeatureUsageEvent
 import proton.android.pass.telemetry.api.TelemetryGrowthSubEvent
@@ -74,7 +72,6 @@ class UpsellV2ViewModel @Inject constructor(
     private val getUserPlan: GetUserPlan,
     private val refreshUserAccess: RefreshUserAccess,
     private val toastManager: ToastManager,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val telemetryManager: TelemetryManager,
     private val payments: Payments
 ) : ViewModel() {
@@ -101,12 +98,6 @@ class UpsellV2ViewModel @Inject constructor(
     private var lastPlansAvailable: PlanWithPriceState.PlansAvailable? = null
 
     init {
-        viewModelScope.launch {
-            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS)
-                .collect { isFoldersEnabled ->
-                    _upsellV2UiState.update { it.copy(isFoldersEnabled = isFoldersEnabled) }
-                }
-        }
         viewModelScope.launch {
             updatePlans()
         }

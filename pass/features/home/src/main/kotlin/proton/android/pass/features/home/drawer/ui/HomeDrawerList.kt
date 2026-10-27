@@ -72,7 +72,6 @@ internal fun HomeDrawerList(
     vaultFolderAtLimit: Set<ShareId> = emptySet(),
     vaultSelectionOption: VaultSelectionOption,
     allItemsCount: Int,
-    foldersEnabled: Boolean,
     canCreateFolderShareIds: Set<ShareId>,
     canCreateFolderNeedsUpgradeShareIds: Set<ShareId>,
     canManageFolderShareIds: Set<ShareId>,
@@ -115,8 +114,7 @@ internal fun HomeDrawerList(
             val folders = loadedFolders ?: emptyList()
             val effectiveCanCreate = canCreateFolderShareIds.contains(shareId) && !vaultFolderAtLimit.contains(shareId)
             val vaultNeedsUpgrade = canCreateFolderNeedsUpgradeShareIds.contains(shareId)
-            val shouldShowFolderContent = foldersEnabled &&
-                (folders.isNotEmpty() || effectiveCanCreate || vaultNeedsUpgrade)
+            val shouldShowFolderContent = folders.isNotEmpty() || effectiveCanCreate || vaultNeedsUpgrade
             val isShowingFolders = vaultShowFoldersMap[shareIdStr] ?: false
             val vaultFolderExpandedMap = NamespacedExpandedState(folderExpandedMap, shareIdStr)
 
@@ -173,7 +171,7 @@ internal fun HomeDrawerList(
                         HomeDrawerUiEvent.OnVaultOptionsClick(shareId = vaultShare.vault.shareId)
                             .also(onUiEvent)
                     },
-                    foldersEnabled = foldersEnabled,
+                    foldersEnabled = true,
                     hasFolderContent = shouldShowFolderContent,
                     showFolders = isShowingFolders && shouldShowFolderContent,
                     onShowFoldersToggle = if (shouldShowFolderContent) {

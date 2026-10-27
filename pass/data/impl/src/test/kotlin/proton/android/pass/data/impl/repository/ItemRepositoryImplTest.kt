@@ -53,7 +53,6 @@ import proton.android.pass.data.impl.fakes.mother.ItemEntityTestFactory
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventItemRevision
 import proton.android.pass.data.api.PendingEventList
@@ -146,7 +145,6 @@ class ItemRepositoryImplTest {
             getUserAddressForShare = FakeGetUserAddressForShare().apply { setResult(Result.success(userAddress)) },
             folderKeyRepository = folderKeyRepository,
             appDispatchers = FakeAppDispatchers(),
-            featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
             searchIndexRepository = searchIndexRepository,
             getReadyAccounts = FakeGetReadyAccounts().apply {
                 setResult(listOf(AccountTestFactory.DEFAULT_ACCOUNT))

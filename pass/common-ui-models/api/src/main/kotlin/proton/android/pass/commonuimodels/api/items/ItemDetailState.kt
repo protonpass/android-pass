@@ -234,8 +234,7 @@ sealed interface ItemDetailState {
         val primaryTotp: TotpState?,
         val passkeys: List<UIPasskeyContent>,
         val loginMonitorState: LoginMonitorState,
-        val linkedAlias: Option<LinkedAliasItem>,
-        val isAutofillUrlRegexEnabled: Boolean = false
+        val linkedAlias: Option<LinkedAliasItem>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Login

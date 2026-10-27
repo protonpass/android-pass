@@ -24,13 +24,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -100,18 +100,13 @@ class SecurityCenterHomeViewModel @Inject constructor(
             }
         }
 
-    private val compromisedPasswordsEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_COMPROMISED_PASSWORDS]
-
-    internal val state: StateFlow<SecurityCenterHomeState> = combineN(
+    internal val state: StateFlow<SecurityCenterHomeState> = combine(
         observeIsSentinelEnabled(),
         observeBreachesFlow,
         observeSecurityAnalysis(),
         excludedLoginItemsFlow.asLoadingResult(),
-        getUserPlan(),
-        compromisedPasswordsEnabledFlow
-    ) { isSentinelEnabled, breachLoadingResult, securityAnalysis, excludedLoginItemsLoadingResult, userPlan,
-        isCompromisedPasswordsEnabled ->
+        getUserPlan()
+    ) { isSentinelEnabled, breachLoadingResult, securityAnalysis, excludedLoginItemsLoadingResult, userPlan ->
         SecurityCenterHomeState(
             isSentinelEnabled = isSentinelEnabled,
             breachLoadingResult = breachLoadingResult,
@@ -120,8 +115,7 @@ class SecurityCenterHomeViewModel @Inject constructor(
             missing2faResult = securityAnalysis.missing2fa,
             compromisedPasswordsLoadingResult = securityAnalysis.compromisedPasswords,
             excludedLoginItemsLoadingResult = excludedLoginItemsLoadingResult,
-            planType = userPlan.planType,
-            isCompromisedPasswordsEnabled = isCompromisedPasswordsEnabled
+            planType = userPlan.planType
         )
     }.stateIn(
         scope = viewModelScope,

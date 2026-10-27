@@ -58,8 +58,6 @@ import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,7 +67,6 @@ class SelectVaultViewModel @Inject constructor(
     private val setDefaultVault: SetDefaultVault,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val observeFolders: ObserveFoldersByParentId,
     canCreateItemsInFolder: CanCreateItemsInFolder,
     savedStateHandle: SavedStateHandleProvider
@@ -91,10 +88,7 @@ class SelectVaultViewModel @Inject constructor(
 
     private val foldersEnabledFlow: Flow<Boolean> =
         if (showFolders) {
-            combine(
-                featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS],
-                canCreateItemsInFolder(selected)
-            ) { featureEnabled: Boolean, planAllows: Boolean -> featureEnabled && planAllows }
+            canCreateItemsInFolder(selected)
         } else {
             flowOf(false)
         }

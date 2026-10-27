@@ -40,8 +40,6 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.securitycenter.api.SecurityCheck
 import proton.android.pass.securitycenter.api.isCheckExcluded
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
@@ -60,7 +58,6 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
     private val observeCompromisedPasswords: ObserveCompromisedPasswords,
     private val observeItems: ObserveItems,
     private val observeAllShares: ObserveAllShares,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val dispatchers: AppDispatchers
 ) : SendUserMonitorCredentialsReport {
     override suspend fun invoke() {
@@ -112,13 +109,7 @@ class SendUserMonitorCredentialsReportImpl @Inject constructor(
         )
     }
 
-    private suspend fun countCompromisedPasswords(userId: UserId, monitoredItems: List<Item>): Int? {
-        val isCompromisedReportEnabled = featureFlagsPreferencesRepository.awaitResolved(
-            featureFlag = FeatureFlag.PASS_COMPROMISED_PASSWORDS,
-            userId = userId
-        )
-        if (!isCompromisedReportEnabled) return null
-
+    private suspend fun countCompromisedPasswords(userId: UserId, monitoredItems: List<Item>): Int {
         val compromisedItems = observeCompromisedPasswords(userId).first()
 
         return withContext(dispatchers.default) {

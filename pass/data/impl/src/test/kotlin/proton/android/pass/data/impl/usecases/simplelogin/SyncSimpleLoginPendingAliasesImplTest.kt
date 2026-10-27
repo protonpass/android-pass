@@ -29,7 +29,6 @@ import proton.android.pass.data.fakes.repositories.FakeUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveVaults
 import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.simplelogin.SimpleLoginAlias
@@ -63,8 +62,7 @@ class SyncSimpleLoginPendingAliasesImplTest {
             createItem = createItem,
             shareKeyRepository = shareKeyRepository,
             userAccessDataRepository = userAccessDataRepository,
-            observeVaults = observeVaults,
-            featureFlagsRepository = FakeFeatureFlagsPreferenceRepository()
+            observeVaults = observeVaults
         )
     }
 

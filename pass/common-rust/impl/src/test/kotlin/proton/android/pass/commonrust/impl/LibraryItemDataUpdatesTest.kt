@@ -149,21 +149,10 @@ internal class LibraryItemDataUpdatesTest {
     }
 
     @Test
-    fun `addUrl in basic mode only appends to urls`() {
-        val source = login(urls = listOf("https://a.com"), autofillUrls = emptyList())
-
-        val updated = source.withUrl("https://b.com", isAutofillUrlAdvancedModesEnabled = false)
-
-        val loginItem = (updated.content as ItemContent.Login).v1
-        assertThat(loginItem.urls).containsExactly("https://a.com", "https://b.com").inOrder()
-        assertThat(loginItem.autofillUrls).isEmpty()
-    }
-
-    @Test
-    fun `addUrl in advanced mode seeds autofill urls from existing urls`() {
+    fun `addUrl seeds autofill urls from existing urls`() {
         val source = login(urls = listOf("https://a.com", " "), autofillUrls = emptyList())
 
-        val updated = source.withUrl("https://b.com", isAutofillUrlAdvancedModesEnabled = true)
+        val updated = source.withUrl("https://b.com")
 
         val loginItem = (updated.content as ItemContent.Login).v1
         assertThat(loginItem.urls).containsExactly("https://a.com", " ", "https://b.com").inOrder()
@@ -174,11 +163,11 @@ internal class LibraryItemDataUpdatesTest {
     }
 
     @Test
-    fun `addUrl in advanced mode keeps existing autofill urls`() {
+    fun `addUrl keeps existing autofill urls`() {
         val existing = AutofillUrl(url = "https://a.com", mode = AutofillUrlMode.EXACT)
         val source = login(urls = listOf("https://a.com"), autofillUrls = listOf(existing))
 
-        val updated = source.withUrl("https://b.com", isAutofillUrlAdvancedModesEnabled = true)
+        val updated = source.withUrl("https://b.com")
 
         val loginItem = (updated.content as ItemContent.Login).v1
         assertThat(loginItem.autofillUrls).containsExactly(
@@ -191,7 +180,7 @@ internal class LibraryItemDataUpdatesTest {
     fun `addUrl on non login item returns it unchanged`() {
         val source = libraryNote()
 
-        assertThat(source.withUrl("https://b.com", true)).isEqualTo(source)
+        assertThat(source.withUrl("https://b.com")).isEqualTo(source)
     }
 
     @Test

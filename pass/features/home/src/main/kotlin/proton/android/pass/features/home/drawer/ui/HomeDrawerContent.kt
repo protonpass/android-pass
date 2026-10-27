@@ -85,7 +85,6 @@ internal fun HomeDrawerContent(
             sharedByMeItemsCount = sharedByMeItemsCount,
             trashedItemsCount = trashedItemsCount,
             onUiEvent = onUiEvent,
-            foldersEnabled = foldersEnabled,
             canCreateFolderShareIds = canCreateFolderShareIds,
             canCreateFolderNeedsUpgradeShareIds = canCreateFolderNeedsUpgradeShareIds,
             canManageFolderShareIds = canManageFolderShareIds

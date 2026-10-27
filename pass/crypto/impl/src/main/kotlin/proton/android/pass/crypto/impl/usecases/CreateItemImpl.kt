@@ -35,16 +35,7 @@ class CreateItemImpl @Inject constructor(
     private val itemContentSerializer: ItemContentSerializer
 ) : CreateItem {
 
-    override fun create(
-        parentKey: InviteKey,
-        itemContents: ItemContents,
-        isDomainMatchingEnabled: Boolean
-    ): EncryptedCreateItem {
-        val contentFormatVersion = if (isDomainMatchingEnabled) {
-            Constants.ITEM_CFV
-        } else {
-            Constants.ITEM_CFV_WITHOUT_URL_MATCHING
-        }
+    override fun create(parentKey: InviteKey, itemContents: ItemContents): EncryptedCreateItem {
         val serializedItem = encryptionContextProvider.withEncryptionContext {
             itemContentSerializer.serializeItem(itemContents, this)
         }
@@ -64,7 +55,7 @@ class CreateItemImpl @Inject constructor(
 
         return EncryptedCreateItem(
             keyRotation = parentKey.rotation,
-            contentFormatVersion = contentFormatVersion,
+            contentFormatVersion = Constants.ITEM_CFV,
             content = Base64.encodeBase64String(encryptedContents.array),
             itemKey = Base64.encodeBase64String(encryptedItemKey.array)
         )

@@ -56,7 +56,6 @@ fun StickyUsernameOptions(
     primaryEmail: String?,
     showCreateAliasButton: Boolean,
     isExpanded: Boolean,
-    isUsernameGeneratorEnabled: Boolean,
     onCreateAliasClick: () -> Unit,
     onPrefillCurrentEmailClick: (String) -> Unit,
     onGenerateUsernameClick: () -> Unit
@@ -77,7 +76,7 @@ fun StickyUsernameOptions(
                 )
             }
         }
-        if (isUsernameGeneratorEnabled && !isExpanded) {
+        if (!isExpanded) {
             add {
                 StickyUsernameAction(
                     icon = me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate,
@@ -183,7 +182,6 @@ fun StickyUsernameOptionsPreview(
                 primaryEmail = input.second.primaryEmail.value(),
                 showCreateAliasButton = input.second.showCreateAlias,
                 isExpanded = input.second.isExpanded,
-                isUsernameGeneratorEnabled = true,
                 onCreateAliasClick = {},
                 onPrefillCurrentEmailClick = {},
                 onGenerateUsernameClick = {}

@@ -44,9 +44,9 @@ class CreateItemImplTest {
         val (shareKey, decryptedShareKey) = ShareKeyTestFactory.create()
 
         val instance = CreateItemImpl(encryptionContextProvider, itemContentSerializer)
-        val request = instance.create(shareKey, contents, isDomainMatchingEnabled = false)
+        val request = instance.create(shareKey, contents)
 
-        assertEquals(request.contentFormatVersion, Constants.ITEM_CFV_WITHOUT_URL_MATCHING)
+        assertEquals(request.contentFormatVersion, Constants.ITEM_CFV)
         assertEquals(request.keyRotation, shareKey.rotation)
 
         val decryptedContent = encryptionContextProvider.withEncryptionContext(decryptedShareKey) {
@@ -57,30 +57,5 @@ class CreateItemImplTest {
         }
         assertEquals(parsed.title, contents.title)
         assertEquals(parsed.note, contents.note)
-    }
-
-    @Test
-    fun testPassedFormatVersionIsPreserved() {
-        val contents = ItemContents.Note(
-            title = StringTestFactory.randomString(),
-            note = StringTestFactory.randomString(),
-            customFields = emptyList()
-        )
-        val (shareKey, _) = ShareKeyTestFactory.create()
-        val instance = CreateItemImpl(encryptionContextProvider, itemContentSerializer)
-
-        val v7Request = instance.create(
-            parentKey = shareKey,
-            itemContents = contents,
-            isDomainMatchingEnabled = false
-        )
-        val v8Request = instance.create(
-            parentKey = shareKey,
-            itemContents = contents,
-            isDomainMatchingEnabled = true
-        )
-
-        assertEquals(Constants.ITEM_CFV_WITHOUT_URL_MATCHING, v7Request.contentFormatVersion)
-        assertEquals(Constants.ITEM_CFV, v8Request.contentFormatVersion)
     }
 }

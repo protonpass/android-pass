@@ -246,17 +246,12 @@ abstract class BaseLoginViewModel(
         val events: Events
     )
 
-    private val featureFlagsFlow: Flow<FeatureFlagsWrapper> = combine(
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES],
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_PASSWORD_CHECKS],
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_USERNAME_GENERATOR],
-        ::FeatureFlagsWrapper
-    )
+    private val featureFlagsFlow: Flow<FeatureFlagsWrapper> =
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_PASSWORD_CHECKS)
+            .map(::FeatureFlagsWrapper)
 
     private data class FeatureFlagsWrapper(
-        val isAutofillUrlRegexEnabled: Boolean,
-        val isPasswordChecksEnabled: Boolean,
-        val isUsernameGeneratorEnabled: Boolean
+        val isPasswordChecksEnabled: Boolean
     )
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -297,9 +292,7 @@ abstract class BaseLoginViewModel(
             displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState,
             canCreateAlias = canCreateAlias,
-            isAutofillUrlRegexEnabled = featureFlags.isAutofillUrlRegexEnabled,
             isPasswordChecksEnabled = featureFlags.isPasswordChecksEnabled,
-            isUsernameGeneratorEnabled = featureFlags.isUsernameGeneratorEnabled,
             canLoadExternalImages = useFavicons.value()
         )
     }

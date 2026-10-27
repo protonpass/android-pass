@@ -58,11 +58,11 @@ internal fun LibraryItemData.withPackageInfo(packageInfo: PackageInfo): LibraryI
 internal fun LibraryItemData.withPackageInfoIfChanged(packageInfo: PackageInfo): LibraryItemData? =
     withPackageInfo(packageInfo).takeIf { it != this }
 
-internal fun LibraryItemData.withUrl(url: String, isAutofillUrlAdvancedModesEnabled: Boolean): LibraryItemData {
+internal fun LibraryItemData.withUrl(url: String): LibraryItemData {
     val login = content as? LibraryItemContent.Login ?: return this
     val loginItem = login.v1
 
-    val existingAutofillUrls = if (isAutofillUrlAdvancedModesEnabled && loginItem.autofillUrls.isEmpty()) {
+    val existingAutofillUrls = if (loginItem.autofillUrls.isEmpty()) {
         loginItem.urls
             .filter { it.isNotBlank() }
             .map { LibraryAutofillUrl(url = it, mode = LibraryAutofillUrlMode.DEFAULT) }
@@ -70,11 +70,7 @@ internal fun LibraryItemData.withUrl(url: String, isAutofillUrlAdvancedModesEnab
         loginItem.autofillUrls
     }
 
-    val autofillUrls = if (isAutofillUrlAdvancedModesEnabled) {
-        existingAutofillUrls + LibraryAutofillUrl(url = url, mode = LibraryAutofillUrlMode.DEFAULT)
-    } else {
-        existingAutofillUrls
-    }
+    val autofillUrls = existingAutofillUrls + LibraryAutofillUrl(url = url, mode = LibraryAutofillUrlMode.DEFAULT)
 
     return copy(
         content = LibraryItemContent.Login(loginItem.copy(urls = loginItem.urls + url, autofillUrls = autofillUrls))

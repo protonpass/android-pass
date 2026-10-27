@@ -67,7 +67,6 @@ import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.HomeListItem
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
 import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
 import proton.android.pass.data.api.repositories.IndexingStatus
@@ -88,7 +87,6 @@ import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.pinning.PinCarousel
 import proton.android.pass.composecomponents.impl.topbar.CollapsibleSearchTopBar
-import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -137,7 +135,7 @@ internal fun HomeContent(
     Scaffold(
         modifier = modifier
             .statusBarsPadding()
-            .applyIf(uiState.foldersEnabled, ifTrue = { nestedScroll(barScrollConnection) }),
+            .nestedScroll(barScrollConnection),
         topBar = {
             val placeholderText = if (uiState.pinningUiState.inPinningMode) {
                 stringResource(R.string.search_topbar_placeholder_pinning)
@@ -180,73 +178,49 @@ internal fun HomeContent(
                     exit = fadeOut(),
                     label = "HomeContent-SearchTopBar"
                 ) {
-                    if (uiState.foldersEnabled) {
-                        val topBarTitle = if (uiState.pinningUiState.inPinningMode) {
-                            stringResource(ComponentsR.string.item_list_header_pinned_search_results)
-                        } else {
-                            when (uiState.homeListUiState.homeVaultSelection) {
-                                VaultSelectionOption.AllVaults ->
-                                    stringResource(R.string.home_drawer_all_items)
-                                VaultSelectionOption.Trash ->
-                                    stringResource(R.string.vault_drawer_item_trash)
-                                is VaultSelectionOption.Vault ->
-                                    uiState.homeListUiState.selectedVaultName
-                                VaultSelectionOption.SharedByMe ->
-                                    stringResource(R.string.item_type_filter_items_shared_by_me)
-                                VaultSelectionOption.SharedWithMe ->
-                                    stringResource(R.string.item_type_filter_items_shared_with_me)
-                                is VaultSelectionOption.Folder ->
-                                    uiState.homeListUiState.selectedFolderName
-                                        .takeIf { it.isNotBlank() }
-                                        ?: stringResource(R.string.home_topbar_title_folder_fallback)
-                            }
-                        }
-                        CollapsibleSearchTopBar(
-                            scrollBehavior = scrollBehavior,
-                            title = topBarTitle,
-                            searchQuery = uiState.searchUiState.searchQuery,
-                            inSearchMode = uiState.searchUiState.inSearchMode,
-                            placeholderText = placeholderText,
-                            onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
-                            onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
-                            onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
-                            drawerIcon = {
-                                HomeDrawerIcon(
-                                    modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
-                                    selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
-                                    homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
-                                    isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
-                                    isSearchMode = uiState.searchUiState.inSearchMode,
-                                    onEvent = onEvent
-                                )
-                            },
-                            actions = {
-                                HomeTopBarActions(uiState = uiState, onEvent = onEvent)
-                            }
-                        )
+                    val topBarTitle = if (uiState.pinningUiState.inPinningMode) {
+                        stringResource(ComponentsR.string.item_list_header_pinned_search_results)
                     } else {
-                        SearchTopBar(
-                            searchQuery = uiState.searchUiState.searchQuery,
-                            inSearchMode = uiState.searchUiState.inSearchMode,
-                            placeholderText = placeholderText,
-                            onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
-                            onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
-                            onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
-                            drawerIcon = {
-                                HomeDrawerIcon(
-                                    modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
-                                    selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
-                                    homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
-                                    isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
-                                    isSearchMode = uiState.searchUiState.inSearchMode,
-                                    onEvent = onEvent
-                                )
-                            },
-                            actions = {
-                                HomeTopBarActions(uiState = uiState, onEvent = onEvent)
-                            }
-                        )
+                        when (uiState.homeListUiState.homeVaultSelection) {
+                            VaultSelectionOption.AllVaults ->
+                                stringResource(R.string.home_drawer_all_items)
+                            VaultSelectionOption.Trash ->
+                                stringResource(R.string.vault_drawer_item_trash)
+                            is VaultSelectionOption.Vault ->
+                                uiState.homeListUiState.selectedVaultName
+                            VaultSelectionOption.SharedByMe ->
+                                stringResource(R.string.item_type_filter_items_shared_by_me)
+                            VaultSelectionOption.SharedWithMe ->
+                                stringResource(R.string.item_type_filter_items_shared_with_me)
+                            is VaultSelectionOption.Folder ->
+                                uiState.homeListUiState.selectedFolderName
+                                    .takeIf { it.isNotBlank() }
+                                    ?: stringResource(R.string.home_topbar_title_folder_fallback)
+                        }
                     }
+                    CollapsibleSearchTopBar(
+                        scrollBehavior = scrollBehavior,
+                        title = topBarTitle,
+                        searchQuery = uiState.searchUiState.searchQuery,
+                        inSearchMode = uiState.searchUiState.inSearchMode,
+                        placeholderText = placeholderText,
+                        onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
+                        onStopSearch = { onEvent(HomeUiEvent.StopSearch) },
+                        onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
+                        drawerIcon = {
+                            HomeDrawerIcon(
+                                modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
+                                selectedVaultOption = uiState.homeListUiState.selectedVaultOption,
+                                homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
+                                isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
+                                isSearchMode = uiState.searchUiState.inSearchMode,
+                                onEvent = onEvent
+                            )
+                        },
+                        actions = {
+                            HomeTopBarActions(uiState = uiState, onEvent = onEvent)
+                        }
+                    )
                 }
             }
         }

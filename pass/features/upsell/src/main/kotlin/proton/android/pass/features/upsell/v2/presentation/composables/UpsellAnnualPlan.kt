@@ -77,7 +77,6 @@ internal const val WEIGHT_UNLIMITED_COL3 = 0.38f
 fun UpsellAnnualPlan(
     modifier: Modifier = Modifier,
     plans: List<UpsellPlanUiModel>,
-    isFoldersEnabled: Boolean,
     onPurchaseClick: (productId: String, offerToken: String) -> Unit
 ) {
     val (selectedPlanIndex, onUpdateSelectedPlanIndex) = remember { mutableIntStateOf(0) }
@@ -168,7 +167,7 @@ fun UpsellAnnualPlan(
                                 modifier = Modifier.fillMaxWidth(),
                                 leftColumnText = "Free",
                                 rightColumnText = "Plus",
-                                items = elementsPlusPlan(isFoldersEnabled),
+                                items = elementsPlusPlan(),
                                 weightCol1 = WEIGHT_PASS_COL1,
                                 weightCol2 = WEIGHT_PASS_COL2,
                                 weightCol3 = WEIGHT_PASS_COL3
@@ -221,7 +220,6 @@ fun UpsellAnnualPlanPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
         Surface {
             UpsellAnnualPlan(
                 plans = mockAnnualPlans,
-                isFoldersEnabled = true,
                 onPurchaseClick = { _, _ -> }
             )
         }

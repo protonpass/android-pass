@@ -43,8 +43,6 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultWithItemCount
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestConstants
@@ -64,7 +62,6 @@ internal class HomeDrawerViewModelTest {
     private lateinit var observeCurrentUser: FakeObserveCurrentUser
     private lateinit var canOrganiseVaults: FakeCanOrganiseVaults
     private lateinit var observeUpgradeInfo: FakeObserveUpgradeInfo
-    private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
     private lateinit var homeSearchOptionsRepository: FakeHomeSearchOptionsRepository
     private lateinit var observeFolders: FakeObserveFoldersByParentId
 
@@ -81,7 +78,6 @@ internal class HomeDrawerViewModelTest {
         }
         canOrganiseVaults = FakeCanOrganiseVaults()
         observeUpgradeInfo = FakeObserveUpgradeInfo()
-        featureFlags = FakeFeatureFlagsPreferenceRepository()
         homeSearchOptionsRepository = FakeHomeSearchOptionsRepository()
         observeFolders = FakeObserveFoldersByParentId()
 
@@ -100,14 +96,13 @@ internal class HomeDrawerViewModelTest {
             observeItemCount = observeItemCount,
             homeSearchOptionsRepository = homeSearchOptionsRepository,
             observeUpgradeInfo = observeUpgradeInfo,
-            featureFlagsPreferencesRepository = featureFlags,
             observeFolders = observeFolders,
             observeFolderLimits = FakeObserveFolderLimits()
         )
     }
 
     @Test
-    internal fun `emits folders in state when PASS_FOLDERS is enabled`() = runTest {
+    internal fun `emits folders in state`() = runTest {
         val userId = UserId("user-1")
         val shareId = ShareId("share-1")
         val vault = VaultTestFactory.create(userId = userId, shareId = shareId, name = "Main Vault")
@@ -120,7 +115,6 @@ internal class HomeDrawerViewModelTest {
             name = "Root"
         )
 
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         observeFolders.sendResult(userId, shareId, Result.success(listOf(folder)))
         observeVaultsWithItemCount.sendResult(
             Result.success(
@@ -136,7 +130,7 @@ internal class HomeDrawerViewModelTest {
 
         viewModel.stateFlow.test {
             val state = awaitNextMatching {
-                it.foldersEnabled && it.vaultFolders[shareId]?.firstOrNull()?.name == "Root"
+                it.vaultFolders[shareId]?.firstOrNull()?.name == "Root"
             }
 
             assertThat(state.vaultFolders[shareId]).hasSize(1)
@@ -158,7 +152,6 @@ internal class HomeDrawerViewModelTest {
             name = "Root"
         )
 
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         observeFolders.sendResult(userId, shareId, Result.success(listOf(folder)))
 
         observeVaultsWithItemCount.sendResult(
@@ -205,7 +198,6 @@ internal class HomeDrawerViewModelTest {
         val firstVault = VaultTestFactory.create(userId = userId, shareId = firstShareId, name = "same-name")
         val secondVault = VaultTestFactory.create(userId = userId, shareId = secondShareId, name = "same-name")
 
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
 
         observeVaultsWithItemCount.sendResult(
             Result.success(
@@ -245,7 +237,6 @@ internal class HomeDrawerViewModelTest {
         val shareId = ShareId("share-1")
         val vault = VaultTestFactory.create(userId = userId, shareId = shareId, name = "Main Vault")
 
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
 
         observeVaultsWithItemCount.sendResult(
             Result.success(
@@ -265,40 +256,26 @@ internal class HomeDrawerViewModelTest {
     // region folder button visibility
 
     @Test
-    internal fun `folder button hidden when PASS_FOLDERS flag is disabled`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, false)
-        canCreateFolder.sendValue(true)
-        emitSingleVault()
-
-        viewModel.stateFlow.test {
-            val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
-            assertThat(state.foldersEnabled).isFalse()
-        }
-    }
-
-    @Test
-    internal fun `folder button shown for paid user when flag is enabled`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+    internal fun `folder button shown for paid user`() = runTest {
         canCreateFolder.sendValue(true)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
         emitSingleVault()
 
         viewModel.stateFlow.test {
-            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
             assertThat(state.canCreateFolderShareIds).isNotEmpty()
             assertThat(state.needsToUpgrade).isFalse()
         }
     }
 
     @Test
-    internal fun `folder upsell button shown for free user when flag is enabled and upgrade available`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
+    internal fun `folder upsell button shown for free user when upgrade available`() = runTest {
         canCreateFolder.sendValue(false)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
         emitSingleVault()
 
         viewModel.stateFlow.test {
-            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
             assertThat(state.canCreateFolderShareIds).isEmpty()
             assertThat(state.canCreateFolderNeedsUpgradeShareIds).isNotEmpty()
         }
@@ -306,14 +283,12 @@ internal class HomeDrawerViewModelTest {
 
     @Test
     internal fun `folder button hidden when org restricts creation and no upgrade available`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         canCreateFolder.sendValue(false)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
         emitSingleVault()
 
         viewModel.stateFlow.test {
             val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
-            assertThat(state.foldersEnabled).isTrue()
             assertThat(state.canCreateFolderShareIds).isEmpty()
             assertThat(state.canCreateFolderNeedsUpgradeShareIds).isEmpty()
         }
@@ -321,13 +296,12 @@ internal class HomeDrawerViewModelTest {
 
     @Test
     internal fun `folder upsell hidden for viewer vault even when upgrade is available`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = false, planAllows = false))
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
         emitSingleVault()
 
         viewModel.stateFlow.test {
-            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
             assertThat(state.canCreateFolderShareIds).isEmpty()
             assertThat(state.canCreateFolderNeedsUpgradeShareIds).isEmpty()
             assertThat(state.canManageFolderShareIds).isEmpty()
@@ -336,13 +310,12 @@ internal class HomeDrawerViewModelTest {
 
     @Test
     internal fun `folder options available when plan blocks folders and no upgrade is available`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = true, planAllows = false))
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
         emitSingleVault()
 
         viewModel.stateFlow.test {
-            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
             assertThat(state.canCreateFolderShareIds).isEmpty()
             assertThat(state.canCreateFolderNeedsUpgradeShareIds).isEmpty()
             assertThat(state.canManageFolderShareIds).isNotEmpty()
@@ -351,13 +324,12 @@ internal class HomeDrawerViewModelTest {
 
     @Test
     internal fun `folder options available for free user when plan blocks folders`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = true, planAllows = false))
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
         emitSingleVault()
 
         viewModel.stateFlow.test {
-            val state = awaitNextMatching { it.foldersEnabled && it.vaultShares.isNotEmpty() }
+            val state = awaitNextMatching { it.vaultShares.isNotEmpty() }
             assertThat(state.canManageFolderShareIds).isNotEmpty()
         }
     }
@@ -380,7 +352,6 @@ internal class HomeDrawerViewModelTest {
             )
         }
 
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         observeFolders.sendResult(userId, shareId, Result.success(folders))
         observeVaultsWithItemCount.sendResult(
             Result.success(listOf(VaultWithItemCount(vault = vault, activeItemCount = 0, trashedItemCount = 0)))
@@ -407,7 +378,6 @@ internal class HomeDrawerViewModelTest {
                 )
             }
 
-            featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
             observeFolders.sendResult(userId, shareId, Result.success(folders))
             observeVaultsWithItemCount.sendResult(
                 Result.success(listOf(VaultWithItemCount(vault = vault, activeItemCount = 0, trashedItemCount = 0)))
@@ -434,12 +404,10 @@ internal class HomeDrawerViewModelTest {
             observeItemCount = observeItemCount,
             homeSearchOptionsRepository = homeSearchOptionsRepository,
             observeUpgradeInfo = observeUpgradeInfo,
-            featureFlagsPreferencesRepository = featureFlags,
             observeFolders = FakeObserveFoldersByParentId(defaultResult = null),
             observeFolderLimits = FakeObserveFolderLimits()
         )
 
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         observeVaultsWithItemCount.sendResult(
             Result.success(listOf(VaultWithItemCount(vault = vault, activeItemCount = 0, trashedItemCount = 0)))
         )

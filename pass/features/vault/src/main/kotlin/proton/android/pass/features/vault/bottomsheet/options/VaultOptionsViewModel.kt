@@ -117,7 +117,6 @@ class VaultOptionsViewModel @Inject constructor(
         observeVaults(includeHidden = true).asLoadingResult(),
         canShare,
         eventFlow,
-        preferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS),
         canCreateFolder(navShareId),
         observeUpgradeInfo().asLoadingResult(),
         folderCountsFlow,
@@ -127,7 +126,7 @@ class VaultOptionsViewModel @Inject constructor(
             else userPreferencesRepository.observeDownloadAllAttachmentsPref(userId)
         },
         preferencesRepository.get<Boolean>(FeatureFlag.PASS_OFFLINE_ATTACHMENTS)
-    ) { vaultResult, canShare, event, foldersEnabled, canCreateFolder,
+    ) { vaultResult, canShare, event, canCreateFolder,
         upgradeResult, folderCounts, folderLimits, downloadAllPref, offlineAttachmentsFF ->
         val rootFolderCount = folderCounts.rootCount
         val totalFolderCount = folderCounts.totalCount
@@ -180,12 +179,10 @@ class VaultOptionsViewModel @Inject constructor(
             showViewMembers = showViewMembers,
             event = event,
             isLastVault = vaultResult.data.size == 1,
-            canAddFolder = foldersEnabled &&
-                rootFolderCount < folderLimits.maxChildren &&
+            canAddFolder = rootFolderCount < folderLimits.maxChildren &&
                 totalFolderCount < folderLimits.maxCount &&
                 (canCreateFolder.isAllowed || canCreateFolder.needsUpgrade && isUpgradeAvailable),
-            canAddFolderNeedsUpgrade = foldersEnabled &&
-                rootFolderCount < folderLimits.maxChildren &&
+            canAddFolderNeedsUpgrade = rootFolderCount < folderLimits.maxChildren &&
                 totalFolderCount < folderLimits.maxCount &&
                 canCreateFolder.needsUpgrade && isUpgradeAvailable,
             showOfflineAttachments = offlineAttachmentsFF && downloadAllPref.value(),

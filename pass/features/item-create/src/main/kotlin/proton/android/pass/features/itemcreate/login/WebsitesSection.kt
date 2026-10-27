@@ -93,7 +93,6 @@ internal fun WebsitesSection(
     websitesWithErrors: ImmutableList<Int>,
     focusLastWebsite: Boolean,
     isEditAllowed: Boolean,
-    isAutofillUrlRegexEnabled: Boolean,
     onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -129,8 +128,8 @@ internal fun WebsitesSection(
 
                 val autofillUrl = autofillUrls.getOrNull(idx)
                 val mode = autofillUrl?.mode ?: AutofillUrlMode.Default
-                val showModeLabel = value.isNotBlank() && isAutofillUrlRegexEnabled
-                val showOptionsMenu = value.isNotBlank() && isEditAllowed && isAutofillUrlRegexEnabled
+                val showModeLabel = value.isNotBlank()
+                val showOptionsMenu = value.isNotBlank() && isEditAllowed
 
                 ProtonTextField(
                     modifier = Modifier.heightIn(min = 48.dp),
@@ -302,7 +301,6 @@ fun WebsitesSectionPreview(
                 autofillUrls = persistentListOf(),
                 focusLastWebsite = false,
                 isEditAllowed = input.second.isEditAllowed,
-                isAutofillUrlRegexEnabled = true,
                 websitesWithErrors = persistentListOf(),
                 onWebsiteSectionEvent = {}
             )
@@ -325,7 +323,6 @@ fun WebsitesSectionWithErrorsPreview(
                 autofillUrls = persistentListOf(),
                 focusLastWebsite = false,
                 isEditAllowed = input.second.isEditAllowed,
-                isAutofillUrlRegexEnabled = true,
                 websitesWithErrors = input.second.websitesWithErrors,
                 onWebsiteSectionEvent = {}
             )

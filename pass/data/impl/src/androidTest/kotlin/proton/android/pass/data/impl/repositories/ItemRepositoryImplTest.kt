@@ -65,7 +65,6 @@ import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
 import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.test.domain.ItemTestFactory
 import proton.android.pass.data.fakes.repositories.FakeSearchIndexRepository
 import proton.android.pass.test.domain.ShareKeyTestFactory
@@ -146,7 +145,6 @@ class ItemRepositoryImplTest {
             getUserAddressForShare = FakeGetUserAddressForShare().apply { setResult(Result.success(userAddress)) },
             folderKeyRepository = FakeFolderKeyRepository(),
             appDispatchers = FakeAppDispatchers(),
-            featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
             searchIndexRepository = FakeSearchIndexRepository()
         )
     }

@@ -36,18 +36,6 @@ enum class FeatureFlag(
         key = "PassRenameAdminToManager",
         isEnabledDefault = false
     ),
-    PASS_FOLDERS(
-        title = "folders",
-        description = "allow user to create folders",
-        key = "PassFolder",
-        isEnabledDefault = false
-    ),
-    PASS_AUTOFILL_URL_ADVANCED_MODES(
-        title = "Autofill URL advanced modes",
-        description = "Enable advanced URL matching modes for autofill",
-        key = "PassAutofillUrlAdvancedModes",
-        isEnabledDefault = false
-    ),
     ENABLE_PAGINATION(
         title = "Enable pagination",
         description = "Enable pagination on item list",
@@ -66,34 +54,10 @@ enum class FeatureFlag(
         key = "PassPasswordChecks",
         isEnabledDefault = false
     ),
-    PASS_USERNAME_GENERATOR(
-        title = "Username generator",
-        description = "Allow the user to generate a username while creating or editing a login",
-        key = "PassUsernameGenerator",
-        isEnabledDefault = false
-    ),
-    PASS_COMPROMISED_PASSWORDS(
-        title = "Compromised passwords",
-        description = "Show the compromised passwords check in Pass Monitor and item details",
-        key = "PassCompromisedPasswords",
-        isEnabledDefault = false
-    ),
     PASS_MONITOR_PER_CHECK_EXCLUSION(
         title = "Monitor per check exclusion",
         description = "Allow the user to exclude an item from a subset of Pass Monitor checks",
         key = "PassMonitorPerCheckExclusion",
-        isEnabledDefault = false
-    ),
-    PASS_POPULAR_SERVICES(
-        title = "Popular services",
-        description = "Suggest popular services while typing the title of a new login",
-        key = "PassPopularServices",
-        isEnabledDefault = false
-    ),
-    PASS_AUTOFILL_HEALTH(
-        title = "Autofill health",
-        description = "Show the autofill troubleshooting entry in settings",
-        key = "PassAutofillHealth",
         isEnabledDefault = false
     ),
     PASS_OFFLINE_ATTACHMENTS(

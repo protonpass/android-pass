@@ -134,7 +134,7 @@ data class UpsellItemsUiState(
     val to: PlanTypeUiState
 )
 
-fun elementsPlusPlan(isFoldersEnabled: Boolean) = buildList {
+fun elementsPlusPlan() = buildList {
     add(
         UpsellItemsUiState(
             R.string.upsell_plan_plus_1,
@@ -156,15 +156,13 @@ fun elementsPlusPlan(isFoldersEnabled: Boolean) = buildList {
             PlanTypeUiState.Check
         )
     )
-    if (isFoldersEnabled) {
-        add(
-            UpsellItemsUiState(
-                R.string.upsell_plan_plus_4,
-                PlanTypeUiState.Empty,
-                PlanTypeUiState.Check
-            )
+    add(
+        UpsellItemsUiState(
+            R.string.upsell_plan_plus_4,
+            PlanTypeUiState.Empty,
+            PlanTypeUiState.Check
         )
-    }
+    )
     add(
         UpsellItemsUiState(
             R.string.upsell_plan_plus_5,
@@ -215,6 +213,5 @@ data class UpsellV2UiState(
     val displayOnBoarding: Boolean = false,
     val displayLoaderDuringPurchase: Boolean = false,
     val stepToDisplay: StepToDisplay = StepToDisplay.Idle,
-    val plans: ImmutableList<UpsellPlanUiModel> = persistentListOf(),
-    val isFoldersEnabled: Boolean = false
+    val plans: ImmutableList<UpsellPlanUiModel> = persistentListOf()
 )

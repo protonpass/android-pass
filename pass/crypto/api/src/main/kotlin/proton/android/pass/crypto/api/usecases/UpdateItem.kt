@@ -31,7 +31,6 @@ interface UpdateItem {
     fun createRequest(
         itemKey: ItemKey,
         itemContent: ByteArray,
-        lastRevision: Long,
-        isDomainMatchingEnabled: Boolean
+        lastRevision: Long
     ): EncryptedUpdateItemRequest
 }

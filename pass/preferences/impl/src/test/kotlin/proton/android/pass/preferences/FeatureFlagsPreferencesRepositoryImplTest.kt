@@ -35,7 +35,7 @@ class FeatureFlagsPreferencesRepositoryImplTest {
 
     private val userId = UserId("test-user-id")
 
-    private val remoteFlag = FeatureFlag.PASS_AUTOFILL_HEALTH
+    private val remoteFlag = FeatureFlag.PASS_EXPLORE_TAB
     private val remoteFlagKey = requireNotNull(remoteFlag.key)
 
     @Test

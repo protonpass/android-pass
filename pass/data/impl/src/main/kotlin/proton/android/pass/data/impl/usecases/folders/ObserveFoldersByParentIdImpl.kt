@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases.folders
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.data.api.repositories.FolderRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
@@ -28,13 +27,10 @@ import proton.android.pass.domain.Folder
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 class ObserveFoldersByParentIdImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val folderRepository: FolderRepository
 ) : ObserveFoldersByParentId {
 
@@ -42,19 +38,14 @@ class ObserveFoldersByParentIdImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         parentFolderId: FolderId?
-    ): Flow<List<Folder>> =
-        whenFoldersEnabled(userId) { folderRepository.observeFoldersByParentId(userId, shareId, parentFolderId) }
+    ): Flow<List<Folder>> = folderRepository.observeFoldersByParentId(userId, shareId, parentFolderId)
 
     override fun invoke(userId: UserId, shareId: ShareId): Flow<List<Folder>> =
-        whenFoldersEnabled(userId) { folderRepository.observeAllFolders(userId, shareId) }
+        folderRepository.observeAllFolders(userId, shareId)
 
     override fun invoke(shareId: ShareId, parentFolderId: FolderId?): Flow<List<Folder>> =
         observeCurrentUser().flatMapLatest { user -> invoke(user.userId, shareId, parentFolderId) }
 
     override fun invoke(shareId: ShareId): Flow<List<Folder>> =
         observeCurrentUser().flatMapLatest { user -> invoke(user.userId, shareId) }
-
-    private fun whenFoldersEnabled(userId: UserId, block: () -> Flow<List<Folder>>): Flow<List<Folder>> =
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_FOLDERS, userId)
-            .flatMapLatest { isEnabled -> if (isEnabled) block() else flowOf(emptyList()) }
 }

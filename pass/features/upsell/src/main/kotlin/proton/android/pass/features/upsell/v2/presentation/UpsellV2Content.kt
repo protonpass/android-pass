@@ -93,7 +93,6 @@ fun UpsellV2Content(
         ) {
             UpsellAnnualPlan(
                 plans = uiState.plans,
-                isFoldersEnabled = uiState.isFoldersEnabled,
                 onPurchaseClick = onPurchaseClick
             )
         }
@@ -107,7 +106,6 @@ fun UpsellV2Content(
             UpsellWelcomeOffer(
                 stepToDisplay = uiState.stepToDisplay,
                 plan = uiState.plans[0],
-                isFoldersEnabled = uiState.isFoldersEnabled,
                 onPurchaseClick = onPurchaseClick
             )
         }
@@ -121,7 +119,6 @@ fun UpsellV2Content(
             UpsellWelcomeOffer(
                 stepToDisplay = uiState.stepToDisplay,
                 plan = uiState.plans[0],
-                isFoldersEnabled = uiState.isFoldersEnabled,
                 onPurchaseClick = onPurchaseClick
             )
         }
@@ -203,8 +200,7 @@ fun UpsellPlanContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
             onSkipButtonClick = {},
             uiState = UpsellV2UiState(
                 stepToDisplay = StepToDisplay.AnnualPlans,
-                plans = mockAnnualPlans,
-                isFoldersEnabled = true
+                plans = mockAnnualPlans
             ),
             onPurchaseClick = { _, _ -> }
         )
@@ -219,8 +215,7 @@ fun UpsellPlanContentWelcomeMonthlyPreview(@PreviewParameter(ThemePreviewProvide
             onSkipButtonClick = {},
             uiState = UpsellV2UiState(
                 stepToDisplay = StepToDisplay.WelcomeOfferMonthly,
-                plans = mockWelcomeMonthlyPlan,
-                isFoldersEnabled = true
+                plans = mockWelcomeMonthlyPlan
             ),
             onPurchaseClick = { _, _ -> }
         )
@@ -235,8 +230,7 @@ fun UpsellPlanContentWelcomeYearlyPreview(@PreviewParameter(ThemePreviewProvider
             onSkipButtonClick = {},
             uiState = UpsellV2UiState(
                 stepToDisplay = StepToDisplay.WelcomeOfferYearly,
-                plans = mockWelcomeYearlyPlan,
-                isFoldersEnabled = true
+                plans = mockWelcomeYearlyPlan
             ),
             onPurchaseClick = { _, _ -> }
         )

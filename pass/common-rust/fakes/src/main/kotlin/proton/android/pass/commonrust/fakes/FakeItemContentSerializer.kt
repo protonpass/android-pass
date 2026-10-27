@@ -110,23 +110,15 @@ class FakeItemContentSerializer @Inject constructor() : ItemContentSerializer {
         return storeItem(stored.copy(contents = login.copy(packageInfoSet = packageInfoSet)))
     }
 
-    override fun addUrlToItem(
-        original: ByteArray,
-        url: String,
-        isAutofillUrlAdvancedModesEnabled: Boolean
-    ): ByteArray {
+    override fun addUrlToItem(original: ByteArray, url: String): ByteArray {
         val stored = readItem(original)
         val login = stored.contents as? ItemContents.Login ?: return original
-        val existingAutofillUrls = if (isAutofillUrlAdvancedModesEnabled && login.autofillUrls.isEmpty()) {
+        val existingAutofillUrls = if (login.autofillUrls.isEmpty()) {
             login.urls.filter { it.isNotBlank() }.map { AutofillUrl(url = it, mode = AutofillUrlMode.Default) }
         } else {
             login.autofillUrls
         }
-        val autofillUrls = if (isAutofillUrlAdvancedModesEnabled) {
-            existingAutofillUrls + AutofillUrl(url = url, mode = AutofillUrlMode.Default)
-        } else {
-            existingAutofillUrls
-        }
+        val autofillUrls = existingAutofillUrls + AutofillUrl(url = url, mode = AutofillUrlMode.Default)
         return storeItem(
             stored.copy(contents = login.copy(urls = login.urls + url, autofillUrls = autofillUrls))
         )

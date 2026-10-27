@@ -45,19 +45,13 @@ import proton.android.pass.domain.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
-import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
-import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES
 import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
 import proton.android.pass.preferences.FeatureFlag.PASS_EXPLORE_TAB
 import proton.android.pass.preferences.FeatureFlag.PASS_PASSWORD_CHECKS
-import proton.android.pass.preferences.FeatureFlag.PASS_USERNAME_GENERATOR
-import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import proton.android.pass.preferences.FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION
-import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
-import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
-import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_OFFLINE_ATTACHMENTS
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDER_NAVIGATION
+import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import java.io.IOException
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
@@ -100,16 +94,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             defaultValue = featureFlag.isEnabledDefault
         ) { renameAdminToManagerEnabled.value }
 
-        PASS_FOLDERS -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { passFoldersEnabled.value }
-
-        PASS_AUTOFILL_URL_ADVANCED_MODES -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { passAutofillUrlRegexEnabled.value }
-
         ENABLE_PAGINATION -> getFeatureFlag(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
@@ -125,30 +109,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             defaultValue = featureFlag.isEnabledDefault
         ) { passPasswordChecksEnabled.value }
 
-        PASS_USERNAME_GENERATOR -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { passUsernameGeneratorEnabled.value }
-
-        PASS_COMPROMISED_PASSWORDS -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { passCompromisedPasswordsEnabled.value }
-
         PASS_MONITOR_PER_CHECK_EXCLUSION -> getFeatureFlag(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { passMonitorPerCheckExclusionEnabled.value }
-
-        PASS_POPULAR_SERVICES -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { passPopularServicesEnabled.value }
-
-        PASS_AUTOFILL_HEALTH -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { passAutofillHealthEnabled.value }
 
         PASS_OFFLINE_ATTACHMENTS -> getFeatureFlag(
             key = featureFlag.key,
@@ -208,14 +172,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             renameAdminToManagerEnabled = boolFlagPrefProto(value)
         }
 
-        PASS_FOLDERS -> setFeatureFlag {
-            passFoldersEnabled = boolFlagPrefProto(value)
-        }
-
-        PASS_AUTOFILL_URL_ADVANCED_MODES -> setFeatureFlag {
-            passAutofillUrlRegexEnabled = boolFlagPrefProto(value)
-        }
-
         ENABLE_PAGINATION -> setFeatureFlag {
             enablePagination = boolFlagPrefProto(value)
         }
@@ -228,24 +184,8 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             passPasswordChecksEnabled = boolFlagPrefProto(value)
         }
 
-        PASS_USERNAME_GENERATOR -> setFeatureFlag {
-            passUsernameGeneratorEnabled = boolFlagPrefProto(value)
-        }
-
-        PASS_COMPROMISED_PASSWORDS -> setFeatureFlag {
-            passCompromisedPasswordsEnabled = boolFlagPrefProto(value)
-        }
-
         PASS_MONITOR_PER_CHECK_EXCLUSION -> setFeatureFlag {
             passMonitorPerCheckExclusionEnabled = boolFlagPrefProto(value)
-        }
-
-        PASS_POPULAR_SERVICES -> setFeatureFlag {
-            passPopularServicesEnabled = boolFlagPrefProto(value)
-        }
-
-        PASS_AUTOFILL_HEALTH -> setFeatureFlag {
-            passAutofillHealthEnabled = boolFlagPrefProto(value)
         }
 
         PASS_OFFLINE_ATTACHMENTS -> setFeatureFlag {
@@ -351,16 +291,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
             RENAME_ADMIN_TO_MANAGER -> renameAdminToManagerEnabled
-            PASS_FOLDERS -> passFoldersEnabled
-            PASS_AUTOFILL_URL_ADVANCED_MODES -> passAutofillUrlRegexEnabled
             ENABLE_PAGINATION -> enablePagination
             PASS_EXPLORE_TAB -> passExploreTabEnabled
             PASS_PASSWORD_CHECKS -> passPasswordChecksEnabled
-            PASS_USERNAME_GENERATOR -> passUsernameGeneratorEnabled
-            PASS_COMPROMISED_PASSWORDS -> passCompromisedPasswordsEnabled
             PASS_MONITOR_PER_CHECK_EXCLUSION -> passMonitorPerCheckExclusionEnabled
-            PASS_POPULAR_SERVICES -> passPopularServicesEnabled
-            PASS_AUTOFILL_HEALTH -> passAutofillHealthEnabled
             PASS_OFFLINE_ATTACHMENTS -> passOfflineAttachmentsEnabled
             PASS_FORCE_SYNC_FOLDERS -> passForceSyncFoldersEnabled
             PASS_FOLDER_NAVIGATION -> passFolderNavigationEnabled

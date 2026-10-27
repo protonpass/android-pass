@@ -87,8 +87,6 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.PASSWORD_INPUT_TAG
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
@@ -150,9 +148,6 @@ class CreateLoginScreenTest {
     @Inject
     lateinit var getPopularServices: FakeGetPopularServices
 
-    @Inject
-    lateinit var featureFlagsRepository: FakeFeatureFlagsPreferenceRepository
-
     @Before
     fun setup() {
         hiltRule.inject()
@@ -165,7 +160,7 @@ class CreateLoginScreenTest {
 
         val totpSpec = TotpSpec(
             secret = "SECRET",
-            label = "LABEL".some(),
+            label = "LABEL".some()
         )
         totpManager.setParseResult(Result.success(totpSpec))
         observeVaults.sendResult(Result.success(listOf(TEST_VAULT)))
@@ -189,7 +184,7 @@ class CreateLoginScreenTest {
         val item = ItemTestFactory.createLogin(
             title = title,
             username = email,
-            note = note,
+            note = note
         )
         totpManager.setSanitisedEditResult(Result.success(totp))
         totpManager.addSanitisedSaveResult(Result.success(totp))
@@ -316,9 +311,8 @@ class CreateLoginScreenTest {
         val totpCustomField = CustomFieldContent.Totp(
             label = totpCustomFieldLabel,
             value = HiddenState.Revealed(
-                FakeEncryptionContext.encrypt(
-                    totpCustomFieldValue
-                ), totpCustomFieldValue
+                FakeEncryptionContext.encrypt(totpCustomFieldValue),
+                totpCustomFieldValue
             )
         )
 
@@ -422,7 +416,7 @@ class CreateLoginScreenTest {
             autofillUrls = emptyList()
         )
         val received = memory.first()
-        val receivedItemContents =  received.itemContents as  ItemContents.Login
+        val receivedItemContents = received.itemContents as ItemContents.Login
         assertThat(received.userId).isEqualTo(USER_ID)
         assertThat(received.shareId).isEqualTo(ShareId(SHARE_ID))
         assertThat(receivedItemContents.title).isEqualTo(title)
@@ -501,7 +495,6 @@ class CreateLoginScreenTest {
 
     @Test
     fun popularServiceSuggestionsHideWhileScreenIsNotResumed() {
-        featureFlagsRepository.set(FeatureFlag.PASS_POPULAR_SERVICES, true)
         getPopularServices.setResult(
             Result.success(listOf(PopularService(title = "Facebook", urls = listOf("https://facebook.com"))))
         )
@@ -601,7 +594,7 @@ class CreateLoginScreenTest {
                         clearAlias = false,
                         selectVault = null,
                         canUseAttachments = true,
-                        onNavigate = {},
+                        onNavigate = {}
                     )
                 }
             }
@@ -741,7 +734,7 @@ class CreateLoginScreenTest {
                             ) {
                                 checker.call()
                             }
-                        },
+                        }
                     )
                 }
             }

@@ -352,7 +352,7 @@ fun UpsellV2SectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                 modifier = Modifier.fillMaxWidth(),
                 leftColumnText = "Free",
                 rightColumnText = "Plus",
-                items = elementsPlusPlan(isFoldersEnabled = true),
+                items = elementsPlusPlan(),
                 weightCol1 = WEIGHT_PASS_COL1,
                 weightCol2 = WEIGHT_PASS_COL2,
                 weightCol3 = WEIGHT_PASS_COL3

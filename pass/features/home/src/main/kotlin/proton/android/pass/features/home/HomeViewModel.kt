@@ -310,14 +310,6 @@ class HomeViewModel @Inject constructor(
         .distinctUntilChanged()
         .onEach { shouldScrollToTopFlow.update { true } }
 
-    private data class FolderCapabilities(
-        val foldersEnabled: Boolean,
-        val canCreateItemsInFolder: Boolean
-    )
-
-    private val foldersEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
-
     private data class FolderObservation(
         val selection: VaultSelectionOption.Folder,
         val folder: Folder?
@@ -344,14 +336,9 @@ class HomeViewModel @Inject constructor(
         .distinctUntilChanged()
         .shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
 
-    private val folderCapabilitiesFlow: Flow<FolderCapabilities> = combine(
-        foldersEnabledFlow,
-        selectedFolderFlow.flatMapLatest { selectedFolder ->
-            val folder = selectedFolder.value()
-            if (folder == null) flowOf(true) else canCreateItemsInFolder(folder.shareId)
-        }
-    ) { foldersEnabled, canCreateItemsInFolder ->
-        FolderCapabilities(foldersEnabled, canCreateItemsInFolder)
+    private val canCreateItemsInFolderFlow: Flow<Boolean> = selectedFolderFlow.flatMapLatest { selectedFolder ->
+        val folder = selectedFolder.value()
+        if (folder == null) flowOf(true) else canCreateItemsInFolder(folder.shareId)
     }
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
@@ -532,10 +519,9 @@ class HomeViewModel @Inject constructor(
         itemUiModelFlow,
         searchOptionsFlow.map { it.vaultSelectionOption }.distinctUntilChanged(),
         isInSearchModeState,
-        searchQueryState,
-        foldersEnabledFlow
-    ) { itemResult, vaultSelectionOption, isInSearchMode, searchQuery, foldersEnabled ->
-        if (isInSearchMode && searchQuery.isNotBlank() || !foldersEnabled) {
+        searchQueryState
+    ) { itemResult, vaultSelectionOption, isInSearchMode, searchQuery ->
+        if (isInSearchMode && searchQuery.isNotBlank()) {
             itemResult
         } else {
             when (vaultSelectionOption) {
@@ -783,7 +769,7 @@ class HomeViewModel @Inject constructor(
         observeCanCreateItems(),
         observeHasShares(includeHidden = true),
         observeUpgradeInfo().asLoadingResult(),
-        folderCapabilitiesFlow,
+        canCreateItemsInFolderFlow,
         canCreateAlias(),
         isPaginationEnabledFlow
     ) { homeListUiState,
@@ -796,7 +782,7 @@ class HomeViewModel @Inject constructor(
         canCreateItems,
         hasShares,
         upgradeInfo,
-        folderCapabilities,
+        canCreateItemsInFolder,
         canCreateAlias,
         isPaginationEnabled ->
         HomeUiState(
@@ -813,8 +799,7 @@ class HomeViewModel @Inject constructor(
             hasShares = hasShares,
             isUpgradeAvailable = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false,
             isQuest = isQuest,
-            foldersEnabled = folderCapabilities.foldersEnabled,
-            canCreateItemsInFolder = folderCapabilities.canCreateItemsInFolder,
+            canCreateItemsInFolder = canCreateItemsInFolder,
             isPaginationEnabled = isPaginationEnabled
         )
     }.stateIn(

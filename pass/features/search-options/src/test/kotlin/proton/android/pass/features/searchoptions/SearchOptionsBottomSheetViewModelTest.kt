@@ -32,8 +32,6 @@ import proton.android.pass.data.fakes.usecases.FakeObservePinnedItemCount
 import proton.android.pass.data.fakes.usecases.items.FakeObserveSharedItemCountSummary
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -46,7 +44,6 @@ internal class SearchOptionsBottomSheetViewModelTest {
     private lateinit var observeItemCount: FakeObserveItemCount
     private lateinit var observePinnedItemCount: FakeObservePinnedItemCount
     private lateinit var observeSharedItemCountSummary: FakeObserveSharedItemCountSummary
-    private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
     private lateinit var homeSearchOptionsRepository: FakeHomeSearchOptionsRepository
     private lateinit var savedStateHandleProvider: SavedStateHandleProvider
 
@@ -55,7 +52,6 @@ internal class SearchOptionsBottomSheetViewModelTest {
         observeItemCount = FakeObserveItemCount()
         observePinnedItemCount = FakeObservePinnedItemCount()
         observeSharedItemCountSummary = FakeObserveSharedItemCountSummary()
-        featureFlags = FakeFeatureFlagsPreferenceRepository()
         homeSearchOptionsRepository = FakeHomeSearchOptionsRepository()
 
         val savedStateHandle = SavedStateHandle(
@@ -71,16 +67,14 @@ internal class SearchOptionsBottomSheetViewModelTest {
     }
 
     @Test
-    internal fun `when vault selected with PASS_FOLDERS enabled, restrictToRootFolder is true`() = runTest {
+    internal fun `when vault selected, restrictToRootFolder is true`() = runTest {
         val shareId = ShareId("share-1")
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
 
         val viewModel = SearchOptionsBottomSheetViewModel(
             homeSearchOptionsRepository = homeSearchOptionsRepository,
             observeItemCount = observeItemCount,
             observePinnedItemCount = observePinnedItemCount,
             observeSharedItemCountSummary = observeSharedItemCountSummary,
-            featureFlagsPreferencesRepository = featureFlags,
             savedStateHandleProvider = savedStateHandleProvider
         )
 
@@ -96,42 +90,15 @@ internal class SearchOptionsBottomSheetViewModelTest {
     }
 
     @Test
-    internal fun `when vault selected with PASS_FOLDERS disabled, restrictToRootFolder is false`() = runTest {
-        val shareId = ShareId("share-1")
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, false)
-
-        val viewModel = SearchOptionsBottomSheetViewModel(
-            homeSearchOptionsRepository = homeSearchOptionsRepository,
-            observeItemCount = observeItemCount,
-            observePinnedItemCount = observePinnedItemCount,
-            observeSharedItemCountSummary = observeSharedItemCountSummary,
-            featureFlagsPreferencesRepository = featureFlags,
-            savedStateHandleProvider = savedStateHandleProvider
-        )
-
-        homeSearchOptionsRepository.setVaultSelectionOption(
-            VaultSelectionOption.Vault(shareId = shareId)
-        )
-
-        viewModel.state.test {
-            awaitItem()
-
-            assertThat(observeItemCount.lastRestrictToRootFolder).isFalse()
-        }
-    }
-
-    @Test
     internal fun `when folder selected, query uses folder share selection`() = runTest {
         val shareId = ShareId("share-1")
         val folderId = FolderId("folder-1")
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
 
         val viewModel = SearchOptionsBottomSheetViewModel(
             homeSearchOptionsRepository = homeSearchOptionsRepository,
             observeItemCount = observeItemCount,
             observePinnedItemCount = observePinnedItemCount,
             observeSharedItemCountSummary = observeSharedItemCountSummary,
-            featureFlagsPreferencesRepository = featureFlags,
             savedStateHandleProvider = savedStateHandleProvider
         )
 
@@ -149,14 +116,12 @@ internal class SearchOptionsBottomSheetViewModelTest {
     @Test
     internal fun `state contains correct vault selection option`() = runTest {
         val shareId = ShareId("share-1")
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
 
         val viewModel = SearchOptionsBottomSheetViewModel(
             homeSearchOptionsRepository = homeSearchOptionsRepository,
             observeItemCount = observeItemCount,
             observePinnedItemCount = observePinnedItemCount,
             observeSharedItemCountSummary = observeSharedItemCountSummary,
-            featureFlagsPreferencesRepository = featureFlags,
             savedStateHandleProvider = savedStateHandleProvider
         )
 
@@ -172,14 +137,12 @@ internal class SearchOptionsBottomSheetViewModelTest {
 
     @Test
     internal fun `resetFilters resets to default filter type and sorting type`() = runTest {
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
 
         val viewModel = SearchOptionsBottomSheetViewModel(
             homeSearchOptionsRepository = homeSearchOptionsRepository,
             observeItemCount = observeItemCount,
             observePinnedItemCount = observePinnedItemCount,
             observeSharedItemCountSummary = observeSharedItemCountSummary,
-            featureFlagsPreferencesRepository = featureFlags,
             savedStateHandleProvider = savedStateHandleProvider
         )
 

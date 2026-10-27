@@ -125,12 +125,6 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     canDisplayTotp
 ) {
 
-    private val autofillUrlRegexEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES]
-
-    private val compromisedPasswordsEnabledFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_COMPROMISED_PASSWORDS]
-
     private val perCheckExclusionEnabledFlow: Flow<Boolean> =
         featureFlagsPreferencesRepository[FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION]
 
@@ -170,10 +164,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         ),
         observeLinkedAlias(item),
         userPreferencesRepository.getUseFaviconsPreference(),
-        observeBreadcrumbs(item),
-        autofillUrlRegexEnabledFlow
+        observeBreadcrumbs(item)
     ) { loginItemContents, primaryTotp, customFieldTotps, loginMonitorState,
-        linkedAlias, useFaviconsPreference, breadcrumb, isAutofillUrlRegexEnabled ->
+        linkedAlias, useFaviconsPreference, breadcrumb ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,
@@ -199,8 +192,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             loginMonitorState = loginMonitorState,
             detailEvent = detailEvent,
             linkedAlias = linkedAlias,
-            breadcrumbs = breadcrumb,
-            isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled
+            breadcrumbs = breadcrumb
         )
     }
 
@@ -214,14 +206,13 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     ): Flow<LoginMonitorState> {
         if (source == ItemDetailsSource.REVISION) return flowOf(LoginMonitorState.Hidden)
 
-        return combineN(
+        return combine(
             observeCompromisedPasswords(userId, item.shareId, item.id),
             getUserPlan(),
             pendingMonitorChecksFlow,
             observeItemFlags(userId = userId, item = item),
-            compromisedPasswordsEnabledFlow,
             perCheckExclusionEnabledFlow
-        ) { isItemCompromised, userPlan, pendingChecks, itemFlags, isCompromisedPasswordsEnabled,
+        ) { isItemCompromised, userPlan, pendingChecks, itemFlags,
             isPerCheckExclusionEnabled ->
             sendTelemetry(scope)
             val isFullyExcluded = itemFlags.hasSkippedHealthCheck() && !itemFlags.hasSkippedMonitorChecks()
@@ -275,7 +266,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 canEdit = canEdit,
                 pendingChecks = pendingChecks,
                 isPerCheckExclusionEnabled = isPerCheckExclusionEnabled
-            ).applyCompromisedPasswordGating(userPlan.isPaidPlan && isCompromisedPasswordsEnabled)
+            ).applyCompromisedPasswordGating(userPlan.isPaidPlan)
         }
     }
 

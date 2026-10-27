@@ -20,6 +20,5 @@ package proton.android.pass.crypto.impl
 
 object Constants {
     const val ITEM_CFV = 8
-    const val ITEM_CFV_WITHOUT_URL_MATCHING = 7
     const val FOLDER_CONTENT_FORMAT_VERSION = 1
 }

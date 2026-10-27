@@ -56,11 +56,7 @@ interface ItemContentSerializer {
     ): ByteArray
 
     fun addPackageInfoToItem(original: ByteArray, packageInfo: PackageInfo): ByteArray?
-    fun addUrlToItem(
-        original: ByteArray,
-        url: String,
-        isAutofillUrlAdvancedModesEnabled: Boolean
-    ): ByteArray
+    fun addUrlToItem(original: ByteArray, url: String): ByteArray
     fun addPasskeyToItem(original: ByteArray, passkey: Passkey): ByteArray
 
     fun serializeVault(vault: VaultProperties): ByteArray

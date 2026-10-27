@@ -27,24 +27,16 @@ import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 
 interface SuggestionItemFilterer {
-    fun filter(
-        items: List<Item>,
-        suggestion: Suggestion,
-        useAutofillUrlModes: Boolean = false
-    ): List<Item>
+    fun filter(items: List<Item>, suggestion: Suggestion): List<Item>
 }
 
 class SuggestionItemFiltererImpl @Inject constructor(
     private val hostParser: HostParser
 ) : SuggestionItemFilterer {
 
-    override fun filter(
-        items: List<Item>,
-        suggestion: Suggestion,
-        useAutofillUrlModes: Boolean
-    ): List<Item> = items.filter { item ->
+    override fun filter(items: List<Item>, suggestion: Suggestion): List<Item> = items.filter { item ->
         when (item.itemType) {
-            is ItemType.Login -> isMatch(suggestion, item, useAutofillUrlModes)
+            is ItemType.Login -> isMatch(suggestion, item)
             is ItemType.CreditCard -> true
             is ItemType.Identity -> true
             is ItemType.Alias,
@@ -57,13 +49,9 @@ class SuggestionItemFiltererImpl @Inject constructor(
         }
     }
 
-    private fun isMatch(
-        suggestion: Suggestion,
-        item: Item,
-        useAutofillUrlModes: Boolean
-    ): Boolean = when (suggestion) {
+    private fun isMatch(suggestion: Suggestion, item: Item): Boolean = when (suggestion) {
         is Suggestion.PackageName -> isPackageNameMatch(suggestion, item)
-        is Suggestion.Url -> isUrlMatch(suggestion.value, item.itemType as ItemType.Login, useAutofillUrlModes)
+        is Suggestion.Url -> isUrlMatch(suggestion.value, item.itemType as ItemType.Login)
     }
 
     private fun isPackageNameMatch(suggestion: Suggestion.PackageName, item: Item): Boolean =
@@ -71,17 +59,13 @@ class SuggestionItemFiltererImpl @Inject constructor(
             stored.packageName.value == suggestion.value && stored.hashes.any { it in suggestion.hashes }
         }
 
-    private fun isUrlMatch(
-        url: String,
-        login: ItemType.Login,
-        useAutofillUrlModes: Boolean
-    ): Boolean {
+    private fun isUrlMatch(url: String, login: ItemType.Login): Boolean {
         val parsedRequest = hostParser.parse(url).fold(
             onSuccess = { it },
             onFailure = { return false }
         )
 
-        if (!useAutofillUrlModes || login.autofillUrls.isEmpty()) {
+        if (login.autofillUrls.isEmpty()) {
             val parsedWebsites = login.websites.mapNotNull { hostParser.parse(it).getOrNull() }
             return isLegacyMatch(parsedRequest, parsedWebsites)
         }

@@ -297,16 +297,16 @@ class SuggestionItemFiltererImplTest {
     // --- Feature flag ON tests ---
 
     @Test
-    fun `flag on, no autofillUrls falls through to legacy Default matching`() {
+    fun `no autofillUrls falls through to legacy Default matching`() {
         val website = "https://proton.me"
         val item = ItemTestFactory.create(ItemTypeTestFactory.login(websites = listOf(website)))
 
-        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(website))
         assertThat(res).isEqualTo(listOf(item))
     }
 
     @Test
-    fun `flag on, Default mode explicit, matches same domain`() {
+    fun `Default mode explicit, matches same domain`() {
         val website = "https://proton.me"
         val item = ItemTestFactory.create(
             ItemTypeTestFactory.login(
@@ -315,12 +315,12 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(website))
         assertThat(res).isEqualTo(listOf(item))
     }
 
     @Test
-    fun `flag on, Exact mode, matching subdomain returns item`() {
+    fun `Exact mode, matching subdomain returns item`() {
         getPublicSuffixList.setTlds(setOf("me"))
         val website = "https://account.proton.me"
         val item = ItemTestFactory.create(
@@ -330,12 +330,12 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(website))
         assertThat(res).isEqualTo(listOf(item))
     }
 
     @Test
-    fun `flag on, Exact mode, different subdomain does not return item`() {
+    fun `Exact mode, different subdomain does not return item`() {
         getPublicSuffixList.setTlds(setOf("me"))
         val stored = "https://account.proton.me"
         val request = "https://mail.proton.me"
@@ -346,12 +346,12 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(listOf(item), Suggestion.Url(request), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(request))
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 
     @Test
-    fun `flag on, Exact mode, stored has subdomain but request does not`() {
+    fun `Exact mode, stored has subdomain but request does not`() {
         getPublicSuffixList.setTlds(setOf("me"))
         val stored = "https://account.proton.me"
         val request = "https://proton.me"
@@ -362,12 +362,12 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(listOf(item), Suggestion.Url(request), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(request))
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 
     @Test
-    fun `flag on, Never mode, item not returned`() {
+    fun `Never mode, item not returned`() {
         val website = "https://proton.me"
         val item = ItemTestFactory.create(
             ItemTypeTestFactory.login(
@@ -376,12 +376,12 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(website))
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 
     @Test
-    fun `flag on, Never on one URL and Default on another, item returned via Default URL`() {
+    fun `Never on one URL and Default on another, item returned via Default URL`() {
         getPublicSuffixList.setTlds(setOf("me"))
         val neverUrl = "https://proton.me"
         val defaultUrl = "https://mail.proton.me"
@@ -396,12 +396,12 @@ class SuggestionItemFiltererImplTest {
         )
 
         // Request matches defaultUrl's domain → item should be suggested
-        val res = instance.filter(listOf(item), Suggestion.Url(defaultUrl), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(defaultUrl))
         assertThat(res).isEqualTo(listOf(item))
     }
 
     @Test
-    fun `flag on, Never on only URL, item not returned even though domain matches`() {
+    fun `Never on only URL, item not returned even though domain matches`() {
         getPublicSuffixList.setTlds(setOf("me"))
         val neverUrl = "https://proton.me"
         val item = ItemTestFactory.create(
@@ -411,12 +411,12 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(listOf(item), Suggestion.Url(neverUrl), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(neverUrl))
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 
     @Test
-    fun `flag on, unsupported mode StartWith is skipped`() {
+    fun `unsupported mode StartWith is skipped`() {
         getPublicSuffixList.setTlds(setOf("me"))
         val website = "https://proton.me"
         val item = ItemTestFactory.create(
@@ -426,7 +426,7 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(listOf(item), Suggestion.Url(website), useAutofillUrlModes = true)
+        val res = instance.filter(listOf(item), Suggestion.Url(website))
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 

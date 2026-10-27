@@ -110,9 +110,7 @@ internal fun LoginItemForm(
     isFileAttachmentsEnabled: Boolean,
     displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
-    isAutofillUrlRegexEnabled: Boolean,
     isPasswordChecksEnabled: Boolean,
-    isUsernameGeneratorEnabled: Boolean,
     popularServiceSuggestions: ImmutableList<PopularService> = persistentListOf(),
     canLoadExternalImages: Boolean = false,
     canShowPopularServices: Boolean = true,
@@ -121,7 +119,7 @@ internal fun LoginItemForm(
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
             LoginField.Email -> AliasOptions
-            LoginField.Username -> if (isUsernameGeneratorEnabled) UsernameGenerator else NoOption
+            LoginField.Username -> UsernameGenerator
             LoginField.Password -> GeneratePassword
             LoginField.PrimaryTotp -> AddTotp
             is LoginField.CustomField -> when (focusedField.field.type) {
@@ -232,7 +230,6 @@ internal fun LoginItemForm(
                     isEditAllowed = isEditAllowed,
                     websitesWithErrors = websitesWithErrors,
                     focusLastWebsite = focusLastWebsite,
-                    isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled,
                     onWebsiteSectionEvent = { onEvent(OnWebsiteEvent(it)) }
                 )
             }
@@ -307,7 +304,6 @@ internal fun LoginItemForm(
                     showCreateAliasButton = showCreateAliasButton,
                     primaryEmail = primaryEmail,
                     isExpanded = loginItemFormState.isExpanded,
-                    isUsernameGeneratorEnabled = isUsernameGeneratorEnabled,
                     onCreateAliasClick = {
                         selectedShareId ?: return@StickyUsernameOptions
                         onEvent(

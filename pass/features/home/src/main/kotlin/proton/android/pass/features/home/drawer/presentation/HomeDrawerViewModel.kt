@@ -55,8 +55,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultWithItemCount
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import javax.inject.Inject
@@ -71,7 +69,6 @@ class HomeDrawerViewModel @Inject constructor(
     observeItemCount: ObserveItemCount,
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val observeFolders: ObserveFoldersByParentId,
     observeFolderLimits: ObserveFolderLimits
 ) : ViewModel() {
@@ -81,7 +78,6 @@ class HomeDrawerViewModel @Inject constructor(
     )
 
     private data class FolderFlowInput(
-        val isFoldersEnabled: Boolean,
         val shareKeys: List<VaultShareKey>,
         val folderLimits: FolderLimitsData
     )
@@ -91,8 +87,6 @@ class HomeDrawerViewModel @Inject constructor(
         val vaultFolders: Map<ShareId, PersistentList<FolderUiModel>>,
         val vaultFolderAtLimit: Set<ShareId>
     )
-
-    private val foldersEnabledFlow: Flow<Boolean> = featureFlagsPreferencesRepository[FeatureFlag.PASS_FOLDERS]
 
     private val vaultSharesItemsCountFlow: Flow<List<VaultWithItemCount>> =
         observeVaultsWithItemCount(includeHidden = false)
@@ -112,11 +106,10 @@ class HomeDrawerViewModel @Inject constructor(
     private val folderLimitsFlow: Flow<FolderLimitsData> = observeFolderLimits()
 
     private val folderFlowInput: Flow<FolderFlowInput> = combine(
-        foldersEnabledFlow,
         vaultShareKeysFlow,
         folderLimitsFlow
-    ) { isFoldersEnabled, shareKeys, folderLimits ->
-        FolderFlowInput(isFoldersEnabled, shareKeys, folderLimits)
+    ) { shareKeys, folderLimits ->
+        FolderFlowInput(shareKeys, folderLimits)
     }.distinctUntilChanged()
 
     private val vaultFoldersFlow: Flow<Pair<Map<ShareId, PersistentList<FolderUiModel>>, Set<ShareId>>> =
@@ -162,7 +155,6 @@ class HomeDrawerViewModel @Inject constructor(
     }
 
     internal val stateFlow: StateFlow<HomeDrawerState> = combineN(
-        foldersEnabledFlow,
         vaultsWithFoldersFlow,
         folderCapabilitiesFlow,
         observeCurrentUser().flatMapLatest { user -> canCreateVault(user.userId) },
@@ -170,8 +162,7 @@ class HomeDrawerViewModel @Inject constructor(
         homeSearchOptionsRepository.observeVaultSelectionOption(),
         itemCountSummaryOptionFlow,
         observeUpgradeInfo().asLoadingResult()
-    ) { isFoldersEnabled,
-        vaultsWithFolders,
+    ) { vaultsWithFolders,
         folderCapabilities,
         canCreateVault,
         canOrganiseVaults,
@@ -179,7 +170,6 @@ class HomeDrawerViewModel @Inject constructor(
         itemCountSummaryOption,
         upgradeInfo ->
         buildHomeDrawerState(
-            isFoldersEnabled = isFoldersEnabled,
             vaultsWithFolders = vaultsWithFolders,
             canCreateFolderShareIds = folderCapabilities.canCreateShareIds,
             canCreateFolderNeedsUpgradeShareIds = folderCapabilities.needsUpgradeShareIds,
@@ -219,7 +209,6 @@ class HomeDrawerViewModel @Inject constructor(
 
     @Suppress("LongParameterList")
     private fun buildHomeDrawerState(
-        isFoldersEnabled: Boolean,
         vaultsWithFolders: VaultsWithFolders,
         canCreateFolderShareIds: Set<ShareId>,
         canCreateFolderNeedsUpgradeShareIds: Set<ShareId>,
@@ -240,14 +229,13 @@ class HomeDrawerViewModel @Inject constructor(
         canOrganiseVaults = canOrganiseVaults,
         vaultSelectionOption = vaultSelectionOption,
         itemCountSummaryOption = itemCountSummaryOption,
-        needsToUpgrade = isUpgradeAvailable,
-        foldersEnabled = isFoldersEnabled
+        needsToUpgrade = isUpgradeAvailable
     )
 
     private fun observeVaultFolders(
         input: FolderFlowInput
     ): Flow<Pair<Map<ShareId, PersistentList<FolderUiModel>>, Set<ShareId>>> {
-        if (!input.isFoldersEnabled || input.shareKeys.isEmpty()) {
+        if (input.shareKeys.isEmpty()) {
             return flowOf(emptyMap<ShareId, PersistentList<FolderUiModel>>() to emptySet())
         }
 

@@ -76,8 +76,7 @@ internal data class ProfileUiState(
     val accounts: ImmutableList<AccountListItem>,
     val dataStorageState: DataStorageState,
     val canDisplaySignInToAnotherDeviceSection: Boolean,
-    val passStoreUrl: String,
-    val canDisplayAutofillTroubleshootingSection: Boolean
+    val passStoreUrl: String
 ) {
 
     internal companion object {
@@ -96,8 +95,7 @@ internal data class ProfileUiState(
             accounts = persistentListOf(),
             dataStorageState = DataStorageState.Initial,
             canDisplaySignInToAnotherDeviceSection = false,
-            passStoreUrl = passStoreUrl,
-            canDisplayAutofillTroubleshootingSection = false
+            passStoreUrl = passStoreUrl
         )
 
     }

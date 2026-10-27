@@ -52,7 +52,6 @@ import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.data.fakes.usecases.attachments.FakeSetVaultOfflineAttachments
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.StringTestFactory
 import proton.android.pass.test.TestConstants
@@ -436,29 +435,10 @@ class VaultOptionsViewModelTest {
     // region canAddFolder / canAddFolderNeedsUpgrade
 
     @Test
-    fun `canAddFolder is false when PASS_FOLDERS flag is disabled`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, false)
-        }
-        canCreateFolder.sendValue(true)
-        setNavShareId(ShareId(SHARE_ID), featureFlags)
-        emitDefaultVault()
-
-        instance.state.test {
-            val item = awaitItem() as VaultOptionsUiState.Success
-            assertThat(item.canAddFolder).isFalse()
-            assertThat(item.canAddFolderNeedsUpgrade).isFalse()
-        }
-    }
-
-    @Test
-    fun `canAddFolder is true and no upgrade needed for paid user when flag is enabled`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, true)
-        }
+    fun `canAddFolder is true and no upgrade needed for paid user`() = runTest {
         canCreateFolder.sendValue(true)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
-        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        setNavShareId(ShareId(SHARE_ID))
         emitDefaultVault()
 
         instance.state.test {
@@ -469,13 +449,10 @@ class VaultOptionsViewModelTest {
     }
 
     @Test
-    fun `canAddFolder shows upsell for free user when flag is enabled and upgrade available`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, true)
-        }
+    fun `canAddFolder shows upsell for free user when upgrade available`() = runTest {
         canCreateFolder.sendValue(false)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
-        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        setNavShareId(ShareId(SHARE_ID))
         emitDefaultVault()
 
         instance.state.test {
@@ -487,12 +464,9 @@ class VaultOptionsViewModelTest {
 
     @Test
     fun `canAddFolder hidden when org restricts folder creation and no upgrade available`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, true)
-        }
         canCreateFolder.sendValue(false)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
-        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        setNavShareId(ShareId(SHARE_ID))
         emitDefaultVault()
 
         instance.state.test {
@@ -504,12 +478,9 @@ class VaultOptionsViewModelTest {
 
     @Test
     fun `canAddFolder hidden for viewer role even when upgrade is available`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, true)
-        }
         canCreateFolder.sendValue(CanCreateFolderResult(roleAllows = false, planAllows = false))
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(true))
-        setNavShareId(ShareId(SHARE_ID), featureFlags)
+        setNavShareId(ShareId(SHARE_ID))
         emitDefaultVault()
 
         instance.state.test {
@@ -521,16 +492,13 @@ class VaultOptionsViewModelTest {
 
     @Test
     fun `canAddFolder is false when root folder count reaches MAX_FOLDER_WIDTH`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, true)
-        }
         canCreateFolder.sendValue(true)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
         val shareId = ShareId(SHARE_ID)
         val fakeFolders = FakeObserveFoldersByParentId().apply {
             sendResult(shareId, null, Result.success(rootFolders(count = 10)))
         }
-        setNavShareId(shareId, featureFlags, fakeFolders)
+        setNavShareId(shareId, fakeFolders)
         emitDefaultVault()
 
         instance.state.test {
@@ -542,16 +510,13 @@ class VaultOptionsViewModelTest {
 
     @Test
     fun `canAddFolder is true when root folder count is below MAX_FOLDER_WIDTH`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, true)
-        }
         canCreateFolder.sendValue(true)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
         val shareId = ShareId(SHARE_ID)
         val fakeFolders = FakeObserveFoldersByParentId().apply {
             sendResult(shareId, null, Result.success(rootFolders(count = 9)))
         }
-        setNavShareId(shareId, featureFlags, fakeFolders)
+        setNavShareId(shareId, fakeFolders)
         emitDefaultVault()
 
         instance.state.test {
@@ -562,9 +527,6 @@ class VaultOptionsViewModelTest {
 
     @Test
     fun `canAddFolder is false when total folder count reaches MAX_FOLDERS_PER_VAULT`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, true)
-        }
         canCreateFolder.sendValue(true)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
         val shareId = ShareId(SHARE_ID)
@@ -572,7 +534,7 @@ class VaultOptionsViewModelTest {
             sendResult(shareId, null, Result.success(rootFolders(count = 5)))
             sendResult(shareId, Result.success(allFolders(count = 100)))
         }
-        setNavShareId(shareId, featureFlags, fakeFolders)
+        setNavShareId(shareId, fakeFolders)
         emitDefaultVault()
 
         instance.state.test {
@@ -584,9 +546,6 @@ class VaultOptionsViewModelTest {
 
     @Test
     fun `canAddFolder is true when total folder count is below MAX_FOLDERS_PER_VAULT`() = runTest {
-        val featureFlags = FakeFeatureFlagsPreferenceRepository().apply {
-            set(FeatureFlag.PASS_FOLDERS, true)
-        }
         canCreateFolder.sendValue(true)
         observeUpgradeInfo.setResult(upgradeInfoWithUpgrade(false))
         val shareId = ShareId(SHARE_ID)
@@ -594,7 +553,7 @@ class VaultOptionsViewModelTest {
             sendResult(shareId, null, Result.success(rootFolders(count = 5)))
             sendResult(shareId, Result.success(allFolders(count = 99)))
         }
-        setNavShareId(shareId, featureFlags, fakeFolders)
+        setNavShareId(shareId, fakeFolders)
         emitDefaultVault()
 
         instance.state.test {
@@ -639,7 +598,6 @@ class VaultOptionsViewModelTest {
 
     private fun setNavShareId(
         shareId: ShareId,
-        featureFlags: FakeFeatureFlagsPreferenceRepository = FakeFeatureFlagsPreferenceRepository(),
         observeFoldersByParentId: FakeObserveFoldersByParentId = FakeObserveFoldersByParentId()
     ) {
         instance = VaultOptionsViewModel(
@@ -654,7 +612,7 @@ class VaultOptionsViewModelTest {
             canCreateFolder = canCreateFolder,
             observeUpgradeInfo = observeUpgradeInfo,
             observeEncryptedItems = FakeObserveEncryptedItems(),
-            preferencesRepository = featureFlags,
+            preferencesRepository = FakeFeatureFlagsPreferenceRepository(),
             observeFoldersByParentId = observeFoldersByParentId,
             observeFolderLimits = FakeObserveFolderLimits(),
             userPreferencesRepository = FakePreferenceRepository(),

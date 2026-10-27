@@ -41,7 +41,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -135,7 +134,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -302,23 +300,15 @@ class CreateLoginViewModel @Inject constructor(
         selectedFolderIdFlow = selectedFolderIdState
     )
 
-    private val popularServicesFlow: Flow<List<PopularService>> =
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_POPULAR_SERVICES)
-            .flatMapLatest { isPopularServicesEnabled ->
-                if (isPopularServicesEnabled) {
-                    flow {
-                        val services = safeRunCatching { getPopularServices() }
-                            .getOrElse {
-                                PassLogger.w(TAG, "Failed to load popular services")
-                                PassLogger.w(TAG, it)
-                                emptyList()
-                            }
-                        emit(services)
-                    }
-                } else {
-                    flowOf(emptyList())
-                }
+    private val popularServicesFlow: Flow<List<PopularService>> = flow {
+        val services = safeRunCatching { getPopularServices() }
+            .getOrElse {
+                PassLogger.w(TAG, "Failed to load popular services")
+                PassLogger.w(TAG, it)
+                emptyList()
             }
+        emit(services)
+    }
 
     // Title of the service the user just picked, used to hide the popup right after a selection
     // (the title then equals the service name). Comparing against the whole catalog instead would

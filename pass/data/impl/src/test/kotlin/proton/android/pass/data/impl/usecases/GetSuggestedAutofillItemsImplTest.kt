@@ -52,7 +52,6 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.UserId
 import proton.android.pass.domain.VaultId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakeInternalSettingsRepository
 import proton.android.pass.preferences.FakePreferenceRepository
 import proton.android.pass.preferences.LastItemAutofillPreference
@@ -73,11 +72,7 @@ internal class FakeSuggestionItemFilterer : SuggestionItemFilterer {
         this.filter = fn
     }
 
-    override fun filter(
-        items: List<Item>,
-        suggestion: Suggestion,
-        useAutofillUrlModes: Boolean
-    ): List<Item> = items.filter(filter::invoke)
+    override fun filter(items: List<Item>, suggestion: Suggestion): List<Item> = items.filter(filter::invoke)
 }
 
 class FakeSuggestionSorter : SuggestionSorter {
@@ -122,8 +117,7 @@ class GetSuggestedAutofillItemsImplTest {
             internalSettingsRepository = internalSettingsRepository,
             getUserPlan = getUserPlan,
             assetLinkRepository = assetLinkRepository,
-            userPreferencesRepository = userPreferencesRepository,
-            featureFlagsPreferencesRepository = FakeFeatureFlagsPreferenceRepository()
+            userPreferencesRepository = userPreferencesRepository
         )
     }
 

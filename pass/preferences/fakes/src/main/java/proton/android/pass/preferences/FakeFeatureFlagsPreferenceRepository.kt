@@ -26,19 +26,13 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.RENAME_ADMIN_TO_MANAGER
-import proton.android.pass.preferences.FeatureFlag.PASS_FOLDERS
-import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES
 import proton.android.pass.preferences.FeatureFlag.ENABLE_PAGINATION
 import proton.android.pass.preferences.FeatureFlag.PASS_EXPLORE_TAB
 import proton.android.pass.preferences.FeatureFlag.PASS_PASSWORD_CHECKS
-import proton.android.pass.preferences.FeatureFlag.PASS_USERNAME_GENERATOR
-import proton.android.pass.preferences.FeatureFlag.PASS_COMPROMISED_PASSWORDS
 import proton.android.pass.preferences.FeatureFlag.PASS_MONITOR_PER_CHECK_EXCLUSION
-import proton.android.pass.preferences.FeatureFlag.PASS_POPULAR_SERVICES
-import proton.android.pass.preferences.FeatureFlag.PASS_AUTOFILL_HEALTH
-import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import proton.android.pass.preferences.FeatureFlag.PASS_OFFLINE_ATTACHMENTS
 import proton.android.pass.preferences.FeatureFlag.PASS_FOLDER_NAVIGATION
+import proton.android.pass.preferences.FeatureFlag.PASS_FORCE_SYNC_FOLDERS
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -57,17 +51,11 @@ class FakeFeatureFlagsPreferenceRepository @Inject constructor() :
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
             RENAME_ADMIN_TO_MANAGER -> it.getOrDefault(RENAME_ADMIN_TO_MANAGER, false) as T
-            PASS_FOLDERS -> it.getOrDefault(FeatureFlag.PASS_FOLDERS, false) as T
-            PASS_AUTOFILL_URL_ADVANCED_MODES -> it.getOrDefault(PASS_AUTOFILL_URL_ADVANCED_MODES, false) as T
             ENABLE_PAGINATION -> it.getOrDefault(ENABLE_PAGINATION, false) as T
             PASS_EXPLORE_TAB -> it.getOrDefault(PASS_EXPLORE_TAB, false) as T
             PASS_PASSWORD_CHECKS -> it.getOrDefault(PASS_PASSWORD_CHECKS, false) as T
-            PASS_USERNAME_GENERATOR -> it.getOrDefault(PASS_USERNAME_GENERATOR, false) as T
-            PASS_COMPROMISED_PASSWORDS -> it.getOrDefault(PASS_COMPROMISED_PASSWORDS, false) as T
             PASS_MONITOR_PER_CHECK_EXCLUSION ->
                 it.getOrDefault(PASS_MONITOR_PER_CHECK_EXCLUSION, false) as T
-            PASS_POPULAR_SERVICES -> it.getOrDefault(PASS_POPULAR_SERVICES, false) as T
-            PASS_AUTOFILL_HEALTH -> it.getOrDefault(PASS_AUTOFILL_HEALTH, false) as T
             PASS_OFFLINE_ATTACHMENTS -> it.getOrDefault(PASS_OFFLINE_ATTACHMENTS, false) as T
             PASS_FORCE_SYNC_FOLDERS -> it.getOrDefault(PASS_FORCE_SYNC_FOLDERS, false) as T
             PASS_FOLDER_NAVIGATION -> it.getOrDefault(PASS_FOLDER_NAVIGATION, false) as T

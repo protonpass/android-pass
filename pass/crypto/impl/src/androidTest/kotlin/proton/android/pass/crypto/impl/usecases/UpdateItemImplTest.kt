@@ -53,8 +53,7 @@ class UpdateItemImplTest {
         val body = instance.createRequest(
             itemKey,
             serialized,
-            lastRevision,
-            isDomainMatchingEnabled = false
+            lastRevision
         )
 
         assertEquals(lastRevision, body.lastRevision)
@@ -92,8 +91,7 @@ class UpdateItemImplTest {
         val body = instance.createRequest(
             itemKey,
             updatedContent,
-            Random.nextLong(),
-            isDomainMatchingEnabled = false
+            Random.nextLong()
         )
 
         val decryptedContent = encryptionContextProvider.withEncryptionContext(decryptedItemKey) {

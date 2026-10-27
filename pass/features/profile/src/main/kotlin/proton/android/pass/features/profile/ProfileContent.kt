@@ -175,7 +175,6 @@ internal fun ProfileContent(
                     )
 
                     HelpCenterProfileSection(
-                        canDisplayAutofillTroubleshooting = state.canDisplayAutofillTroubleshootingSection,
                         onAutofillTroubleshootingClick = {
                             onEvent(ProfileUiEvent.OnAutofillTroubleshootingClick)
                         },

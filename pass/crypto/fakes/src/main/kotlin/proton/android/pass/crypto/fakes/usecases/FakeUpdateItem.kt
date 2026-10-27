@@ -33,7 +33,6 @@ class FakeUpdateItem : UpdateItem {
     override fun createRequest(
         itemKey: ItemKey,
         itemContent: ByteArray,
-        lastRevision: Long,
-        isDomainMatchingEnabled: Boolean
+        lastRevision: Long
     ): EncryptedUpdateItemRequest = request ?: throw IllegalStateException("request is not set")
 }

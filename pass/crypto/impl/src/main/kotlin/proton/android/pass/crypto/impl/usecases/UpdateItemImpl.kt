@@ -35,14 +35,8 @@ class UpdateItemImpl @Inject constructor(
     override fun createRequest(
         itemKey: ItemKey,
         itemContent: ByteArray,
-        lastRevision: Long,
-        isDomainMatchingEnabled: Boolean
+        lastRevision: Long
     ): EncryptedUpdateItemRequest {
-        val contentFormatVersion = if (isDomainMatchingEnabled) {
-            Constants.ITEM_CFV
-        } else {
-            Constants.ITEM_CFV_WITHOUT_URL_MATCHING
-        }
         val decryptedItemKey = encryptionContextProvider.withEncryptionContext {
             EncryptionKey(decrypt(itemKey.key))
         }
@@ -54,7 +48,7 @@ class UpdateItemImpl @Inject constructor(
         return EncryptedUpdateItemRequest(
             keyRotation = itemKey.rotation,
             lastRevision = lastRevision,
-            contentFormatVersion = contentFormatVersion,
+            contentFormatVersion = Constants.ITEM_CFV,
             content = Base64.encodeBase64String(encryptedContents.array)
         )
     }

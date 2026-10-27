@@ -40,8 +40,7 @@ internal data class HomeDrawerState(
     internal val canOrganiseVaults: Boolean,
     internal val vaultSelectionOption: VaultSelectionOption,
     private val itemCountSummaryOption: Option<ItemCountSummary>,
-    internal val needsToUpgrade: Boolean,
-    internal val foldersEnabled: Boolean
+    internal val needsToUpgrade: Boolean
 ) {
 
     internal val sharedWithMeItemsCount: Int = when (itemCountSummaryOption) {
@@ -97,8 +96,7 @@ internal data class HomeDrawerState(
             canOrganiseVaults = false,
             vaultSelectionOption = VaultSelectionOption.AllVaults,
             itemCountSummaryOption = None,
-            needsToUpgrade = false,
-            foldersEnabled = false
+            needsToUpgrade = false
         )
 
     }

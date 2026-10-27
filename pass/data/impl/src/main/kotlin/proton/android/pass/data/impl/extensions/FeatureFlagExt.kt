@@ -22,8 +22,5 @@ import proton.android.pass.domain.UserId
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
-internal suspend fun FeatureFlagsPreferencesRepository.isDomainMatchingEnabled(userId: UserId): Boolean =
-    awaitResolved(FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES, userId)
-
 internal suspend fun FeatureFlagsPreferencesRepository.isForceSyncFoldersEnabled(userId: UserId): Boolean =
     awaitResolved(FeatureFlag.PASS_FORCE_SYNC_FOLDERS, userId)

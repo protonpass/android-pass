@@ -7,7 +7,7 @@ option java_multiple_files = true;
 
 message FeatureFlagsPreferences {
   reserved 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
-      26, 28, 29, 30, 31, 32, 33;
+      26, 28, 29, 30, 31, 32, 33, 34, 35, 39, 40, 42, 43;
   reserved "custom_fields_enabled", "credit_cards_enabled", "sharing_v1_enabled",
       "remove_primary_vault_enabled", "sharing_new_users_enabled", "credit_card_autofill_enabled",
       "pinning_v1_enabled", "history_v1_enabled", "security_center_v1_enabled",
@@ -19,20 +19,16 @@ message FeatureFlagsPreferences {
       "custom_type_v1_enabled", "file_attachment_encryption_v2_enabled",
       "pass_hide_show_vault_enabled", "groups_enabled", "pass_mobile_on_boarding_V2_enabled",
       "pass_allow_credit_card_free_users", "pass_user_events_v1_enabled",
-      "pass_allow_no_vault";
+      "pass_allow_no_vault", "pass_folders_enabled", "pass_autofill_url_regex_enabled",
+      "pass_username_generator_enabled", "pass_compromised_passwords_enabled",
+      "pass_popular_services_enabled", "pass_autofill_health_enabled";
 
   BoolFlagPrefProto autofill_debug_mode_enabled = 3;
   BoolFlagPrefProto rename_admin_to_manager_enabled = 27;
-  BoolFlagPrefProto pass_folders_enabled = 34;
-  BoolFlagPrefProto pass_autofill_url_regex_enabled = 35;
   BoolFlagPrefProto enable_pagination = 36;
   BoolFlagPrefProto pass_explore_tab_enabled = 37;
   BoolFlagPrefProto pass_password_checks_enabled = 38;
-  BoolFlagPrefProto pass_username_generator_enabled = 39;
-  BoolFlagPrefProto pass_compromised_passwords_enabled = 40;
   BoolFlagPrefProto pass_monitor_per_check_exclusion_enabled = 41;
-  BoolFlagPrefProto pass_popular_services_enabled = 42;
-  BoolFlagPrefProto pass_autofill_health_enabled = 43;
   BoolFlagPrefProto pass_offline_attachments_enabled = 44;
   BoolFlagPrefProto pass_force_sync_folders_enabled = 45;
   BoolFlagPrefProto pass_folder_navigation_enabled = 46;

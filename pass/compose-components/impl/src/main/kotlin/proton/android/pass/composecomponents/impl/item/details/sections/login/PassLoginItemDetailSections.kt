@@ -73,7 +73,6 @@ internal fun PassLoginItemDetailSections(
     shouldDisplayItemHistoryButton: Boolean,
     attachmentsState: AttachmentsState,
     linkedAlias: Option<LinkedAliasItem>,
-    isAutofillUrlRegexEnabled: Boolean,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
@@ -103,8 +102,8 @@ internal fun PassLoginItemDetailSections(
             onEvent = onEvent
         )
 
-        val displayUrls: ImmutableList<AutofillUrl> = remember(urls, autofillUrls, isAutofillUrlRegexEnabled) {
-            if (isAutofillUrlRegexEnabled && autofillUrls.isNotEmpty()) {
+        val displayUrls: ImmutableList<AutofillUrl> = remember(urls, autofillUrls) {
+            if (autofillUrls.isNotEmpty()) {
                 autofillUrls.toPersistentList()
             } else {
                 urls.map { AutofillUrl(it, AutofillUrlMode.Default) }.toPersistentList()
@@ -114,7 +113,6 @@ internal fun PassLoginItemDetailSections(
         if (displayUrls.isNotEmpty()) {
             PassLoginItemDetailWebsitesSection(
                 autofillUrls = displayUrls,
-                isAutofillUrlRegexEnabled = isAutofillUrlRegexEnabled,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent

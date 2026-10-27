@@ -601,7 +601,6 @@ internal class HomeViewModelTest {
         )
         observeEncryptedItems.emit(vaultParams, listOf(rootItem, folderItem))
 
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
         observeAllShares.sendResult(Result.success(emptyList()))
         observeCanCreateItems.emit(canCreateItems = true)
@@ -647,7 +646,6 @@ internal class HomeViewModelTest {
         )
         observeEncryptedItems.emit(folderParams, listOf(directItem, subFolderItem))
 
-        featureFlags.set(FeatureFlag.PASS_FOLDERS, true)
         preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
         observeAllShares.sendResult(Result.success(emptyList()))
         observeCanCreateItems.emit(canCreateItems = true)

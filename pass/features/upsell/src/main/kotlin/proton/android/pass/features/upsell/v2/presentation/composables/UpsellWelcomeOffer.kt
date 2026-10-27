@@ -68,7 +68,6 @@ fun UpsellWelcomeOffer(
     modifier: Modifier = Modifier,
     stepToDisplay: StepToDisplay,
     plan: UpsellPlanUiModel,
-    isFoldersEnabled: Boolean,
     onPurchaseClick: (productId: String, offerToken: String) -> Unit
 ) {
     Box(
@@ -198,8 +197,7 @@ fun UpsellWelcomeOffer(
 
             WhatsIncluded(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                isFoldersEnabled = isFoldersEnabled
+                    .fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(Spacing.mediumLarge))
@@ -233,7 +231,6 @@ fun UpsellWelcomeOfferPreview(@PreviewParameter(ThemePreviewProvider::class) isD
             UpsellWelcomeOffer(
                 stepToDisplay = StepToDisplay.WelcomeOfferMonthly,
                 plan = mockWelcomeMonthlyPlan[0],
-                isFoldersEnabled = true,
                 onPurchaseClick = { _, _ -> }
             )
         }

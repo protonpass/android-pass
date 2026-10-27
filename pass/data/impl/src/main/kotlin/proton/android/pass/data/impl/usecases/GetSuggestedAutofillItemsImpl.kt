@@ -48,8 +48,6 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -64,8 +62,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private val getUserPlan: GetUserPlan,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val assetLinkRepository: AssetLinkRepository,
-    private val userPreferencesRepository: UserPreferencesRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : GetSuggestedAutofillItems {
 
     override fun invoke(
@@ -155,15 +152,13 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                     includeHidden = false
                 ),
                 getUrlFromPackageNameFlow(suggestion),
-                userPreferencesRepository.observeUseDigitalAssetLinksPreference().map { it.value() },
-                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PASS_AUTOFILL_URL_ADVANCED_MODES, userId)
-            ) { items: List<Item>, digitalAssetLinkSuggestions: List<Suggestion.Url>,
-                isDALEnabled: Boolean, useAutofillUrlModes: Boolean ->
-                val filteredItems = suggestionItemFilter.filter(items, suggestion, useAutofillUrlModes)
+                userPreferencesRepository.observeUseDigitalAssetLinksPreference().map { it.value() }
+            ) { items: List<Item>, digitalAssetLinkSuggestions: List<Suggestion.Url>, isDALEnabled: Boolean ->
+                val filteredItems = suggestionItemFilter.filter(items, suggestion)
                     .map { item -> ItemData.SuggestedItem(item, suggestion) }
                 val combinedItems: List<ItemData.SuggestedItem> = if (isDALEnabled) {
                     filteredItems + digitalAssetLinkSuggestions.flatMap {
-                        suggestionItemFilter.filter(items, it, useAutofillUrlModes)
+                        suggestionItemFilter.filter(items, it)
                             .map { item -> ItemData.SuggestedItem(item, it) }
                     }
                 } else {

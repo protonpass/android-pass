@@ -93,8 +93,6 @@ import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.BiometricSystemLockPreference
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -120,7 +118,6 @@ class ProfileViewModel @Inject constructor(
     private val observeUser: ObserveUser,
     private val performSync: PerformSync,
     private val searchOptionsRepository: HomeSearchOptionsRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeAccounts: ObserveAccounts,
     observePrimaryAccount: ObservePrimaryAccount,
     observeItemCount: ObserveItemCount,
@@ -192,9 +189,6 @@ class ProfileViewModel @Inject constructor(
     private val autofillStatusFlow: Flow<AutofillSupportedStatus> = autofillManager
         .getAutofillStatus()
         .distinctUntilChanged()
-
-    private val canDisplayAutofillTroubleshootingFlow: Flow<Boolean> =
-        featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_HEALTH]
 
     private val eventFlow: MutableStateFlow<ProfileEvent> = MutableStateFlow(ProfileEvent.Unknown)
 
@@ -315,11 +309,9 @@ class ProfileViewModel @Inject constructor(
         dataStorageStateFlow,
         accountsFlow,
         flowOf(appConfig.flavor.isQuest()),
-        canCreateAlias(),
-        canDisplayAutofillTroubleshootingFlow
+        canCreateAlias()
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event,
-        passkey, secureLinksCount, dataStorage, accounts, isQuest, canCreateAliases,
-        canDisplayAutofillTroubleshootingSection ->
+        passkey, secureLinksCount, dataStorage, accounts, isQuest, canCreateAliases ->
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         ProfileUiState(
@@ -336,8 +328,7 @@ class ProfileViewModel @Inject constructor(
             accounts = accounts,
             dataStorageState = dataStorage,
             canDisplaySignInToAnotherDeviceSection = !isQuest,
-            passStoreUrl = appConfig.flavor.passStoreUrl(),
-            canDisplayAutofillTroubleshootingSection = canDisplayAutofillTroubleshootingSection
+            passStoreUrl = appConfig.flavor.passStoreUrl()
         )
     }.stateIn(
         scope = viewModelScope,

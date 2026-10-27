@@ -44,7 +44,6 @@ import proton.android.pass.data.impl.fakes.FakeShareKeyRepository
 import proton.android.pass.data.impl.fakes.FakeShareRepository
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.domain.UserId
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.events.EventToken
@@ -105,7 +104,6 @@ class ItemRepositoryImplRefreshItemsTest {
             getUserAddressForShare = FakeGetUserAddressForShare().apply { setResult(Result.success(userAddress)) },
             folderKeyRepository = FakeFolderKeyRepository(),
             appDispatchers = FakeAppDispatchers(),
-            featureFlagsRepository = FakeFeatureFlagsPreferenceRepository(),
             searchIndexRepository = searchIndexRepository,
             getReadyAccounts = FakeGetReadyAccounts().apply {
                 setResult(listOf(AccountTestFactory.DEFAULT_ACCOUNT))

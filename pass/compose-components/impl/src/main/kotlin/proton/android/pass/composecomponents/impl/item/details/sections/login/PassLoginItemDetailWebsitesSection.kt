@@ -61,7 +61,6 @@ import me.proton.core.presentation.R as CoreR
 internal fun PassLoginItemDetailWebsitesSection(
     modifier: Modifier = Modifier,
     autofillUrls: ImmutableList<AutofillUrl>,
-    isAutofillUrlRegexEnabled: Boolean,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -107,40 +106,38 @@ internal fun PassLoginItemDetailWebsitesSection(
                             itemColors = itemColors,
                             itemDiffType = itemDiffType
                         )
-                        if (isAutofillUrlRegexEnabled) {
-                            Column(
-                                Modifier
-                                    .fillMaxWidth()
-                                    .background(
-                                        PassTheme.colors.inputBackgroundStrong,
-                                        PassTheme.shapes.squircleSmallShape
-                                    )
-                                    .padding(Spacing.small),
-                                verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
-                            ) {
-                                PassText.CaptionRegular(
-                                    text = autofillUrl.mode.detailLabel(),
-                                    color = when (modeDiffType) {
-                                        ItemDiffType.Content,
-                                        ItemDiffType.Field -> PassTheme.colors.signalWarning
-                                        ItemDiffType.None -> PassTheme.colors.loginInteractionNormMajor2
-                                    }
+                        Column(
+                            Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    PassTheme.colors.inputBackgroundStrong,
+                                    PassTheme.shapes.squircleSmallShape
                                 )
-                                if (!autofillUrl.mode.isSupported) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
-                                    ) {
-                                        PassIcon.Default(
-                                            modifier = Modifier.size(12.dp),
-                                            id = CoreR.drawable.ic_proton_exclamation_circle,
-                                            tint = PassTheme.colors.signalWarning
-                                        )
-                                        PassText.CaptionRegular(
-                                            text = stringResource(R.string.autofill_mode_label_unsupported),
-                                            color = PassTheme.colors.signalWarning
-                                        )
-                                    }
+                                .padding(Spacing.small),
+                            verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                        ) {
+                            PassText.CaptionRegular(
+                                text = autofillUrl.mode.detailLabel(),
+                                color = when (modeDiffType) {
+                                    ItemDiffType.Content,
+                                    ItemDiffType.Field -> PassTheme.colors.signalWarning
+                                    ItemDiffType.None -> PassTheme.colors.loginInteractionNormMajor2
+                                }
+                            )
+                            if (!autofillUrl.mode.isSupported) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                                ) {
+                                    PassIcon.Default(
+                                        modifier = Modifier.size(12.dp),
+                                        id = CoreR.drawable.ic_proton_exclamation_circle,
+                                        tint = PassTheme.colors.signalWarning
+                                    )
+                                    PassText.CaptionRegular(
+                                        text = stringResource(R.string.autofill_mode_label_unsupported),
+                                        color = PassTheme.colors.signalWarning
+                                    )
                                 }
                             }
                         }

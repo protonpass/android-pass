@@ -72,7 +72,6 @@ import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasTotp
 import proton.android.pass.data.impl.extensions.hasWebsite
-import proton.android.pass.data.impl.extensions.isDomainMatchingEnabled
 import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toEncryptedDomain
@@ -93,7 +92,6 @@ import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.domain.AddressId
 import proton.android.pass.domain.FolderId
-import proton.android.pass.domain.ITEM_CFV_URL_MATCHING
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemEncrypted
@@ -115,7 +113,6 @@ import proton.android.pass.domain.key.FolderKey
 import proton.android.pass.domain.key.InviteKey
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 import javax.inject.Inject
 
@@ -137,13 +134,10 @@ class ItemRepositoryImpl @Inject constructor(
     private val getUserAddressForShare: GetUserAddressForShare,
     private val folderKeyRepository: FolderKeyRepository,
     private val appDispatchers: AppDispatchers,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val searchIndexRepository: SearchIndexRepository,
     private val getPrimaryUserId: GetPrimaryUserId,
     private val getReadyAccounts: GetReadyAccounts
 ) : BaseRepository(userAddressRepository), ItemRepository {
-
-    private suspend fun isDomainMatchingEnabled(userId: UserId) = featureFlagsRepository.isDomainMatchingEnabled(userId)
 
     @Suppress("TooGenericExceptionCaught")
     override suspend fun createItem(
@@ -159,7 +153,7 @@ class ItemRepositoryImpl @Inject constructor(
         } ?: shareKey
 
         val body = try {
-            createItem.create(parentKey, contents, isDomainMatchingEnabled(userId))
+            createItem.create(parentKey, contents)
         } catch (e: Exception) {
             PassLogger.w(TAG, "Error creating item")
             PassLogger.w(TAG, e)
@@ -202,7 +196,7 @@ class ItemRepositoryImpl @Inject constructor(
             folderKeyRepository.getFolderKey(userId, share.id, it)
                 ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
         } ?: shareKey
-        val body = createItem.create(parentKey, itemContents, isDomainMatchingEnabled(userId))
+        val body = createItem.create(parentKey, itemContents)
 
         val mailboxIds = newAlias.mailboxes.map { it.id }
         val requestBody = CreateAliasRequest(
@@ -245,16 +239,15 @@ class ItemRepositoryImpl @Inject constructor(
             folderKeyRepository.getFolderKey(userId, shareId, it)
                 ?: throw IllegalStateException("No folder key found for folderId=${it.id}")
         } ?: shareKey
-        val domainMatchingEnabled = isDomainMatchingEnabled(userId)
         val request = safeRunCatching {
-            val itemBody = createItem.create(parentKey, contents, domainMatchingEnabled)
+            val itemBody = createItem.create(parentKey, contents)
             val aliasContents = ItemContents.Alias(
                 title = contents.title,
                 note = newAlias.contents.note,
                 customFields = newAlias.contents.customFields,
                 aliasEmail = "" // Not used when creating the payload
             )
-            val aliasBody = createItem.create(parentKey, aliasContents, domainMatchingEnabled)
+            val aliasBody = createItem.create(parentKey, aliasContents)
 
             CreateItemAliasRequest(
                 alias = CreateAliasRequest(
@@ -332,8 +325,7 @@ class ItemRepositoryImpl @Inject constructor(
             userId,
             share,
             item,
-            itemContents,
-            isDomainMatchingEnabled(userId)
+            itemContents
         )
     }
 
@@ -1072,16 +1064,11 @@ class ItemRepositoryImpl @Inject constructor(
             item to decrypt(item.content)
         }
 
-        val isAutofillUrlAdvancedModesEnabled = item.contentFormatVersion >=
-            ITEM_CFV_URL_MATCHING ||
-            isDomainMatchingEnabled(userId)
-
         val (needsToUpdate, updatedContents) = updateItemContents(
             item,
             originalContent,
             packageInfo,
-            url,
-            isAutofillUrlAdvancedModesEnabled
+            url
         )
 
         if (!needsToUpdate) {
@@ -1094,8 +1081,7 @@ class ItemRepositoryImpl @Inject constructor(
             userId,
             share,
             item,
-            updatedContents,
-            isAutofillUrlAdvancedModesEnabled
+            updatedContents
         )
     }
 
@@ -1506,8 +1492,7 @@ class ItemRepositoryImpl @Inject constructor(
             userId = userId,
             share = share,
             item = item,
-            itemContents = updatedContents,
-            isDomainMatchingEnabled = isDomainMatchingEnabled(userId)
+            itemContents = updatedContents
         )
     }
 
@@ -1878,8 +1863,7 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         originalContent: ByteArray,
         packageInfoOption: Option<PackageInfo>,
-        url: Option<String>,
-        isAutofillUrlAdvancedModesEnabled: Boolean
+        url: Option<String>
     ): Pair<Boolean, ByteArray> {
         var needsToUpdate = false
 
@@ -1917,8 +1901,7 @@ class ItemRepositoryImpl @Inject constructor(
                         needsToUpdate = true
                         itemContentSerializer.addUrlToItem(
                             original = itemContentsWithPackageName,
-                            url = url.value,
-                            isAutofillUrlAdvancedModesEnabled = isAutofillUrlAdvancedModesEnabled
+                            url = url.value
                         )
                     }
                 }
@@ -1940,8 +1923,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         item: Item,
-        itemContents: ByteArray,
-        isDomainMatchingEnabled: Boolean
+        itemContents: ByteArray
     ): Item = withUserAddress(userId) { userAddress ->
         val folderKeyOverride = item.folderId?.let { folderId ->
             folderKeyRepository.getFolderKey(
@@ -1960,8 +1942,7 @@ class ItemRepositoryImpl @Inject constructor(
         val body = updateItem.createRequest(
             itemKey,
             itemContents,
-            item.revision,
-            isDomainMatchingEnabled
+            item.revision
         )
         val itemResponse = remoteItemDataSource.updateItem(
             userId = userId,

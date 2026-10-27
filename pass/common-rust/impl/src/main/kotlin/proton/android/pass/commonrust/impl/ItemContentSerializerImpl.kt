@@ -89,12 +89,8 @@ class ItemContentSerializerImpl @Inject constructor() : ItemContentSerializer {
             .withPackageInfoIfChanged(packageInfo)
             ?.let { serialization.itemDataPerformUpdate(original, it) }
 
-    override fun addUrlToItem(
-        original: ByteArray,
-        url: String,
-        isAutofillUrlAdvancedModesEnabled: Boolean
-    ): ByteArray {
-        val updated = serialization.itemDataDeserialize(original).withUrl(url, isAutofillUrlAdvancedModesEnabled)
+    override fun addUrlToItem(original: ByteArray, url: String): ByteArray {
+        val updated = serialization.itemDataDeserialize(original).withUrl(url)
         return serialization.itemDataPerformUpdate(original, updated)
     }
 

@@ -34,8 +34,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
-import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordReport
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
 import proton.android.pass.securitycenter.api.passwords.Missing2faReport
@@ -56,8 +54,6 @@ internal class ItemDetailsMenuMonitoringTest {
 
     private lateinit var getUserPlan: FakeGetUserPlan
 
-    private lateinit var featureFlags: FakeFeatureFlagsPreferenceRepository
-
     private lateinit var resolveTriggeredMonitorChecks: ResolveTriggeredMonitorChecks
 
     @Before
@@ -67,14 +63,12 @@ internal class ItemDetailsMenuMonitoringTest {
         missingTfaChecker = FakeMissing2faChecker()
         observeCompromisedPasswords = FakeObserveCompromisedPasswords()
         getUserPlan = FakeGetUserPlan()
-        featureFlags = FakeFeatureFlagsPreferenceRepository()
         resolveTriggeredMonitorChecks = ResolveTriggeredMonitorChecks(
             insecurePasswordChecker = insecurePasswordChecker,
             duplicatedPasswordChecker = duplicatedPasswordChecker,
             missingTfaChecker = missingTfaChecker,
             observeCompromisedPasswords = observeCompromisedPasswords,
-            getUserPlan = getUserPlan,
-            featureFlagsPreferencesRepository = featureFlags
+            getUserPlan = getUserPlan
         )
     }
 
@@ -188,7 +182,6 @@ internal class ItemDetailsMenuMonitoringTest {
     }
 
     private fun fireCompromisedPassword(item: Item) {
-        featureFlags.set(FeatureFlag.PASS_COMPROMISED_PASSWORDS, true)
         getUserPlan.setResult(Result.success(PAID_PLAN))
         observeCompromisedPasswords.emit(
             listOf(CompromisedPasswordItem(shareId = item.shareId, itemId = item.id))

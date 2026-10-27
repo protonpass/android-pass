@@ -22,14 +22,18 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.hasAnyDescendant
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasParent
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
 import proton.android.pass.composecomponents.impl.R as CompR
+import proton.android.pass.features.home.drawer.ui.HomeDrawerTestTag
 
 object DrawerRobot : Robot {
 
@@ -46,6 +50,12 @@ object DrawerRobot : Robot {
         waitUntilPositionStable(options)
         composeRule.onNode(options, useUnmergedTree = true).performClick()
         return FolderRobot
+    }
+
+    fun openOptionsOfNested(vaultName: String, path: List<String>): FolderRobot {
+        (listOf(vaultName) + path.dropLast(1)).forEach(::ensureExpanded)
+        scrollTo(hasText(path.last()))
+        return openOptionsOf(path.last())
     }
 
     fun openOptionsOfVault(vaultName: String): FolderRobot {
@@ -67,6 +77,36 @@ object DrawerRobot : Robot {
         composeRule.onNode(folder, useUnmergedTree = true).performClick()
         return FolderRobot
     }
+
+    private fun scrollTo(target: SemanticsMatcher) {
+        composeRule.waitUntil(TIMEOUT_MILLIS) {
+            runCatching {
+                composeRule.onNode(hasTestTag(HomeDrawerTestTag.LIST), useUnmergedTree = true)
+                    .performScrollToNode(target)
+            }.isSuccess
+        }
+    }
+
+    private fun ensureExpanded(name: String) {
+        scrollTo(hasText(name))
+        val toggle = expandToggleOf(name)
+        waitUntilPositionStable(toggle)
+        if (!isExpanded(toggle)) {
+            composeRule.onNode(toggle, useUnmergedTree = true).performClick()
+        }
+        composeRule.waitUntil(TIMEOUT_MILLIS) { runCatching { isExpanded(toggle) }.getOrDefault(false) }
+    }
+
+    private fun isExpanded(toggle: SemanticsMatcher): Boolean {
+        val state = composeRule.onNode(toggle, useUnmergedTree = true)
+            .fetchSemanticsNode()
+            .config[SemanticsProperties.StateDescription]
+        return state == string(CompR.string.expand_collapse_state_expanded)
+    }
+
+    private fun expandToggleOf(name: String): SemanticsMatcher =
+        SemanticsMatcher.keyIsDefined(SemanticsProperties.StateDescription) and
+            hasAnyAncestor(hasClickAction() and hasAnyDescendant(hasText(name)))
 
     private fun optionsButtonOf(sibling: SemanticsMatcher): SemanticsNodeInteraction =
         composeRule.onNode(useUnmergedTree = true, matcher = optionsButtonMatcher(sibling))

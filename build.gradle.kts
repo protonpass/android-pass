@@ -272,6 +272,22 @@ fladle {
             maxTestShards.set(1)
         }
     }
+    if (providers.gradleProperty("cucumber").orNull == "true") {
+        val cucumberEnvironment = mutableMapOf("optionsAnnotationPackage" to "proton.android.pass.uitest.cucumber")
+        if (providers.gradleProperty("flank.cucumberDryRun").orNull == "true") {
+            cucumberEnvironment["dryRun"] = "true"
+        } else {
+            testTimeout.set("20m")
+            runTimeout.set("30m")
+        }
+        val signUpFeature = "features/SignIn-SignUp/sign-up-to-an-empty-vault.feature"
+        when (providers.gradleProperty("flank.cucumberShard").orNull) {
+            "sign-up" -> cucumberEnvironment["features"] = signUpFeature
+            "rest" -> cucumberEnvironment["name"] = "^(?!Sign up lands in an empty vault$).*"
+        }
+        disableSharding.set(true)
+        environmentVariables.set(cucumberEnvironment)
+    }
 }
 
 val filterFlankConfig = tasks.register("filterFlankConfigForSelectiveTests") {

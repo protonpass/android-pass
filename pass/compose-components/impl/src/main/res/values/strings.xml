@@ -343,6 +343,8 @@
 
     <string name="expand_collpased_text">more</string>
     <string name="collapse_expanded_text">less</string>
+    <string name="expand_collapse_state_expanded">Expanded</string>
+    <string name="expand_collapse_state_collapsed">Collapsed</string>
 
     <string name="login_item_monitor_widget_weak_pass_title">Weak Password</string>
     <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>

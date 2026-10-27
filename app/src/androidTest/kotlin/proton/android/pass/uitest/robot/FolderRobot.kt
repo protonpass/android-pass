@@ -62,9 +62,8 @@ object FolderRobot : Robot {
         waitForVaultOptions()
         check(exists(createFolderRow)) { "Create folder is not offered" }
         composeRule.onNode(createFolderRow, useUnmergedTree = true).performClick()
-        val upsell = listOf("upsell_plan_title", "upsell_plan_what_included")
-            .map { hasText(string(stringIdentifier(it))) }
-        composeRule.waitUntil(TIMEOUT_MILLIS) { upsell.any { exists(it) } }
+        val upsellSkip = hasText(string(stringIdentifier("upsell_skip")))
+        composeRule.waitUntil(TIMEOUT_MILLIS) { exists(upsellSkip) }
         check(!exists(hasText(string(stringIdentifier("vault_add_folder_dialog_title"))))) {
             "Add folder dialog is shown instead of the upgrade flow"
         }

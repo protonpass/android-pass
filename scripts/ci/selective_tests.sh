@@ -3,7 +3,8 @@
 # Replaces: ./gradlew assembleDebugAndroidTest assembleDevDebugAndroidTest && ./gradlew runFlank
 #
 # Env:  BASE_SHA, HEAD_SHA, FLAVOUR (default: dev), DRY_RUN (1=print only),
-#       ALWAYS_RUN_MODULES, STRICT_MISSING_TESTS, SMOKE_TEST_MODULE (:app)
+#       ALWAYS_RUN_MODULES, STRICT_MISSING_TESTS, SMOKE_TEST_MODULE (:app),
+#       APP_TESTS_ENABLED (default: 1 only if the test-specs submodule pointer changed)
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -13,6 +14,7 @@ SMOKE_FALLBACK_FILE="${TMPDIR:-/tmp}/ci_smoke_fallback${CI_JOB_ID:+_${CI_JOB_ID}
 FLAVOUR="${FLAVOUR:-dev}"
 DRY_RUN="${DRY_RUN:-0}"
 SMOKE_TEST_MODULE="${SMOKE_TEST_MODULE:-:app}"
+TEST_SPECS_PATH="app/src/androidTest/assets/features"
 FLANK_SHARDS_ARG="-Pflank.maxTestShards=${FLANK_MAX_TEST_SHARDS:-4}"
 
 log() { echo "[selective_tests] $*" >&2; }
@@ -25,12 +27,33 @@ run_gradle() {
   else log "Running: ./gradlew $*"; cd "$REPO_ROOT" && ./gradlew "$@"; fi
 }
 
+if [ -z "${APP_TESTS_ENABLED:-}" ]; then
+  if [ -n "$(git -C "$REPO_ROOT" diff --name-only "${BASE_SHA:-HEAD^1}" "${HEAD_SHA:-HEAD}" -- "$TEST_SPECS_PATH")" ]; then
+    APP_TESTS_ENABLED=1
+  else
+    APP_TESTS_ENABLED=0
+  fi
+fi
+log "App tests against black enabled: $APP_TESTS_ENABLED"
+
+if [ "$APP_TESTS_ENABLED" = "1" ] && [ "$DRY_RUN" != "1" ]; then
+  git -C "$REPO_ROOT" submodule update --init --checkout "$TEST_SPECS_PATH"
+fi
+
 run_full_suite() {
   log "Running full instrumented test suite."
   run_gradle assembleDebugAndroidTest "assemble$(capitalize "$FLAVOUR")DebugAndroidTest" \
              ":app:assemble$(capitalize "$FLAVOUR")BlackDebug" \
              ":app:assemble$(capitalize "$FLAVOUR")BlackDebugAndroidTest"
-  run_gradle runFlank "$FLANK_SHARDS_ARG"
+  if [ "$APP_TESTS_ENABLED" = "1" ]; then
+    run_gradle runFlank "$FLANK_SHARDS_ARG"
+    return
+  fi
+  local apks
+  apks=$(find "$REPO_ROOT" -path '*/build/outputs/apk/androidTest/*' -name '*-androidTest.apk' \
+           -not -path "$REPO_ROOT/app/build/*" -not -path "$REPO_ROOT/.worktrees/*" -not -path "$REPO_ROOT/.claude/*" | sort | paste -sd, -)
+  [ -z "$apks" ] && die "No test APKs found after build."
+  run_gradle runFlank "$FLANK_SHARDS_ARG" "-Pselective.test.apks=$apks"
 }
 
 # -- Step 1: Detect changed modules ----------------------------------------
@@ -78,6 +101,14 @@ hardening_out=$("${BASH:-bash}" "$SCRIPT_DIR/apply_hardening_rules.sh" "${AFFECT
 
 TESTABLE_MODULES=()
 [ -n "$hardening_out" ] && mapfile -t TESTABLE_MODULES < <(grep -vxF ":app" <<< "$hardening_out" || true)
+
+if [ "$APP_TESTS_ENABLED" = "1" ]; then
+  TESTABLE_MODULES+=( ":app" )
+fi
+
+if [ -f "$SMOKE_FALLBACK_FILE" ] && source "$SMOKE_FALLBACK_FILE" && [ "${SMOKE_FALLBACK:-0}" = "1" ] && [ "$APP_TESTS_ENABLED" != "1" ]; then
+  log "Smoke fallback — app tests run against black and are disabled; skipping."; exit 0
+fi
 
 if [ -f "$SMOKE_FALLBACK_FILE" ] && source "$SMOKE_FALLBACK_FILE" && [ "${SMOKE_FALLBACK:-0}" = "1" ]; then
   log "Smoke fallback — running app-level smoke test only."

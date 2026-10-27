@@ -32,19 +32,24 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import io.cucumber.junit.WithJunitRule
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.testing.LoginTestHelper
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.quark.data.User
 import me.proton.test.fusion.FusionConfig
 import org.junit.Rule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 import proton.android.pass.data.api.errors.ItemNotFoundError
+import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateFolder
@@ -52,6 +57,9 @@ import proton.android.pass.data.api.usecases.folders.CreateFolder
 import proton.android.pass.data.api.usecases.folders.DeleteFolders
 import proton.android.pass.data.api.usecases.folders.ObserveFolderLimits
 import proton.android.pass.data.api.usecases.folders.ObserveFoldersByParentId
+import proton.android.pass.data.api.usecases.folders.RefreshFolders
+import proton.android.pass.data.impl.network.RemoteApiException
+import proton.android.pass.data.impl.network.RemoteResult
 import proton.android.pass.domain.FolderId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -122,6 +130,12 @@ class FolderSteps {
     lateinit var observeFoldersByParentId: ObserveFoldersByParentId
 
     @Inject
+    lateinit var refreshFolders: RefreshFolders
+
+    @Inject
+    lateinit var observeCurrentUser: ObserveCurrentUser
+
+    @Inject
     lateinit var createItem: CreateItem
 
     @Inject
@@ -133,7 +147,9 @@ class FolderSteps {
 
     private val uiFolderNames = mutableListOf<String>()
 
-    private var deepestFolderName: String? = null
+    private var nestedFolderVault: String? = null
+
+    private var nestedFolderNames: List<String> = emptyList()
 
     private var folderPendingDeletion: String? = null
 
@@ -176,20 +192,37 @@ class FolderSteps {
 
     private fun signIn(user: User) {
         if (!isSignedInAs(user)) {
-            loginTestHelper.logoutAll()
-            UserLoginRule(
-                quark = { BaseTest.quark },
-                loginTestHelper = { loginTestHelper },
-                testUser = user,
-                shouldSeedUser = false
-            ).apply(
-                object : Statement() {
-                    override fun evaluate() = Unit
-                },
-                Description.EMPTY
-            ).evaluate()
+            retryLoginWhenUnavailable {
+                loginTestHelper.logoutAll()
+                UserLoginRule(
+                    quark = { BaseTest.quark },
+                    loginTestHelper = { loginTestHelper },
+                    testUser = user,
+                    shouldSeedUser = false
+                ).apply(
+                    object : Statement() {
+                        override fun evaluate() = Unit
+                    },
+                    Description.EMPTY
+                ).evaluate()
+            }
         }
         reachHome()
+    }
+
+    private fun retryLoginWhenUnavailable(block: () -> Unit) {
+        var backoffMillis = RETRY_INITIAL_BACKOFF_MILLIS
+        repeat(RETRY_ATTEMPTS - 1) {
+            try {
+                return block()
+            } catch (exception: ApiException) {
+                val status = (exception.error as? ApiResult.Error.Http)?.httpCode
+                if (status !in RETRYABLE_HTTP_STATUSES) throw exception
+            }
+            Thread.sleep(backoffMillis)
+            backoffMillis *= 2
+        }
+        block()
     }
 
     private fun assertSignedIn() {
@@ -286,10 +319,10 @@ class FolderSteps {
             deleteFoldersNamed(shareId, "$NESTED_PREFIX 1")
             val maxDepth = observeFolderLimits().first().maxDepth
             var parentId: FolderId? = null
-            for (level in 1..maxDepth) {
-                parentId = createTracked(shareId, parentId, "$NESTED_PREFIX $level")
-                deepestFolderName = "$NESTED_PREFIX $level"
-            }
+            val names = (1..maxDepth).map { "$NESTED_PREFIX $it" }
+            names.forEach { name -> parentId = createTracked(shareId, parentId, name) }
+            nestedFolderVault = vaultName
+            nestedFolderNames = names
         }
     }
 
@@ -306,7 +339,7 @@ class FolderSteps {
     }
 
     private suspend fun deleteInBatches(shareId: ShareId, folderIds: List<FolderId>) {
-        folderIds.chunked(DELETE_BATCH_SIZE).forEach { deleteFolders(shareId, it) }
+        folderIds.chunked(DELETE_BATCH_SIZE).forEach { batch -> retryWhenUnavailable { deleteFolders(shareId, batch) } }
     }
 
     private suspend fun fillRootFolders(shareId: ShareId, maxChildren: Int): List<FolderId> {
@@ -323,9 +356,38 @@ class FolderSteps {
         parentId: FolderId?,
         name: String
     ): FolderId {
-        val folderId = createFolder(shareId, parentId, name).folderId
+        var attempted = false
+        val folderId = retryWhenUnavailable {
+            val alreadyCreated = if (attempted) existingFolderId(shareId, parentId, name) else null
+            attempted = true
+            alreadyCreated ?: createFolder(shareId, parentId, name).folderId
+        }
         createdFolders += shareId to folderId
         return folderId
+    }
+
+    private suspend fun existingFolderId(
+        shareId: ShareId,
+        parentId: FolderId?,
+        name: String
+    ): FolderId? {
+        safeRunCatching { refreshFolders(observeCurrentUser().first().userId, setOf(shareId)) }
+        return observeFoldersByParentId(shareId, parentId).first().firstOrNull { it.name == name }?.folderId
+    }
+
+    private suspend fun <T> retryWhenUnavailable(block: suspend () -> T): T {
+        var backoffMillis = RETRY_INITIAL_BACKOFF_MILLIS
+        repeat(RETRY_ATTEMPTS - 1) {
+            try {
+                return block()
+            } catch (exception: RemoteApiException) {
+                val status = (exception.error as? RemoteResult.Error.Http)?.status
+                if (status !in RETRYABLE_HTTP_STATUSES) throw exception
+            }
+            delay(backoffMillis)
+            backoffMillis *= 2
+        }
+        return block()
     }
 
     private suspend fun allFolderIds(shareId: ShareId, parentId: FolderId?): Set<FolderId> =
@@ -386,13 +448,14 @@ class FolderSteps {
         }
         uiFolderVault = null
         uiFolderNames.clear()
-        deepestFolderName = null
+        nestedFolderVault = null
+        nestedFolderNames = emptyList()
     }
 
     private suspend fun deleteFoldersNamed(shareId: ShareId, name: String) {
         val leftovers = observeFoldersByParentId(shareId, null).first().filter { it.name == name }
         if (leftovers.isNotEmpty()) {
-            deleteFolders(shareId, leftovers.map { it.folderId })
+            retryWhenUnavailable { deleteFolders(shareId, leftovers.map { it.folderId }) }
         }
     }
 
@@ -490,7 +553,8 @@ class FolderSteps {
 
     @When("I open the options of the folder at the deepest level")
     fun openOptionsOfDeepestFolder() {
-        HomeRobot.openDrawer().openOptionsOf(requireNotNull(deepestFolderName) { "No nested folders were created" })
+        val vaultName = requireNotNull(nestedFolderVault) { "No nested folders were created" }
+        HomeRobot.openDrawer().openOptionsOfNested(vaultName, nestedFolderNames)
     }
 
     @When("I open the options of the folder {string}")
@@ -644,6 +708,11 @@ class FolderSteps {
 
     private companion object {
         const val DELETE_BATCH_SIZE = 20
+        const val HTTP_BAD_GATEWAY = 502
+        const val HTTP_SERVICE_UNAVAILABLE = 503
+        val RETRYABLE_HTTP_STATUSES = setOf(HTTP_BAD_GATEWAY, HTTP_SERVICE_UNAVAILABLE)
+        const val RETRY_ATTEMPTS = 4
+        const val RETRY_INITIAL_BACKOFF_MILLIS = 2_000L
         const val FILLER_PREFIX = "Filler "
         const val NESTED_PREFIX = "Level"
         const val DEFAULT_VAULT_NAME = "Personal"

@@ -131,9 +131,8 @@ class SignInSteps {
             .fillAndClickNext(String.random(PASSWORD_LENGTH))
             .skip()
             .skipConfirm()
-        HvCodeRobot
-            .fillCodeForInternal(username)
-            .clickVerify()
+        fillInternalHumanVerification(username)
+        HvCodeRobot.clickVerify()
         CongratsRobot.uiElementsDisplayed()
         CongratsRobot.clickStart()
     }

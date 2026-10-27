@@ -591,6 +591,7 @@ dependencies {
     }
     androidTestImplementation(projects.pass.payments.fakes)
     androidTestImplementation(libs.androidx.work.testing)
+    androidTestImplementation(libs.androidx.test.espresso.web)
     androidTestImplementation(libs.cucumber.android)
     androidTestImplementation(libs.cucumber.android.hilt)
     androidTestUtil(libs.androidx.test.orchestrator)

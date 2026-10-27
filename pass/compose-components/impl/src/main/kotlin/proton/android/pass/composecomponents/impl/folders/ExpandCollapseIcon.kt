@@ -29,8 +29,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.defaultTint
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 
 @Composable
@@ -44,8 +48,13 @@ fun ExpandCollapseIcon(
         label = "expandCollapseRotation"
     )
 
+    val stateText = stringResource(
+        if (expanded) R.string.expand_collapse_state_expanded else R.string.expand_collapse_state_collapsed
+    )
+
     Box(
         modifier = modifier
+            .semantics { stateDescription = stateText }
             .size(36.dp)
             .clip(CircleShape)
             .clickable { onClick() },

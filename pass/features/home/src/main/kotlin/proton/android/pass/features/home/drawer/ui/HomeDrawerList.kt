@@ -27,6 +27,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.toOption
@@ -49,6 +50,10 @@ import proton.android.pass.features.home.R
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
+
+object HomeDrawerTestTag {
+    const val LIST = "homeDrawerList"
+}
 
 private fun booleanMapSaver() = mapSaver<MutableMap<String, Boolean>>(
     save = { it },
@@ -82,7 +87,7 @@ internal fun HomeDrawerList(
     val folderExpandedMap = rememberSaveable(saver = booleanMapSaver()) { mutableStateMapOf() }
     val knownFolderIdsMap = remember { mutableMapOf<String, Set<String>>() }
 
-    LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = modifier.testTag(HomeDrawerTestTag.LIST)) {
         item {
             HomeDrawerRow(
                 shareIconRes = CompR.drawable.ic_brand_pass,

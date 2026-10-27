@@ -72,6 +72,8 @@ fun AppLockTypeBottomsheet(
 
     AppLockTypeBottomsheetContent(
         modifier = modifier.bottomSheet(),
-        state = state
-    ) { viewModel.onChanged(it, context.toClassHolder()) }
+        state = state,
+        onSelected = { viewModel.onChanged(it, context.toClassHolder()) },
+        onDisableLockSelected = viewModel::onDisableLockSelected
+    )
 }

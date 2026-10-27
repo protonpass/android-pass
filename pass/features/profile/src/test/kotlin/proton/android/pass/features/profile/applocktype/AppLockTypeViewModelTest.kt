@@ -40,7 +40,16 @@ import proton.android.pass.data.api.usecases.SetAppLockType
 import proton.android.pass.data.fakes.usecases.FakeObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.fakes.usecases.FakeSetPasswordOnlyLock
 import proton.android.pass.common.api.some
+import proton.android.pass.domain.ForceLockSeconds
 import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.OrganizationShareMode
+import proton.android.pass.domain.organizations.OrganizationAliasMode
+import proton.android.pass.domain.organizations.OrganizationItemShareMode
+import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
+import proton.android.pass.domain.organizations.OrganizationSharingPolicy
+import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
+import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import proton.android.pass.features.profile.ProfileSnackbarMessage
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
@@ -399,6 +408,117 @@ class AppLockTypeViewModelTest {
         assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Enabled)
         assertThat(viewModel.state.value.event).isNotEqualTo(AppLockTypeEvent.Dismiss)
     }
+
+    @Test
+    fun `password only lock without enforcement offers the disable option`() = runTest {
+        preferenceRepository.setAppLockTypePreference(NonePreference)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+
+        createViewModel()
+
+        viewModel.state.test {
+            val state = awaitItem()
+            assertThat(state.isPasswordOption).isTrue()
+            assertThat(state.canDisableLock).isTrue()
+            assertThat(state.items).containsExactly(NonePreference, Pin, Biometrics).inOrder()
+        }
+    }
+
+    @Test
+    fun `password only lock with enforcement does not offer the disable option`() = runTest {
+        preferenceRepository.setAppLockTypePreference(NonePreference)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        observeEnforcedLock.emitValue(enforcedOrganization())
+
+        createViewModel()
+
+        viewModel.state.test {
+            val state = awaitItem()
+            assertThat(state.isPasswordOption).isTrue()
+            assertThat(state.canDisableLock).isFalse()
+        }
+    }
+
+    @Test
+    fun `disabled lock does not offer the disable option`() = runTest {
+        preferenceRepository.setAppLockTypePreference(NonePreference)
+        preferenceRepository.setAppLockState(AppLockState.Disabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+
+        createViewModel()
+
+        viewModel.state.test {
+            assertThat(awaitItem().canDisableLock).isFalse()
+        }
+    }
+
+    @Test
+    fun `pin and biometrics locks do not offer the disable option`() = runTest {
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+
+        listOf(Pin, Biometrics).forEach { type ->
+            preferenceRepository.setAppLockTypePreference(type)
+            createViewModel()
+
+            viewModel.state.test {
+                assertThat(awaitItem().canDisableLock).isFalse()
+            }
+        }
+    }
+
+    @Test
+    fun `selecting the disable option parks None and asks master password`() = runTest {
+        preferenceRepository.setAppLockTypePreference(NonePreference)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+
+        createViewModel()
+
+        viewModel.state.test {
+            assertThat(awaitItem().canDisableLock).isTrue()
+
+            viewModel.onDisableLockSelected()
+
+            assertThat(awaitItem().event).isEqualTo(AppLockTypeEvent.ConfirmMasterPassword)
+            assertThat(pendingAppLockChangeHolder.pendingTarget).isEqualTo(NonePreference)
+            assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Enabled)
+        }
+    }
+
+    @Test
+    fun `selecting the disable option is ignored when it is not offered`() = runTest {
+        preferenceRepository.setAppLockTypePreference(Pin)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+
+        createViewModel()
+
+        viewModel.state.test {
+            awaitItem()
+
+            viewModel.onDisableLockSelected()
+
+            expectNoEvents()
+            assertThat(pendingAppLockChangeHolder.pendingTarget).isNull()
+        }
+    }
+
+    private fun enforcedOrganization() = OrganizationSettings.Organization(
+        canUpdate = true,
+        shareMode = OrganizationShareMode.Unrestricted,
+        forceLockSeconds = ForceLockSeconds.Enforced(600),
+        passwordPolicy = OrganizationPasswordPolicy(),
+        vaultsPolicy = OrganizationVaultsPolicy(
+            vaultCreateMode = OrganizationVaultCreateMode.AllUsers
+        ),
+        sharingPolicy = OrganizationSharingPolicy(
+            itemShareMode = OrganizationItemShareMode.Enabled,
+            secureLinkMode = OrganizationSecureLinkMode.Enabled
+        ),
+        aliasMode = OrganizationAliasMode.AllowedForAllMembers
+    )
 }
 
 private class TestSetAppLockType(

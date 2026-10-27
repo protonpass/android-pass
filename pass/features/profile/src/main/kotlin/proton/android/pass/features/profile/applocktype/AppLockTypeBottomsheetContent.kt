@@ -35,17 +35,31 @@ import proton.android.pass.preferences.AppLockTypePreference
 fun AppLockTypeBottomsheetContent(
     modifier: Modifier = Modifier,
     state: AppLockTypeUiState,
-    onSelected: (AppLockTypePreference) -> Unit
+    onSelected: (AppLockTypePreference) -> Unit,
+    onDisableLockSelected: () -> Unit
 ) {
     BottomSheetItemList(
         modifier = modifier,
-        items = state.items.map { preference ->
-            appLockTypeBottomSheetItem(
+        items = state.items.flatMap { preference ->
+            val item = appLockTypeBottomSheetItem(
                 preference = preference,
                 isSelected = preference == state.selected,
                 isPasswordOption = state.isPasswordOption,
                 onClick = { onSelected(preference) }
             )
+            if (preference == AppLockTypePreference.None && state.canDisableLock) {
+                listOf(
+                    item,
+                    appLockTypeBottomSheetItem(
+                        preference = preference,
+                        isSelected = false,
+                        isPasswordOption = false,
+                        onClick = onDisableLockSelected
+                    )
+                )
+            } else {
+                listOf(item)
+            }
         }.withDividers().toPersistentList()
     )
 }

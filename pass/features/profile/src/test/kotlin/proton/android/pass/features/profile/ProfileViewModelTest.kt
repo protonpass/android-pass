@@ -30,6 +30,7 @@ import proton.android.pass.autofill.fakes.FakeAutofillManager
 import proton.android.pass.biometry.FakeBiometryManager
 import proton.android.pass.clipboard.fakes.FakeClipboardManager
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.usecases.SetAppLockType
 import proton.android.pass.data.fakes.usecases.FakeCanCreateAlias
 import proton.android.pass.data.fakes.usecases.FakeObserveAccounts
 import proton.android.pass.data.fakes.usecases.FakeObserveAnyAccountHasEnforcedLock
@@ -40,16 +41,27 @@ import proton.android.pass.data.fakes.usecases.FakeObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.FakeObserveUser
 import proton.android.pass.data.fakes.usecases.FakeObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.FakePerformSync
-import proton.android.pass.data.fakes.usecases.FakeSetAppLockType
 import proton.android.pass.data.fakes.usecases.FakeSetPasswordOnlyLock
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
+import proton.android.pass.domain.ForceLockSeconds
+import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.OrganizationShareMode
+import proton.android.pass.domain.organizations.OrganizationAliasMode
+import proton.android.pass.domain.organizations.OrganizationItemShareMode
+import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.domain.organizations.OrganizationSecureLinkMode
+import proton.android.pass.domain.organizations.OrganizationSharingPolicy
+import proton.android.pass.domain.organizations.OrganizationVaultCreateMode
+import proton.android.pass.domain.organizations.OrganizationVaultsPolicy
 import proton.android.pass.features.profile.applocktype.PendingAppLockChangeHolder
 import proton.android.pass.notifications.fakes.FakeSnackbarDispatcher
 import proton.android.pass.passkeys.fakes.FakeCanDeviceSupportPasskeys
+import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.FakePreferenceRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.searchoptions.fakes.FakeHomeSearchOptionsRepository
 import proton.android.pass.test.MainDispatcherRule
 
@@ -61,7 +73,8 @@ class ProfileViewModelTest {
     private lateinit var preferenceRepository: FakePreferenceRepository
     private lateinit var biometryManager: FakeBiometryManager
     private lateinit var pendingAppLockChangeHolder: PendingAppLockChangeHolder
-    private lateinit var setAppLockType: FakeSetAppLockType
+    private lateinit var setAppLockType: RecordingSetAppLockType
+    private lateinit var observeEnforcedLock: FakeObserveAnyAccountHasEnforcedLock
     private lateinit var viewModel: ProfileViewModel
 
     @Before
@@ -69,7 +82,8 @@ class ProfileViewModelTest {
         preferenceRepository = FakePreferenceRepository()
         biometryManager = FakeBiometryManager()
         pendingAppLockChangeHolder = PendingAppLockChangeHolder()
-        setAppLockType = FakeSetAppLockType()
+        setAppLockType = RecordingSetAppLockType(preferenceRepository)
+        observeEnforcedLock = FakeObserveAnyAccountHasEnforcedLock()
         val observeItemCount = FakeObserveItemCount().apply {
             sendResult(Result.success(EMPTY_ITEM_COUNT))
         }
@@ -95,7 +109,7 @@ class ProfileViewModelTest {
             observeItemCount = observeItemCount,
             observeMFACount = observeMFACount,
             observeUpgradeInfo = FakeObserveUpgradeInfo(),
-            observeAnyAccountHasEnforcedLock = FakeObserveAnyAccountHasEnforcedLock(),
+            observeAnyAccountHasEnforcedLock = observeEnforcedLock,
             observeSecureLinksCount = FakeObserveSecureLinksCount(),
             observeUserAccessData = observeUserAccessData,
             canCreateAlias = FakeCanCreateAlias()
@@ -187,6 +201,60 @@ class ProfileViewModelTest {
         assertThat(pendingAppLockChangeHolder.pendingTarget).isNull()
     }
 
+    @Test
+    fun `verified master password disables a password only lock without enforcement`() = runTest {
+        preferenceRepository.setAppLockTypePreference(AppLockTypePreference.None)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        pendingAppLockChangeHolder.pendingTarget = AppLockTypePreference.None
+
+        viewModel.onMasterPasswordVerifiedForLockChange()
+        advanceUntilIdle()
+
+        assertThat(setAppLockType.invoked).containsExactly(AppLockTypePreference.None)
+        assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Disabled)
+    }
+
+    @Test
+    fun `verified master password does not disable a password only lock under enforcement`() = runTest {
+        preferenceRepository.setAppLockTypePreference(AppLockTypePreference.None)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        observeEnforcedLock.emitValue(
+            OrganizationSettings.Organization(
+                canUpdate = true,
+                shareMode = OrganizationShareMode.Unrestricted,
+                forceLockSeconds = ForceLockSeconds.Enforced(600),
+                passwordPolicy = OrganizationPasswordPolicy(),
+                vaultsPolicy = OrganizationVaultsPolicy(
+                    vaultCreateMode = OrganizationVaultCreateMode.AllUsers
+                ),
+                sharingPolicy = OrganizationSharingPolicy(
+                    itemShareMode = OrganizationItemShareMode.Enabled,
+                    secureLinkMode = OrganizationSecureLinkMode.Enabled
+                ),
+                aliasMode = OrganizationAliasMode.AllowedForAllMembers
+            )
+        )
+        pendingAppLockChangeHolder.pendingTarget = AppLockTypePreference.None
+
+        viewModel.onMasterPasswordVerifiedForLockChange()
+        advanceUntilIdle()
+
+        assertThat(setAppLockType.invoked).isEmpty()
+        assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Enabled)
+    }
+
+    @Test
+    fun `verified master password does nothing when the lock is not password only`() = runTest {
+        preferenceRepository.setAppLockTypePreference(AppLockTypePreference.None)
+        preferenceRepository.setAppLockState(AppLockState.Disabled)
+        pendingAppLockChangeHolder.pendingTarget = AppLockTypePreference.None
+
+        viewModel.onMasterPasswordVerifiedForLockChange()
+        advanceUntilIdle()
+
+        assertThat(setAppLockType.invoked).isEmpty()
+    }
+
     private fun givenBiometricLock(systemLock: BiometricSystemLockPreference, biometricsOnly: Boolean) {
         preferenceRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
         preferenceRepository.setBiometricSystemLockPreference(systemLock)
@@ -215,5 +283,19 @@ class ProfileViewModelTest {
             trashed = 0,
             sharedWithMeTrashed = 0
         )
+    }
+}
+
+private class RecordingSetAppLockType(
+    private val userPreferencesRepository: UserPreferencesRepository
+) : SetAppLockType {
+
+    val invoked = mutableListOf<AppLockTypePreference>()
+
+    override suspend fun invoke(type: AppLockTypePreference): Result<Unit> = runCatching {
+        invoked += type
+        userPreferencesRepository.setAppLockTypePreference(type).getOrThrow()
+        val state = if (type == AppLockTypePreference.None) AppLockState.Disabled else AppLockState.Enabled
+        userPreferencesRepository.setAppLockState(state).getOrThrow()
     }
 }

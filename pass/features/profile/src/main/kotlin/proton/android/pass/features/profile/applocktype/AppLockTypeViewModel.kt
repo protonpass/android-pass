@@ -91,6 +91,7 @@ class AppLockTypeViewModel @Inject constructor(
             selected = appLockTypePreference,
             isPasswordOption = isAlreadyPasswordOnlyLock || isForceLockMandatory,
             isForceLockMandatory = isForceLockMandatory,
+            canDisableLock = isAlreadyPasswordOnlyLock && !isForceLockMandatory,
             event = event
         )
     }.stateIn(
@@ -157,6 +158,12 @@ class AppLockTypeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onDisableLockSelected() {
+        if (!state.value.canDisableLock) return
+        pendingAppLockChangeHolder.pendingTarget = None
+        eventState.update { AppLockTypeEvent.ConfirmMasterPassword }
     }
 
     fun onPinSuccessfullyEntered(contextHolder: ClassHolder<Context>) {

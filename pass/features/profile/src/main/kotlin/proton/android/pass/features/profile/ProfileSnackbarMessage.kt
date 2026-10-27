@@ -32,6 +32,7 @@ enum class ProfileSnackbarMessage(
     AppLockUpdateError(R.string.profile_error_app_lock_update_failed, SnackbarType.ERROR),
     FingerprintLockEnabled(R.string.profile_fingerprint_lock_enabled, SnackbarType.SUCCESS),
     FingerprintLockDisabled(R.string.profile_fingerprint_lock_disabled, SnackbarType.SUCCESS),
+    AppLockDisabled(R.string.profile_app_lock_disabled, SnackbarType.SUCCESS),
     AppVersionCopied(R.string.profile_app_version_copied_to_clipboard, SnackbarType.SUCCESS, true),
     PinLockEnabled(R.string.configure_pin_pin_lock_enabled, SnackbarType.SUCCESS),
     PinLockDisabled(R.string.configure_pin_pin_lock_disabled, SnackbarType.SUCCESS),

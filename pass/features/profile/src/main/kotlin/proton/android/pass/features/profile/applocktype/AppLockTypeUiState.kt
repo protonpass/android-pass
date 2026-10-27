@@ -33,6 +33,7 @@ data class AppLockTypeUiState(
     val selected: AppLockTypePreference,
     val isPasswordOption: Boolean,
     val isForceLockMandatory: Boolean,
+    val canDisableLock: Boolean,
     val event: AppLockTypeEvent
 ) {
     companion object {
@@ -41,6 +42,7 @@ data class AppLockTypeUiState(
             selected = AppLockTypePreference.None,
             isPasswordOption = false,
             isForceLockMandatory = false,
+            canDisableLock = false,
             event = AppLockTypeEvent.Unknown
         )
     }

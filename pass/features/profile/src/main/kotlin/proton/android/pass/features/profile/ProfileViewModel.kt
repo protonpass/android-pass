@@ -424,9 +424,12 @@ class ProfileViewModel @Inject constructor(
     internal fun onMasterPasswordVerifiedForLockChange() {
         val target = pendingAppLockChangeHolder.consume() ?: return
         viewModelScope.launch {
-            if (userPreferencesRepository.getAppLockTypePreference().first() != AppLockTypePreference.Biometrics) {
+            val currentType = userPreferencesRepository.getAppLockTypePreference().first()
+            if (currentType == AppLockTypePreference.None) {
+                disablePasswordOnlyLock(target)
                 return@launch
             }
+            if (currentType != AppLockTypePreference.Biometrics) return@launch
             when (target) {
                 AppLockTypePreference.None -> {
                     val isEnforced = observeAnyAccountHasEnforcedLock().first()
@@ -454,6 +457,18 @@ class ProfileViewModel @Inject constructor(
                 AppLockTypePreference.Biometrics -> {}
             }
         }
+    }
+
+    private suspend fun disablePasswordOnlyLock(target: AppLockTypePreference) {
+        val isPasswordOnlyLock = userPreferencesRepository.getAppLockState().first() == AppLockState.Enabled
+        val isEnforced = observeAnyAccountHasEnforcedLock().first().let { it is Some && it.value.isEnforced() }
+        if (target != AppLockTypePreference.None || !isPasswordOnlyLock || isEnforced) return
+        setAppLockType(AppLockTypePreference.None)
+            .onSuccess { snackbarDispatcher(ProfileSnackbarMessage.AppLockDisabled) }
+            .onFailure { error ->
+                PassLogger.w(TAG, error, "Failed to disable password only lock after password check")
+                snackbarDispatcher(ProfileSnackbarMessage.AppLockUpdateError)
+            }
     }
 
     internal fun onNewAccountReady(newAccountReady: Set<UserId>) {

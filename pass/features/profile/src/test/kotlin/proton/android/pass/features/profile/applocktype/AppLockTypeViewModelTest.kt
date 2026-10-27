@@ -29,6 +29,7 @@ import android.content.Context
 import proton.android.pass.appconfig.fakes.FakeAppConfig
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
+import proton.android.pass.biometry.BiometryStartupError
 import proton.android.pass.biometry.EnrollmentGuardSetupResult
 import proton.android.pass.biometry.FakeBiometryManager
 import proton.android.pass.biometry.FakeStoreAuthSuccessful
@@ -61,6 +62,7 @@ class AppLockTypeViewModelTest {
     private lateinit var biometryManager: FakeBiometryManager
     private lateinit var snackbarDispatcher: FakeSnackbarDispatcher
     private lateinit var setPasswordOnlyLock: FakeSetPasswordOnlyLock
+    private lateinit var pendingAppLockChangeHolder: PendingAppLockChangeHolder
     private lateinit var observeEnforcedLock: FakeObserveAnyAccountHasEnforcedLock
     private lateinit var appConfig: FakeAppConfig
     private lateinit var setAppLockType: TestSetAppLockType
@@ -72,6 +74,7 @@ class AppLockTypeViewModelTest {
         biometryManager = FakeBiometryManager()
         snackbarDispatcher = FakeSnackbarDispatcher()
         setPasswordOnlyLock = FakeSetPasswordOnlyLock()
+        pendingAppLockChangeHolder = PendingAppLockChangeHolder()
         observeEnforcedLock = FakeObserveAnyAccountHasEnforcedLock()
         appConfig = FakeAppConfig()
         setAppLockType = TestSetAppLockType(preferenceRepository)
@@ -87,6 +90,7 @@ class AppLockTypeViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             setAppLockType = setAppLockType,
             setPasswordOnlyLock = setPasswordOnlyLock,
+            pendingAppLockChangeHolder = pendingAppLockChangeHolder,
             storeAuthSuccessful = storeAuthSuccessful,
             observeAnyAccountHasEnforcedLock = observeEnforcedLock,
             appConfig = appConfig
@@ -275,6 +279,53 @@ class AppLockTypeViewModelTest {
         assertThat(preferenceRepository.getAppLockTypePreference().first()).isEqualTo(NonePreference)
         assertThat(preferenceRepository.getAppLockState().first()).isEqualTo(AppLockState.Disabled)
         assertThat(storeAuthSuccessful.invokedWith).isNull()
+    }
+
+    @Test
+    fun `deadlock case - leaving biometrics without hardware parks the target and asks master password`() = runTest {
+        preferenceRepository.setAppLockTypePreference(Biometrics)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+
+        createViewModel()
+
+        viewModel.state.test {
+            assertThat(awaitItem().selected).isEqualTo(Biometrics)
+
+            viewModel.onChanged(NonePreference, ClassHolder<Context>(None))
+            biometryManager.emitResult(
+                BiometryResult.FailedToStart(BiometryStartupError.NoneEnrolled)
+            )
+
+            val dialogState = awaitItem()
+            assertThat(dialogState.event).isEqualTo(AppLockTypeEvent.ConfirmMasterPassword)
+            assertThat(preferenceRepository.getAppLockTypePreference().first()).isEqualTo(Biometrics)
+            assertThat(pendingAppLockChangeHolder.pendingTarget).isEqualTo(NonePreference)
+        }
+    }
+
+    @Test
+    fun `deadlock case - recoverable biometry failure only shows snackbar`() = runTest {
+        preferenceRepository.setAppLockTypePreference(Biometrics)
+        preferenceRepository.setAppLockState(AppLockState.Enabled)
+        observeEnforcedLock.emitValue(OrganizationSettings.NotAnOrganization)
+
+        createViewModel()
+
+        viewModel.state.test {
+            assertThat(awaitItem().selected).isEqualTo(Biometrics)
+
+            viewModel.onChanged(NonePreference, ClassHolder<Context>(None))
+            biometryManager.emitResult(
+                BiometryResult.FailedToStart(BiometryStartupError.HardwareUnavailable)
+            )
+            expectNoEvents()
+
+            assertThat(snackbarDispatcher.snackbarMessage.first())
+                .isEqualTo(ProfileSnackbarMessage.BiometryFailedToStartError.some())
+            assertThat(pendingAppLockChangeHolder.pendingTarget).isNull()
+            assertThat(preferenceRepository.getAppLockTypePreference().first()).isEqualTo(Biometrics)
+        }
     }
 
     @Test

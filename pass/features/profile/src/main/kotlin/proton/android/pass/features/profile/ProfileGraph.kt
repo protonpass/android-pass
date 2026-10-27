@@ -39,6 +39,7 @@ import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
 
 const val ENTER_PIN_PARAMETER_KEY = "enterPin"
+const val MASTER_PASSWORD_VERIFIED_KEY = "masterPasswordVerified"
 private const val PROFILE_GRAPH = "profile_graph"
 
 object ProfileNavItem : NavItem(baseRoute = "profile", isTopLevel = true)
@@ -77,6 +78,8 @@ sealed interface ProfileNavigation {
     data object ConfigurePin : ProfileNavigation
 
     data object EnterPin : ProfileNavigation
+
+    data object ConfirmMasterPasswordForLockChange : ProfileNavigation
 
     data object FeatureFlags : ProfileNavigation
 
@@ -135,11 +138,15 @@ fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {
         composable(ProfileNavItem) {
             val enterPinSuccess by it.savedStateHandle.getStateFlow(ENTER_PIN_PARAMETER_KEY, false)
                 .collectAsStateWithLifecycle()
+            val masterPasswordVerified by it.savedStateHandle.getStateFlow(MASTER_PASSWORD_VERIFIED_KEY, false)
+                .collectAsStateWithLifecycle()
             ProfileScreen(
                 modifier = Modifier.testTag(ProfileScreenTestTag.SCREEN),
                 enterPinSuccess = enterPinSuccess,
+                masterPasswordVerified = masterPasswordVerified,
                 onNavigateEvent = onNavigateEvent,
-                onClearPinSuccess = { it.savedStateHandle[ENTER_PIN_PARAMETER_KEY] = false }
+                onClearPinSuccess = { it.savedStateHandle[ENTER_PIN_PARAMETER_KEY] = false },
+                onClearMasterPasswordVerified = { it.savedStateHandle[MASTER_PASSWORD_VERIFIED_KEY] = false }
             )
         }
         bottomSheet(FeedbackBottomsheet) {

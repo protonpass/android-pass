@@ -41,12 +41,13 @@ fun SettingToggle(
     modifier: Modifier = Modifier,
     text: String,
     isChecked: Boolean,
+    isEnabled: Boolean = true,
     belowContent: (@Composable () -> Unit)? = null,
     onClick: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
-            .clickable { onClick(!isChecked) }
+            .clickable(enabled = isEnabled) { onClick(!isChecked) }
             .fillMaxWidth()
             .padding(
                 horizontal = Spacing.medium,
@@ -67,6 +68,7 @@ fun SettingToggle(
 
             Switch(
                 checked = isChecked,
+                enabled = isEnabled,
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = PassTheme.colors.interactionNormMajor1
                 ),

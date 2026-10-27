@@ -23,6 +23,7 @@ import proton.android.pass.preferences.AppLockTypePreference
 sealed interface AppLockTypeEvent {
     data object EnterPin : AppLockTypeEvent
     data object ConfigurePin : AppLockTypeEvent
+    data object ConfirmMasterPassword : AppLockTypeEvent
     data object Dismiss : AppLockTypeEvent
     data object Unknown : AppLockTypeEvent
 }

@@ -31,6 +31,8 @@ class FakeBiometryManager @Inject constructor() : BiometryManager {
 
     private var biometryStatus: BiometryStatus = BiometryStatus.CanAuthenticate
 
+    var biometricsOnlyAuthenticationAvailable: Boolean = true
+
     private val resultFlow = MutableSharedFlow<BiometryResult>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
@@ -61,6 +63,8 @@ class FakeBiometryManager @Inject constructor() : BiometryManager {
     }
 
     override fun getBiometryStatus(): BiometryStatus = biometryStatus
+
+    override fun canAuthenticateWithBiometricsOnly(): Boolean = biometricsOnlyAuthenticationAvailable
 
     override fun launch(contextHolder: ClassHolder<Context>, biometryType: BiometryType): Flow<BiometryResult> {
         hasBeenCalled = true

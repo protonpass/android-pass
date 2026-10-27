@@ -40,6 +40,7 @@
     <string name="app_lock_config_app_lock_time">Automatic lock</string>
     <string name="app_lock_config_password">Password</string>
     <string name="app_lock_config_use_system_lock_when_biometric_fails">Use system lock when biometric fails</string>
+    <string name="app_lock_config_system_lock_locked_explanation">Your device has no strong biometric available, so your device PIN or password is the only way to unlock. Change your app lock type before turning this off.</string>
     <string name="configure_pin_set_pin_code">Set PIN code</string>
     <string name="configure_pin_unlock_the_app_with_this_code">Unlock the app with this code</string>
     <string name="configure_pin_enter_pin_code">Enter PIN code</string>

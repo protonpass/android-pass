@@ -138,12 +138,22 @@ internal fun AppLockSection(
                         else -> {}
                     }
 
+                    val biometricSection = appLockSectionState as? BiometricSection
+                    val isToggleLocked = biometricSection?.isSystemLockToggleLocked == true
                     SettingToggle(
                         text = stringResource(R.string.app_lock_config_use_system_lock_when_biometric_fails),
-                        isChecked = (appLockSectionState as? BiometricSection)
-                            ?.biometricSystemLockPreference
-                            ?.value()
-                            ?: false,
+                        isChecked = biometricSection?.biometricSystemLockPreference?.value() ?: false,
+                        isEnabled = !isToggleLocked,
+                        belowContent = if (isToggleLocked) {
+                            {
+                                Text(
+                                    text = stringResource(R.string.app_lock_config_system_lock_locked_explanation),
+                                    style = ProtonTheme.typography.defaultSmallWeak
+                                )
+                            }
+                        } else {
+                            null
+                        },
                         onClick = { onEvent(ProfileUiEvent.OnToggleBiometricSystemLock(it)) }
                     )
                 }

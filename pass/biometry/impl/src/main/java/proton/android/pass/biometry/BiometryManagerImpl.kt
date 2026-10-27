@@ -144,6 +144,9 @@ class BiometryManagerImpl @Inject constructor(
     override suspend fun resetEnrollmentGuard(): EnrollmentGuardSetupResult =
         withContext(appDispatchers.io) { biometricEnrollmentGuard.reset() }
 
+    override fun canAuthenticateWithBiometricsOnly(): Boolean =
+        biometricManager.canAuthenticate(getStrongOnlyAuthenticators()) == BiometricManager.BIOMETRIC_SUCCESS
+
     private fun canAuthenticate(): BiometryResult {
         val biometricSystemLock = runBlocking {
             userPreferencesRepository.getBiometricSystemLockPreference().first()
@@ -182,6 +185,15 @@ class BiometryManagerImpl @Inject constructor(
     // BIOMETRIC_STRONG | DEVICE_CREDENTIAL is unsupported on API 28-29.
     // Setting an unsupported value on an affected Android version will result in an error
     // when calling build().
+
+    private fun getStrongOnlyAuthenticators(): Int = if (
+        Build.VERSION.SDK_INT == Build.VERSION_CODES.Q ||
+        Build.VERSION.SDK_INT == Build.VERSION_CODES.P
+    ) {
+        BiometricManager.Authenticators.BIOMETRIC_WEAK
+    } else {
+        BiometricManager.Authenticators.BIOMETRIC_STRONG
+    }
 
     private fun getAllowedAuthenticators(biometricSystemLock: BiometricSystemLockPreference): Int =
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q ||

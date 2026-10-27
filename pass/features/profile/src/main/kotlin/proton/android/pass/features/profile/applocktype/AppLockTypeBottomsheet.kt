@@ -56,6 +56,11 @@ fun AppLockTypeBottomsheet(
                 viewModel.clearEvents()
             }
 
+            AppLockTypeEvent.ConfirmMasterPassword -> {
+                onNavigateEvent(ProfileNavigation.ConfirmMasterPasswordForLockChange)
+                viewModel.clearEvents()
+            }
+
             AppLockTypeEvent.Dismiss -> {
                 onNavigateEvent(ProfileNavigation.CloseBottomSheet)
                 viewModel.clearEvents()

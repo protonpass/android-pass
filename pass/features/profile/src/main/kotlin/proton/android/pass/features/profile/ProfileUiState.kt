@@ -126,6 +126,7 @@ internal sealed interface AppLockSectionState {
 
 internal sealed interface BiometricSection : AppLockSectionState {
     val biometricSystemLockPreference: BiometricSystemLockPreference
+    val isSystemLockToggleLocked: Boolean
 }
 
 internal sealed interface PinSection : AppLockSectionState
@@ -137,7 +138,8 @@ internal sealed interface UserAppLockSectionState {
     @Stable
     data class Biometric(
         val appLockTimePreference: AppLockTimePreference,
-        override val biometricSystemLockPreference: BiometricSystemLockPreference
+        override val biometricSystemLockPreference: BiometricSystemLockPreference,
+        override val isSystemLockToggleLocked: Boolean = false
     ) : UserAppLockSectionState, BiometricSection
 
     @JvmInline
@@ -161,7 +163,8 @@ internal sealed interface EnforcedAppLockSectionState {
     @Stable
     data class Biometric(
         val seconds: Int,
-        override val biometricSystemLockPreference: BiometricSystemLockPreference
+        override val biometricSystemLockPreference: BiometricSystemLockPreference,
+        override val isSystemLockToggleLocked: Boolean = false
     ) : EnforcedAppLockSectionState, BiometricSection
 
     @JvmInline

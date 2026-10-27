@@ -269,6 +269,7 @@ class AuthViewModel @Inject constructor(
         LoadingResult.Loading -> LoadingResult.Loading
         is LoadingResult.Success -> when (origin) {
             AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY,
+            AuthOrigin.CHANGE_APP_LOCK_TYPE,
             AuthOrigin.AUTO_LOCK -> hasExtraPassword
 
             AuthOrigin.EXTRA_PASSWORD_CONFIGURE -> LoadingResult.Success(false)

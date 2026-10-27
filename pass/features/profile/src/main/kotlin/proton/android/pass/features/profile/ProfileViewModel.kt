@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -44,6 +45,7 @@ import proton.android.pass.appconfig.api.BuildFlavor.Companion.isQuest
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.passStoreUrl
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillSupportedStatus
+import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
@@ -61,6 +63,8 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUser
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.PerformSync
+import proton.android.pass.data.api.usecases.SetAppLockType
+import proton.android.pass.data.api.usecases.SetPasswordOnlyLock
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateAlias
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
@@ -71,6 +75,7 @@ import proton.android.pass.domain.UserId
 import proton.android.pass.domain.account.Account
 import proton.android.pass.domain.account.AccountState
 import proton.android.pass.domain.account.User
+import proton.android.pass.features.profile.applocktype.PendingAppLockChangeHolder
 import proton.android.pass.features.profile.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByAliases
 import proton.android.pass.features.profile.ProfileSnackbarMessage.FilteredByCreditCards
@@ -90,7 +95,9 @@ import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.SearchFilterType
@@ -102,6 +109,10 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val autofillManager: AutofillManager,
+    private val biometryManager: BiometryManager,
+    private val pendingAppLockChangeHolder: PendingAppLockChangeHolder,
+    private val setAppLockType: SetAppLockType,
+    private val setPasswordOnlyLock: SetPasswordOnlyLock,
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
@@ -115,21 +126,28 @@ class ProfileViewModel @Inject constructor(
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
+    private val observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
     observeSecureLinksCount: ObserveSecureLinksCount,
     observeUserAccessData: ObserveUserAccessData,
     canCreateAlias: CanCreateAlias
 ) : ViewModel() {
 
+    private val systemLockRefreshTrigger = MutableStateFlow(0)
+
     private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
         userPreferencesRepository.getAppLockState(),
         userPreferencesRepository.getAppLockTimePreference(),
         userPreferencesRepository.getAppLockTypePreference(),
-        userPreferencesRepository.getBiometricSystemLockPreference()
-    ) { appLockState, time, type, biometricSystemLock ->
+        userPreferencesRepository.getBiometricSystemLockPreference(),
+        systemLockRefreshTrigger
+    ) { appLockState, time, type, biometricSystemLock, _ ->
         when (type) {
             AppLockTypePreference.Biometrics ->
-                UserAppLockSectionState.Biometric(time, biometricSystemLock)
+                UserAppLockSectionState.Biometric(
+                    appLockTimePreference = time,
+                    biometricSystemLockPreference = biometricSystemLock,
+                    isSystemLockToggleLocked = isSystemLockToggleLocked(biometricSystemLock)
+                )
 
             AppLockTypePreference.Pin -> UserAppLockSectionState.Pin(time)
             AppLockTypePreference.None -> if (appLockState == AppLockState.Enabled) {
@@ -148,11 +166,16 @@ class ProfileViewModel @Inject constructor(
                     val seconds = orgSettings.value.secondsToForceLock()
                     combine(
                         userPreferencesRepository.getAppLockTypePreference(),
-                        userPreferencesRepository.getBiometricSystemLockPreference()
-                    ) { type, biometricSystemLock ->
+                        userPreferencesRepository.getBiometricSystemLockPreference(),
+                        systemLockRefreshTrigger
+                    ) { type, biometricSystemLock, _ ->
                         when (type) {
                             AppLockTypePreference.Biometrics ->
-                                EnforcedAppLockSectionState.Biometric(seconds, biometricSystemLock)
+                                EnforcedAppLockSectionState.Biometric(
+                                    seconds = seconds,
+                                    biometricSystemLockPreference = biometricSystemLock,
+                                    isSystemLockToggleLocked = isSystemLockToggleLocked(biometricSystemLock)
+                                )
 
                             AppLockTypePreference.Pin ->
                                 EnforcedAppLockSectionState.Pin(seconds)
@@ -174,6 +197,7 @@ class ProfileViewModel @Inject constructor(
         featureFlagsPreferencesRepository[FeatureFlag.PASS_AUTOFILL_HEALTH]
 
     private val eventFlow: MutableStateFlow<ProfileEvent> = MutableStateFlow(ProfileEvent.Unknown)
+
 
     private val upgradeInfoFlow = observeUpgradeInfo().asLoadingResult()
 
@@ -372,13 +396,64 @@ class ProfileViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ProfileEvent.Unknown)
     }
 
+    internal fun onScreenResumed() {
+        systemLockRefreshTrigger.update { it + 1 }
+    }
+
     internal fun onToggleBiometricSystemLock(value: Boolean) {
+        viewModelScope.launch {
+            val isBiometricLock =
+                userPreferencesRepository.getAppLockTypePreference().first() == AppLockTypePreference.Biometrics
+            if (!value && isBiometricLock && !biometryManager.canAuthenticateWithBiometricsOnly()) return@launch
+            applyBiometricSystemLockPreference(value)
+        }
+    }
+
+    private fun isSystemLockToggleLocked(preference: BiometricSystemLockPreference): Boolean =
+        preference.value() && !biometryManager.canAuthenticateWithBiometricsOnly()
+
+    private fun applyBiometricSystemLockPreference(value: Boolean) {
         BiometricSystemLockPreference.from(value)
             .also(userPreferencesRepository::setBiometricSystemLockPreference)
     }
 
     internal fun onPinSuccessfullyEntered() {
         eventFlow.update { ProfileEvent.ConfigurePin }
+    }
+
+    internal fun onMasterPasswordVerifiedForLockChange() {
+        val target = pendingAppLockChangeHolder.consume() ?: return
+        viewModelScope.launch {
+            if (userPreferencesRepository.getAppLockTypePreference().first() != AppLockTypePreference.Biometrics) {
+                return@launch
+            }
+            when (target) {
+                AppLockTypePreference.None -> {
+                    val isEnforced = observeAnyAccountHasEnforcedLock().first()
+                        .let { it is Some && it.value.isEnforced() }
+                    val result = if (isEnforced) {
+                        setPasswordOnlyLock()
+                    } else {
+                        setAppLockType(AppLockTypePreference.None)
+                    }
+                    result
+                        .onSuccess {
+                            if (isEnforced) {
+                                userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+                            }
+                            snackbarDispatcher(ProfileSnackbarMessage.FingerprintLockDisabled)
+                        }
+                        .onFailure { error ->
+                            PassLogger.w(TAG, error, "Failed to update app lock type after password check")
+                            snackbarDispatcher(ProfileSnackbarMessage.AppLockUpdateError)
+                        }
+                }
+
+                AppLockTypePreference.Pin -> eventFlow.update { ProfileEvent.ConfigurePin }
+
+                AppLockTypePreference.Biometrics -> {}
+            }
+        }
     }
 
     internal fun onNewAccountReady(newAccountReady: Set<UserId>) {

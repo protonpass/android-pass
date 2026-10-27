@@ -88,11 +88,15 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
     testImplementation(projects.pass.appConfig.fakes)
+    testImplementation(projects.pass.autofill.fakes)
     testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.passkeys.fakes)
     testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.searchOptions.fakes)
 
     androidTestImplementation(libs.androidx.test.espresso.intents)
 

@@ -962,6 +962,13 @@ fun NavGraphBuilder.appGraph(
                     route = EnterPin.buildRoute(AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY)
                 )
 
+                ProfileNavigation.ConfirmMasterPasswordForLockChange -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = Auth,
+                        route = Auth.buildRoute(AuthOrigin.CHANGE_APP_LOCK_TYPE)
+                    )
+                }
+
                 ProfileNavigation.SecureLinks -> appNavigator.navigate(
                     destination = SecureLinksListNavItem
                 )
@@ -2355,6 +2362,7 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 is AuthNavigation.CloseScreen -> when (it.origin) {
                     AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY,
+                    AuthOrigin.CHANGE_APP_LOCK_TYPE,
                     AuthOrigin.EXTRA_PASSWORD_REMOVE,
                     AuthOrigin.EXTRA_PASSWORD_CONFIGURE -> appNavigator.navigateBack()
 
@@ -2367,6 +2375,10 @@ fun NavGraphBuilder.appGraph(
                         dismissBottomSheet {
                             appNavigator.setResult(mapOf(ENTER_PIN_PARAMETER_KEY to true))
                         }
+
+                    AuthOrigin.CHANGE_APP_LOCK_TYPE -> it.lockChangeResult()?.let { result ->
+                        appNavigator.navigateBackWithResult(key = result.key, value = result.value)
+                    }
 
                     AuthOrigin.EXTRA_PASSWORD_CONFIGURE ->
                         appNavigator.navigate(

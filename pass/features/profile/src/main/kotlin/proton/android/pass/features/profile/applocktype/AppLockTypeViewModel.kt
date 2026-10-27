@@ -37,6 +37,7 @@ import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
+import proton.android.pass.biometry.BiometryStartupError
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
@@ -67,6 +68,7 @@ class AppLockTypeViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val setAppLockType: SetAppLockType,
     private val setPasswordOnlyLock: SetPasswordOnlyLock,
+    private val pendingAppLockChangeHolder: PendingAppLockChangeHolder,
     private val storeAuthSuccessful: StoreAuthSuccessful,
     observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
     private val appConfig: AppConfig
@@ -193,14 +195,22 @@ class AppLockTypeViewModel @Inject constructor(
                     is BiometryResult.Error -> onError(result)
                     // User can retry
                     BiometryResult.Failed -> {}
-                    is BiometryResult.FailedToStart -> onBiometryFailedToStart()
+                    is BiometryResult.FailedToStart -> onBiometryFailedToStart(result)
                 }
                 PassLogger.i(TAG, "Biometry result: $result")
             }
     }
 
-    private suspend fun onBiometryFailedToStart() {
-        snackbarDispatcher(BiometryFailedToStartError)
+    private suspend fun onBiometryFailedToStart(result: BiometryResult.FailedToStart) {
+        val biometryIsUnrecoverable = result.cause == BiometryStartupError.NoneEnrolled ||
+            result.cause == BiometryStartupError.NoHardware
+        val leavingBiometrics = state.value.selected == Biometrics
+        if (biometryIsUnrecoverable && leavingBiometrics) {
+            pendingAppLockChangeHolder.pendingTarget = newPreferenceState.value
+            eventState.update { AppLockTypeEvent.ConfirmMasterPassword }
+        } else {
+            snackbarDispatcher(BiometryFailedToStartError)
+        }
     }
 
     private suspend fun onBiometryError(result: BiometryResult.Error) {
@@ -216,7 +226,7 @@ class AppLockTypeViewModel @Inject constructor(
     private fun onBiometryAuthSet() {
         viewModelScope.launch {
             if (!biometryManager.resetEnrollmentGuard().canEnableBiometricLock()) {
-                onBiometryFailedToStart()
+                snackbarDispatcher(BiometryFailedToStartError)
                 return@launch
             }
             storeAuthSuccessful(UnlockMethod.PinOrBiometrics)

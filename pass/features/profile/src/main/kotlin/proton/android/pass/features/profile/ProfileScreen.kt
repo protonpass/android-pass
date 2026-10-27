@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
@@ -38,9 +39,14 @@ fun ProfileScreen(
     enterPinSuccess: Boolean,
     onNavigateEvent: (ProfileNavigation) -> Unit,
     onClearPinSuccess: () -> Unit,
+    masterPasswordVerified: Boolean = false,
+    onClearMasterPasswordVerified: () -> Unit = {},
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        viewModel.onScreenResumed()
+    }
     val newAccountReady by viewModel.onAccountReadyFlow.collectAsStateWithLifecycle(
         minActiveState = Lifecycle.State.CREATED,
         initialValue = emptySet()
@@ -57,6 +63,12 @@ fun ProfileScreen(
         if (enterPinSuccess) {
             onClearPinSuccess()
             viewModel.onPinSuccessfullyEntered()
+        }
+    }
+    LaunchedEffect(masterPasswordVerified) {
+        if (masterPasswordVerified) {
+            onClearMasterPasswordVerified()
+            viewModel.onMasterPasswordVerifiedForLockChange()
         }
     }
     LaunchedEffect(state.event) {

@@ -139,6 +139,7 @@ class EnterPinViewModel @Inject constructor(
                             }
 
                             AuthOrigin.AUTO_LOCK,
+                            AuthOrigin.CHANGE_APP_LOCK_TYPE,
                             AuthOrigin.EXTRA_PASSWORD_CONFIGURE,
                             AuthOrigin.EXTRA_PASSWORD_LOGIN,
                             AuthOrigin.EXTRA_PASSWORD_REMOVE -> {

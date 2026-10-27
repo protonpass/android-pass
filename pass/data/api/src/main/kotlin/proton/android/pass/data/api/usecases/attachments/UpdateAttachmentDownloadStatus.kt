@@ -18,14 +18,9 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 
 interface UpdateAttachmentDownloadStatus {
-    suspend operator fun invoke(
-        userId: UserId,
-        attachment: Attachment,
-        status: AttachmentDownloadStatus
-    )
+    suspend operator fun invoke(attachment: Attachment, status: AttachmentDownloadStatus)
 }

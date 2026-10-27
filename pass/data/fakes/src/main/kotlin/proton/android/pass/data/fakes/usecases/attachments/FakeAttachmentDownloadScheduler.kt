@@ -28,6 +28,17 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeAttachmentDownloadScheduler @Inject constructor() : AttachmentDownloadScheduler {
+
+    data class ScheduledAttachment(
+        val userId: UserId,
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    )
+
+    private val scheduledAttachmentsList = mutableListOf<ScheduledAttachment>()
+    val scheduledAttachments: List<ScheduledAttachment> get() = scheduledAttachmentsList.toList()
+
     override suspend fun scheduleAll(userId: UserId, force: Boolean) {
         // no-op
     }
@@ -42,7 +53,7 @@ class FakeAttachmentDownloadScheduler @Inject constructor() : AttachmentDownload
         itemId: ItemId,
         attachmentId: AttachmentId
     ) {
-        // no-op
+        scheduledAttachmentsList.add(ScheduledAttachment(userId, shareId, itemId, attachmentId))
     }
 
     override suspend fun cancelVault(userId: UserId, shareId: ShareId) {

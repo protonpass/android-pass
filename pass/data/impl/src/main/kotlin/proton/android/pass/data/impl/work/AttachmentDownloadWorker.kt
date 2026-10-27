@@ -109,7 +109,7 @@ class AttachmentDownloadWorker @AssistedInject constructor(
                     onFailure = { e ->
                         PassLogger.w(TAG, "$TAG finished with errors")
                         PassLogger.w(TAG, e)
-                        Result.failure()
+                        Result.success()
                     }
                 )
             } finally {
@@ -139,7 +139,7 @@ class AttachmentDownloadWorker @AssistedInject constructor(
             Result.success()
         } else {
             PassLogger.w(TAG, "$TAG finished with errors")
-            Result.failure()
+            Result.success()
         }
     } finally {
         notificationManager?.cancel(notificationId)
@@ -196,7 +196,7 @@ class AttachmentDownloadWorker @AssistedInject constructor(
     private fun mapDownloadResult(downloadResult: DownloadAllResult): Result = when (downloadResult) {
         is DownloadAllResult.PausedDueToStorage -> {
             PassLogger.w(TAG, "Downloads paused due to storage full")
-            Result.failure()
+            Result.success()
         }
         is DownloadAllResult.Success -> {
             PassLogger.i(TAG, "$TAG finished successfully")

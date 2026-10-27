@@ -123,7 +123,7 @@ internal class AttachmentRepositoryImplTest {
         val attachment = createTestAttachment(listOf(chunkId))
 
         // Act
-        instance.downloadAttachment(userId, attachment)
+        instance.downloadAttachment(attachment)
 
         // Assert
         val encryptedCacheFile = fakeFileUriGenerator.encryptedCacheFileFor(userId, attachment)
@@ -163,7 +163,7 @@ internal class AttachmentRepositoryImplTest {
         val attachment = createTestAttachment(listOf(chunkId))
 
         // Act
-        instance.downloadAttachment(userId, attachment)
+        instance.downloadAttachment(attachment)
 
         // Assert
         assertThat(fakeRemote.downloadChunkInvocations).isEqualTo(0)
@@ -181,7 +181,7 @@ internal class AttachmentRepositoryImplTest {
 
         // Act & Assert
         assertFailsWith<RuntimeException> {
-            instance.downloadAttachment(userId, attachment)
+            instance.downloadAttachment(attachment)
         }
 
         // Cache file should be deleted after failure
@@ -205,7 +205,7 @@ internal class AttachmentRepositoryImplTest {
         )
         val attachment = createTestAttachment(listOf(chunkId0, chunkId1, chunkId2))
 
-        instance.downloadAttachment(userId, attachment)
+        instance.downloadAttachment(attachment)
 
         val diskBytes = fakeFileUriGenerator.encryptedCacheFileFor(userId, attachment).readBytes()
         val expected = ByteArrayOutputStream().also { baos ->
@@ -235,7 +235,7 @@ internal class AttachmentRepositoryImplTest {
         )
         val attachment = createTestAttachment(listOf(chunkId0, chunkId1))
 
-        instance.downloadAttachment(userId, attachment)
+        instance.downloadAttachment(attachment)
 
         val encryptedCacheFile = fakeFileUriGenerator.encryptedCacheFileFor(userId, attachment)
         val decryptedOutput = ByteArrayOutputStream()
@@ -261,6 +261,7 @@ internal class AttachmentRepositoryImplTest {
             Chunk(id = cid, size = 100L, index = index)
         }
         return Attachment(
+            userId = userId,
             id = attachmentId,
             persistentId = persistentId,
             shareId = shareId,

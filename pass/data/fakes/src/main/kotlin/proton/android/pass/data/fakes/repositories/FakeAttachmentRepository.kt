@@ -97,13 +97,9 @@ class FakeAttachmentRepository @Inject constructor() : AttachmentRepository {
         attachmentId: AttachmentId
     ): Attachment = getAttachmentByIdResult.getOrThrow()
 
-    override suspend fun downloadAttachment(userId: UserId, attachment: Attachment): URI = URI.create("")
+    override suspend fun downloadAttachment(attachment: Attachment): URI = URI.create("")
 
-    override suspend fun updateDownloadStatus(
-        userId: UserId,
-        attachment: Attachment,
-        status: AttachmentDownloadStatus
-    ) = Unit
+    override suspend fun updateDownloadStatus(attachment: Attachment, status: AttachmentDownloadStatus) = Unit
 
     override suspend fun resetDownloadingToPending(userId: UserId, shareIds: List<ShareId>) = Unit
 

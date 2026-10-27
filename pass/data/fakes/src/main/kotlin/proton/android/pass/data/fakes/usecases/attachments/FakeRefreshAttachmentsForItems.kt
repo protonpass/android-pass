@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases.attachments
 
+import kotlinx.coroutines.CompletableDeferred
 import proton.android.pass.data.api.usecases.attachments.RefreshAttachmentsForItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -27,6 +28,28 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeRefreshAttachmentsForItems @Inject constructor() : RefreshAttachmentsForItems {
-    override suspend fun invoke(userId: UserId, items: List<Pair<ShareId, ItemId>>): List<Pair<ShareId, ItemId>> =
-        emptyList()
+
+    private var result: Result<List<Pair<ShareId, ItemId>>> = Result.success(emptyList())
+    private var gate: CompletableDeferred<Unit>? = null
+
+    var invocationCount = 0
+        private set
+
+    fun setResult(value: Result<List<Pair<ShareId, ItemId>>>) {
+        result = value
+    }
+
+    fun holdUntilReleased() {
+        gate = CompletableDeferred()
+    }
+
+    fun release() {
+        gate?.complete(Unit)
+    }
+
+    override suspend fun invoke(userId: UserId, items: List<Pair<ShareId, ItemId>>): List<Pair<ShareId, ItemId>> {
+        invocationCount++
+        gate?.await()
+        return result.getOrThrow()
+    }
 }

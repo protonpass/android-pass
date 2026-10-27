@@ -19,7 +19,7 @@
 package proton.android.pass.data.fakes.usecases.attachments
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.usecases.attachments.ObserveOfflineEnabledShareIds
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserId
@@ -28,5 +28,12 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeObserveOfflineEnabledShareIds @Inject constructor() : ObserveOfflineEnabledShareIds {
-    override fun invoke(userId: UserId): Flow<List<ShareId>> = flowOf(emptyList())
+
+    private val flow = MutableStateFlow<List<ShareId>>(emptyList())
+
+    fun emit(shareIds: List<ShareId>) {
+        flow.value = shareIds
+    }
+
+    override fun invoke(userId: UserId): Flow<List<ShareId>> = flow
 }

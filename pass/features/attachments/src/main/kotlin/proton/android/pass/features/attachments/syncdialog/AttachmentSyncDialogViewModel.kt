@@ -40,6 +40,7 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.safeRunCatching
+import proton.android.pass.common.api.safeRunCatchingWithCleanup
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.ObservePrimaryUserId
@@ -95,6 +96,7 @@ class AttachmentSyncDialogViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val refreshFailedItemsState = MutableStateFlow<Set<ItemId>>(emptySet())
+    private val isRefreshingState = MutableStateFlow(true)
 
     private val vaultSizesState = MutableStateFlow<Map<ShareId, Long>>(emptyMap())
     private val inFlightShareIds = mutableSetOf<ShareId>()
@@ -111,15 +113,19 @@ class AttachmentSyncDialogViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            refreshAttachmentsForItemsWithFlag()
+            safeRunCatchingWithCleanup(
+                onCancellation = { isRefreshingState.value = false }
+            ) {
+                refreshAttachmentsForItemsWithFlag()
+            }
+            isRefreshingState.value = false
         }
     }
 
     internal fun onRetryAttachment(attachment: Attachment) {
         viewModelScope.launch {
-            val userId = getPrimaryUserId() ?: return@launch
             runCatching {
-                updateAttachmentDownloadStatus(userId, attachment, AttachmentDownloadStatus.Downloading)
+                updateAttachmentDownloadStatus(attachment, AttachmentDownloadStatus.Downloading)
             }.onError { error ->
                 PassLogger.w(TAG, "Error retrying attachment download")
                 PassLogger.w(TAG, error)
@@ -127,7 +133,7 @@ class AttachmentSyncDialogViewModel @Inject constructor(
             refreshFailedItemsState.update { it - attachment.itemId }
             safeRunCatching {
                 downloadScheduler.scheduleAttachment(
-                    userId = userId,
+                    userId = attachment.userId,
                     shareId = attachment.shareId,
                     itemId = attachment.itemId,
                     attachmentId = attachment.id
@@ -135,6 +141,9 @@ class AttachmentSyncDialogViewModel @Inject constructor(
             }.onFailure { error ->
                 PassLogger.w(TAG, "Error rescheduling download on retry")
                 PassLogger.w(TAG, error)
+                safeRunCatching {
+                    updateAttachmentDownloadStatus(attachment, AttachmentDownloadStatus.Failed)
+                }
             }
         }
     }
@@ -167,7 +176,7 @@ class AttachmentSyncDialogViewModel @Inject constructor(
             observeAttachmentsWithFailures(userId, shareIds),
             observeItemsForShares(userId, shareIds),
             userPreferencesRepository.observeSharedItemsDownloadPref(userId)
-        ) { networkInfo, (vaults, sizes), (attachments, failedItems), items, sharedItemsPref ->
+        ) { networkInfo, (vaults, sizes), (attachments, failedItems, isRefreshing), items, sharedItemsPref ->
             val offlineVaults = vaults.filter { it.offlineAttachments }
             val itemInfoMap = buildItemInfoMap(items)
 
@@ -193,7 +202,8 @@ class AttachmentSyncDialogViewModel @Inject constructor(
             buildDialogState(
                 vaults = vaultStates + listOfNotNull(sharedItemsState),
                 networkInfo = networkInfo,
-                failedItems = failedItems
+                failedItems = failedItems,
+                isRefreshing = isRefreshing
             )
         }
 
@@ -223,10 +233,11 @@ class AttachmentSyncDialogViewModel @Inject constructor(
     private fun observeAttachmentsWithFailures(
         userId: UserId,
         shareIds: List<ShareId>
-    ): Flow<Pair<List<Attachment>, Set<ItemId>>> = combine(
+    ): Flow<Triple<List<Attachment>, Set<ItemId>, Boolean>> = combine(
         observeActiveAttachments(userId, shareIds),
-        refreshFailedItemsState
-    ) { attachments, failedItems -> attachments to failedItems }
+        refreshFailedItemsState,
+        isRefreshingState
+    ) { attachments, failedItems, isRefreshing -> Triple(attachments, failedItems, isRefreshing) }
 
     private fun observeItemsForShares(userId: UserId, shareIds: List<ShareId>): Flow<List<Item>> = observeItems(
         selection = ShareSelection.Shares(shareIds),
@@ -321,15 +332,19 @@ class AttachmentSyncDialogViewModel @Inject constructor(
     private fun buildDialogState(
         vaults: List<VaultSyncState>,
         networkInfo: NetworkInfo,
-        failedItems: Set<ItemId>
+        failedItems: Set<ItemId>,
+        isRefreshing: Boolean
     ): AttachmentSyncDialogState {
         val allAttachments = vaults.flatMap { vault -> vault.items.flatMap { it.attachments } }
         val total = allAttachments.size
         val downloaded = allAttachments.count { it.status == AttachmentDownloadStatus.Downloaded }
         val failed = allAttachments.count { it.status == AttachmentDownloadStatus.Failed }
 
+        val resolvedStatus = resolveSyncStatus(networkInfo, failedItems, total, downloaded, failed)
+        val status = if (isRefreshing && resolvedStatus == SyncStatus.Done) SyncStatus.Loading else resolvedStatus
+
         return AttachmentSyncDialogState(
-            status = resolveSyncStatus(networkInfo, failedItems, total, downloaded, failed),
+            status = status,
             downloaded = downloaded,
             total = total,
             vaults = vaults

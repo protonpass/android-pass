@@ -553,7 +553,8 @@ class AttachmentRepositoryImpl @Inject constructor(
     }
 
     @Suppress("LongMethod")
-    override suspend fun downloadAttachment(userId: UserId, attachment: Attachment): URI {
+    override suspend fun downloadAttachment(attachment: Attachment): URI {
+        val userId = attachment.userId
         if (attachment.chunks.isEmpty()) throw IllegalStateException("No chunks provided")
 
         if (!legacyDirCleanupDone.getAndSet(true)) {
@@ -583,7 +584,7 @@ class AttachmentRepositoryImpl @Inject constructor(
             persistentId = attachment.persistentId,
             mimeType = attachment.mimeType
         )
-        updateDownloadStatus(userId, attachment, AttachmentDownloadStatus.Downloaded)
+        updateDownloadStatus(attachment, AttachmentDownloadStatus.Downloaded)
         return result
     }
 
@@ -639,14 +640,10 @@ class AttachmentRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateDownloadStatus(
-        userId: UserId,
-        attachment: Attachment,
-        status: AttachmentDownloadStatus
-    ) {
+    override suspend fun updateDownloadStatus(attachment: Attachment, status: AttachmentDownloadStatus) {
         withContext(appDispatchers.io) {
             local.updateDownloadStatus(
-                userId = userId,
+                userId = attachment.userId,
                 shareId = attachment.shareId,
                 itemId = attachment.itemId,
                 attachmentId = attachment.id,
@@ -836,6 +833,7 @@ fun AttachmentEntity.toDomain(
     chunks: List<Chunk>
 ): Attachment {
     return Attachment(
+        userId = UserId(this.userId),
         id = AttachmentId(this.id),
         persistentId = PersistentAttachmentId(this.persistentId),
         shareId = shareId,

@@ -22,6 +22,7 @@ import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 
 @JvmInline
 value class PendingAttachmentId(val id: String)
@@ -50,6 +51,7 @@ enum class AttachmentType {
 }
 
 data class Attachment(
+    val userId: UserId,
     val id: AttachmentId,
     val persistentId: PersistentAttachmentId,
     val shareId: ShareId,

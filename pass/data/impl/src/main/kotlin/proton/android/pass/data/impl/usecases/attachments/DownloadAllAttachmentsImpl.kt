@@ -26,9 +26,9 @@ import proton.android.pass.common.api.safeRunCatching
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.DownloadAllAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAllResult
-import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
@@ -72,20 +72,18 @@ class DownloadAllAttachmentsImpl @Inject constructor(
             block = { attachment ->
                 if (storageFullDetected.get()) {
                     attachmentRepository.updateDownloadStatus(
-                        userId = userId,
                         attachment = attachment,
                         status = AttachmentDownloadStatus.Paused
                     )
                     return@runConcurrently
                 }
-                attachmentRepository.updateDownloadStatus(userId, attachment, AttachmentDownloadStatus.Downloading)
+                attachmentRepository.updateDownloadStatus(attachment, AttachmentDownloadStatus.Downloading)
                 safeRunCatching {
                     downloadAttachment(attachment)
                 }.onFailure { e ->
                     PassLogger.w(TAG, "Failed to download attachment ${attachment.id.id}")
                     PassLogger.w(TAG, e)
                     attachmentRepository.updateDownloadStatus(
-                        userId = userId,
                         attachment = attachment,
                         status = AttachmentDownloadStatus.Failed
                     )

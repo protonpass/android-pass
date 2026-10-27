@@ -90,13 +90,9 @@ interface AttachmentRepository {
         attachmentId: AttachmentId
     ): Attachment
 
-    suspend fun downloadAttachment(userId: UserId, attachment: Attachment): URI
+    suspend fun downloadAttachment(attachment: Attachment): URI
 
-    suspend fun updateDownloadStatus(
-        userId: UserId,
-        attachment: Attachment,
-        status: AttachmentDownloadStatus
-    )
+    suspend fun updateDownloadStatus(attachment: Attachment, status: AttachmentDownloadStatus)
 
     suspend fun resetDownloadingToPending(userId: UserId, shareIds: List<ShareId>)
 

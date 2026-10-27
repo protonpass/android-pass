@@ -18,9 +18,7 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
-import proton.android.pass.data.api.usecases.GetPrimaryUserId
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.domain.attachments.Attachment
 import java.net.URI
@@ -29,16 +27,8 @@ import javax.inject.Singleton
 
 @Singleton
 class DownloadAttachmentImpl @Inject constructor(
-    private val getPrimaryUserId: GetPrimaryUserId,
     private val attachmentRepository: AttachmentRepository
 ) : DownloadAttachment {
 
-    override suspend fun invoke(attachment: Attachment): URI {
-        val userId = getPrimaryUserId()
-            ?: throw UserIdNotAvailableError()
-        return attachmentRepository.downloadAttachment(
-            userId = userId,
-            attachment = attachment
-        )
-    }
+    override suspend fun invoke(attachment: Attachment): URI = attachmentRepository.downloadAttachment(attachment)
 }

@@ -57,7 +57,6 @@ class DownloadSingleAttachmentImpl @Inject constructor(
             ?: return false
 
         attachmentRepository.updateDownloadStatus(
-            userId = userId,
             attachment = attachment,
             status = AttachmentDownloadStatus.Downloading
         )
@@ -67,7 +66,6 @@ class DownloadSingleAttachmentImpl @Inject constructor(
                 PassLogger.w(TAG, "Failed to download attachment ${attachmentId.id}")
                 PassLogger.w(TAG, error)
                 attachmentRepository.updateDownloadStatus(
-                    userId = userId,
                     attachment = attachment,
                     status = AttachmentDownloadStatus.Failed
                 )

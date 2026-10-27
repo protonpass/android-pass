@@ -25,6 +25,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
@@ -109,6 +110,7 @@ class AttachmentSectionPreviewProvider :
         createTime: Instant = Instant.fromEpochSeconds(CREATE_TIME),
         modifiedTime: Instant = Instant.fromEpochSeconds(CREATE_TIME)
     ) = Attachment(
+        userId = UserId("user-id"),
         id = id,
         persistentId = PersistentAttachmentId("persistent-$id"),
         shareId = ShareId("share-$id"),

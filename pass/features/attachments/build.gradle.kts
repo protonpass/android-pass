@@ -38,6 +38,7 @@ android {
     }
 
     testOptions {
+        unitTests.isReturnDefaultValues = true
         managedDevices {
             allDevices {
                 maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel2api30").apply {
@@ -88,4 +89,14 @@ dependencies {
     implementation(projects.pass.network.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
+
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.crypto.fakes)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.network.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
 }

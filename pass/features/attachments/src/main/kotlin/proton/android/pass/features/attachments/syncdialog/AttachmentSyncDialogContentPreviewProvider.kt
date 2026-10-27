@@ -25,6 +25,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.UserId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentDownloadStatus
 import proton.android.pass.domain.attachments.AttachmentId
@@ -219,6 +220,7 @@ internal class AttachmentSyncDialogContentPreviewProvider :
         size: Long,
         status: AttachmentDownloadStatus
     ) = Attachment(
+        userId = UserId("user-id"),
         id = AttachmentId(id),
         persistentId = PersistentAttachmentId(id),
         shareId = ShareId("share-1"),

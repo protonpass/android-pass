@@ -250,7 +250,7 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
     private fun getPasswordCallerContext(): PasswordCallerContext? {
         val callingAppInfo = extractPasswordCallingAppInfo(intent) ?: run {
-            PassLogger.w(TAG, "Password selection request does not contain BeginGetCredentialRequest")
+            PassLogger.w(TAG, "Password selection request does not contain a credential request")
             return null
         }
         return passwordCallerContextResolver.resolve(callingAppInfo)
@@ -375,3 +375,4 @@ internal class PasswordCredentialSelectionActivity : FragmentActivity() {
 
 internal fun extractPasswordCallingAppInfo(intent: Intent): CallingAppInfo? =
     PendingIntentHandler.retrieveBeginGetCredentialRequest(intent)?.callingAppInfo
+        ?: PendingIntentHandler.retrieveProviderGetCredentialRequest(intent)?.callingAppInfo

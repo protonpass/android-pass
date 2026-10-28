@@ -24,9 +24,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.RequiresApi
+import androidx.credentials.GetPasswordOption
 import androidx.credentials.provider.BeginGetCredentialRequest
 import androidx.credentials.provider.BeginGetPasswordOption
 import androidx.credentials.provider.CallingAppInfo
+import androidx.credentials.provider.ProviderGetCredentialRequest
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
@@ -67,6 +69,40 @@ class PasswordCredentialSelectionActivityRequestTest {
         assertThat(extracted?.signingInfoCompat).isEqualTo(callingAppInfo.signingInfoCompat)
     }
 
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.P)
+    @Test
+    fun extractsCallingAppInfoFromProviderGetRequest() {
+        val callingAppInfo = createCallingAppInfo()
+        val providerRequest = ProviderGetCredentialRequest(
+            credentialOptions = listOf(GetPasswordOption()),
+            callingAppInfo = callingAppInfo
+        )
+        val intent = createProviderPendingIntent(providerRequest)
+
+        val extracted = extractPasswordCallingAppInfo(intent)
+
+        assertThat(extracted?.packageName).isEqualTo(callingAppInfo.packageName)
+        assertThat(extracted?.signingInfoCompat).isEqualTo(callingAppInfo.signingInfoCompat)
+    }
+
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.P)
+    @Test
+    fun returnsNullWhenIntentHasNoCredentialRequest() {
+        assertThat(extractPasswordCallingAppInfo(Intent())).isNull()
+    }
+
+    private fun createCallingAppInfo(): CallingAppInfo {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val signingInfo = context.packageManager
+            .getPackageInfo(context.packageName, PackageManager.GET_SIGNING_CERTIFICATES)
+            .signingInfo
+            ?: error("Test app must have signing information")
+        return CallingAppInfo(
+            packageName = context.packageName,
+            signingInfo = signingInfo
+        )
+    }
+
     private fun createPendingIntent(beginRequest: BeginGetCredentialRequest): Intent = Intent().apply {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             putExtra(BEGIN_GET_CREDENTIAL_REQUEST_EXTRA, Api34.toFrameworkRequest(beginRequest))
@@ -75,8 +111,32 @@ class PasswordCredentialSelectionActivityRequestTest {
         }
     }
 
+    private fun createProviderPendingIntent(providerRequest: ProviderGetCredentialRequest): Intent = Intent().apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            putExtra(GET_CREDENTIAL_REQUEST_EXTRA, Api34.toFrameworkRequest(providerRequest))
+        } else {
+            putExtra(GET_CREDENTIAL_REQUEST_EXTRA, ProviderGetCredentialRequest.asBundle(providerRequest))
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private object Api34 {
+
+        fun toFrameworkRequest(providerRequest: ProviderGetCredentialRequest): Parcelable {
+            val callingAppInfo = providerRequest.callingAppInfo
+            val frameworkCallingAppInfo = android.service.credentials.CallingAppInfo(
+                callingAppInfo.packageName,
+                requireNotNull(callingAppInfo.signingInfo)
+            )
+            val frameworkOptions = providerRequest.credentialOptions.map { option ->
+                android.credentials.CredentialOption.Builder(
+                    option.type,
+                    option.requestData,
+                    option.candidateQueryData
+                ).build()
+            }
+            return android.service.credentials.GetCredentialRequest(frameworkCallingAppInfo, frameworkOptions)
+        }
 
         fun toFrameworkRequest(beginRequest: BeginGetCredentialRequest): Parcelable {
             val bundle = BeginGetCredentialRequest.asBundle(beginRequest)
@@ -90,5 +150,7 @@ class PasswordCredentialSelectionActivityRequestTest {
     private companion object {
         const val BEGIN_GET_CREDENTIAL_REQUEST_EXTRA =
             "android.service.credentials.extra.BEGIN_GET_CREDENTIAL_REQUEST"
+        const val GET_CREDENTIAL_REQUEST_EXTRA =
+            "android.service.credentials.extra.GET_CREDENTIAL_REQUEST"
     }
 }

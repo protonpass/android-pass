@@ -22,18 +22,25 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -44,9 +51,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import me.proton.core.compose.theme.ProtonTheme
+import kotlinx.coroutines.launch
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.PassTheme
@@ -78,6 +89,8 @@ internal fun PasswordInput(
     placeholder: String = stringResource(id = R.string.field_password_hint),
     isEditAllowed: Boolean,
     showLeadingIcon: Boolean = true,
+    bottomOverlap: Dp = 0.dp,
+    viewportBottomPx: Float = 0f,
     onChange: (String) -> Unit,
     onFocus: (Boolean) -> Unit
 ) {
@@ -85,6 +98,11 @@ internal fun PasswordInput(
     var restoreFocus by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val coroutineScope = rememberCoroutineScope()
+    val bottomOverlapPx = with(LocalDensity.current) { bottomOverlap.toPx() }
+    val arePasswordChecksVisible = isFocused && isPasswordChecksEnabled
+    var fieldSize by remember { mutableStateOf(IntSize.Zero) }
 
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
         if (isFocused) {
@@ -100,12 +118,36 @@ internal fun PasswordInput(
         }
     }
 
+    LaunchedEffect(viewportBottomPx) {
+        if (arePasswordChecksVisible && fieldSize != IntSize.Zero) {
+            bringIntoViewRequester.bringIntoView(
+                Rect(0f, 0f, fieldSize.width.toFloat(), fieldSize.height + bottomOverlapPx)
+            )
+        }
+    }
+
     PasswordInputContent(
         value = value,
         passwordStrength = passwordStrength,
-        modifier = modifier,
+        modifier = modifier
+            .bringIntoViewRequester(bringIntoViewRequester)
+            .onSizeChanged { size ->
+                fieldSize = size
+                if (arePasswordChecksVisible) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView(
+                            Rect(
+                                left = 0f,
+                                top = 0f,
+                                right = size.width.toFloat(),
+                                bottom = size.height + bottomOverlapPx
+                            )
+                        )
+                    }
+                }
+            },
         passwordChecks = passwordChecks,
-        arePasswordChecksVisible = isFocused && isPasswordChecksEnabled,
+        arePasswordChecksVisible = arePasswordChecksVisible,
         placeholder = placeholder,
         isEditAllowed = isEditAllowed,
         showLeadingIcon = showLeadingIcon,

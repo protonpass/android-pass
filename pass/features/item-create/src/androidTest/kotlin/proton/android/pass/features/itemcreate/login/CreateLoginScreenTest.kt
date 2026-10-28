@@ -19,7 +19,14 @@
 package proton.android.pass.features.itemcreate.login
 
 import android.os.Build
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.test.ComposeTimeoutException
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.hasContentDescription
@@ -33,6 +40,9 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performScrollToKey
 import androidx.compose.ui.test.performTextReplacement
+import androidx.compose.ui.unit.Density
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -87,6 +97,8 @@ import proton.android.pass.features.itemcreate.common.CustomFieldDraftRepository
 import proton.android.pass.features.itemcreate.common.DraftFormFieldEvent
 import proton.android.pass.features.itemcreate.common.PASSWORD_INPUT_TAG
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.preferences.FakeFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
@@ -147,6 +159,9 @@ class CreateLoginScreenTest {
 
     @Inject
     lateinit var getPopularServices: FakeGetPopularServices
+
+    @Inject
+    lateinit var featureFlagsRepository: FakeFeatureFlagsPreferenceRepository
 
     @Before
     fun setup() {
@@ -755,6 +770,76 @@ class CreateLoginScreenTest {
         assertThat(createItem.memory()).isEmpty()
     }
 
+    @Test
+    fun passwordFieldStaysAboveKeyboardAndStickyBarWhenChecksAreShown() {
+        featureFlagsRepository.set(FeatureFlag.PASS_PASSWORD_CHECKS, true)
+
+        composeTestRule.apply {
+            setContent {
+                CompositionLocalProvider(
+                    LocalDensity provides Density(
+                        density = LocalDensity.current.density,
+                        fontScale = LARGE_FONT_SCALE
+                    )
+                ) {
+                    PassTheme(isDark = true) {
+                        Box(modifier = Modifier.imePadding()) {
+                            CreateLoginScreen(
+                                clearAlias = false,
+                                selectVault = null,
+                                canUseAttachments = true,
+                                onNavigate = {}
+                            )
+                        }
+                    }
+                }
+            }
+
+            waitUntilExists(hasTestTag(PASSWORD_INPUT_TAG))
+
+            val isKeyboardShown = runCatching {
+                waitUntil(KEYBOARD_TIMEOUT_MILLIS) { imeBottomInsetPx() > 0 }
+            }.exceptionOrNull() !is ComposeTimeoutException
+            assumeTrue(isKeyboardShown)
+            waitForStableImeInset()
+
+            onNodeWithTag(PASSWORD_INPUT_TAG).performScrollTo().performClick()
+            onNodeWithTag(PASSWORD_INPUT_TAG).assertIsFocused()
+            waitForStableImeInset()
+            waitForIdle()
+
+            val listBounds: Rect = onNodeWithTag(LoginFormTag.LAZY_COLUMN)
+                .fetchSemanticsNode()
+                .boundsInWindow
+            val passwordBounds: Rect = onNodeWithTag(PASSWORD_INPUT_TAG)
+                .fetchSemanticsNode()
+                .boundsInWindow
+            val viewportBottomPx = listBounds.bottom - with(density) { StickyImeRowHeight.toPx() }
+
+            assertThat(passwordBounds.top).isAtLeast(listBounds.top)
+            assertThat(passwordBounds.bottom).isAtMost(viewportBottomPx)
+        }
+    }
+
+    private fun waitForStableImeInset() {
+        var previousInset = -1
+        composeTestRule.waitUntil(KEYBOARD_TIMEOUT_MILLIS) {
+            val currentInset = imeBottomInsetPx()
+            val isStable = currentInset == previousInset
+            previousInset = currentInset
+            Thread.sleep(SETTLE_INTERVAL_MILLIS)
+            isStable
+        }
+    }
+
+    private fun imeBottomInsetPx(): Int {
+        val decorView = composeTestRule.activity.window.decorView
+        return ViewCompat.getRootWindowInsets(decorView)
+            ?.getInsets(WindowInsetsCompat.Type.ime())
+            ?.bottom
+            ?: 0
+    }
+
     private fun setupPlan(plan: PlanType, totpLimit: PlanLimit = PlanLimit.Unlimited) {
         canPerformPaidAction.setResult(plan !is PlanType.Free)
         val upgradeInfo = UpgradeInfo(
@@ -776,6 +861,9 @@ class CreateLoginScreenTest {
     }
 
     companion object {
+        private const val KEYBOARD_TIMEOUT_MILLIS = 5_000L
+        private const val SETTLE_INTERVAL_MILLIS = 300L
+        private const val LARGE_FONT_SCALE = 2f
         private const val SHARE_ID = "shareId-123"
         private val USER_ID = UserId("user-id-123")
         private const val USER_EMAIL = "a@b.c"

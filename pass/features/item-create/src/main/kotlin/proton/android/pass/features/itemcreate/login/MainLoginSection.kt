@@ -40,7 +40,8 @@ internal fun MainLoginSection(
     onEvent: (LoginContentEvent) -> Unit,
     onFocusChange: (LoginField, Boolean) -> Unit,
     isUsernameSplitTooltipEnabled: Boolean,
-    isPasswordChecksEnabled: Boolean
+    isPasswordChecksEnabled: Boolean,
+    viewportBottomPx: Float = 0f
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -68,6 +69,8 @@ internal fun MainLoginSection(
             passwordChecks = loginItemFormState.passwordChecks,
             isPasswordChecksEnabled = isPasswordChecksEnabled,
             isEditAllowed = isEditAllowed,
+            bottomOverlap = StickyImeRowHeight,
+            viewportBottomPx = viewportBottomPx,
             onChange = { onEvent(LoginContentEvent.OnPasswordChange(it)) },
             onFocus = { isFocused ->
                 onEvent(LoginContentEvent.OnFocusChange(LoginField.Password, isFocused))

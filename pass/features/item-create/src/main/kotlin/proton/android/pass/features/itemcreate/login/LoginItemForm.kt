@@ -28,8 +28,11 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -38,7 +41,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -136,9 +138,12 @@ internal fun LoginItemForm(
         val titlePosition = remember { mutableStateOf(IntOffset.Zero) }
         val titleSize = remember { mutableStateOf(IntSize.Zero) }
 
+        var listBottomPx by remember { mutableFloatStateOf(0f) }
+
         LazyColumn(
             modifier = Modifier
                 .testTag(LoginFormTag.LAZY_COLUMN)
+                .onGloballyPositioned { listBottomPx = it.positionInWindow().y + it.size.height }
                 .fillMaxWidth()
                 .padding(horizontal = Spacing.medium)
         ) {
@@ -206,6 +211,7 @@ internal fun LoginItemForm(
             item {
                 MainLoginSection(
                     modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                    viewportBottomPx = listBottomPx,
                     loginItemFormState = loginItemFormState,
                     canUpdateUsername = canUpdateUsername,
                     selectedShareId = selectedShareId,
@@ -282,7 +288,7 @@ internal fun LoginItemForm(
 
             if (isCurrentStickyVisible) {
                 item {
-                    Spacer(modifier = Modifier.height(48.dp))
+                    Spacer(modifier = Modifier.height(StickyImeRowHeight))
                 }
             }
         }

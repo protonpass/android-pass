@@ -30,12 +30,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 
+val StickyImeRowHeight = 48.dp
+
 @Composable
 fun StickyImeRow(modifier: Modifier = Modifier, content: @Composable RowScope.() -> Unit) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(48.dp)
+            .height(StickyImeRowHeight)
             .background(PassTheme.colors.backgroundNorm),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center

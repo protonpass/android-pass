@@ -44,7 +44,7 @@ test-unit:
 	./gradlew testDevDebugUnitTest -x :pass:screenshot-tests:testDevDebugUnitTest --no-configuration-cache
 
 test-android:
-	./gradlew allDevicesDebugAndroidTest
+	./gradlew pixel2api30DebugAndroidTest :app:pixel2api30DevBlackDebugAndroidTest --continue
 
 # Clean
 clean:

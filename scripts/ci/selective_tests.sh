@@ -37,6 +37,7 @@ fi
 log "App tests against black enabled: $APP_TESTS_ENABLED"
 
 if [ "$APP_TESTS_ENABLED" = "1" ] && [ "$DRY_RUN" != "1" ]; then
+  "$REPO_ROOT/tools/private/ci/checkBlackHealthy.sh" || die "black is down, app tests cannot run"
   git -C "$REPO_ROOT" submodule update --init --checkout "$TEST_SPECS_PATH"
 fi
 

@@ -66,6 +66,19 @@
           }
         ]
       }
+    },
+    {
+      "type": "android",
+      "info": {
+        "package_name": "com.iode.firefox",
+        "_source": "https://fdroid.iode.tech/repo/IodeBrowser-179.apk verified with apksigner 36.1.0 on 2026-10-29 (cert DN, EMAILADDRESS component redacted: CN=Android, OU=Android, O=Android, L=Toulouse, ST=Occitanie, C=FR; sha256 b6702af8...9343 matches iode official repo index; cert equals preferredSigner for com.iode.firefox)",
+        "signatures": [
+          {
+            "build": "release",
+            "cert_fingerprint_sha256": "C9:96:DA:AB:86:A8:CD:32:53:77:49:A5:EE:1D:C2:F9:84:F2:9D:43:F3:06:7D:2C:0A:54:BF:8B:FB:AB:62:C0"
+          }
+        ]
+      }
     }
   ]
 }

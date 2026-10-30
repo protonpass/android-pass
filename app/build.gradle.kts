@@ -432,7 +432,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.pass.common)
     implementation(libs.plumber)
-    implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
 
     debugImplementation(libs.showkase)

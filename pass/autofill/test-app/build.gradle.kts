@@ -102,7 +102,6 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.core.compose)
 
-    implementation(projects.pass.commonUi.api)
     implementation(libs.androidx.credentials)
     implementation(libs.core.presentation.compose)
 }

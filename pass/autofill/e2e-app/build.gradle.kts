@@ -76,7 +76,6 @@ dependencies {
     implementation(libs.androidx.startup.runtime)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.collections)
-    implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.timber)
 
